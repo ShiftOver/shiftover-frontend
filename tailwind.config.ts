@@ -7,6 +7,14 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    colors: {
+      'shiftover-black': '#353535',
+      'shiftover-white-1': '#f7faf5',
+      'shiftover-white-2': '#f5f2f2',
+      'shiftover-blue': '#1fa9c4',
+      'shiftover-gray': '#484848',
+      'shiftover-teal': '#5deecc',
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
