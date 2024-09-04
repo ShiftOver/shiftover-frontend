@@ -4,7 +4,6 @@ import PatientCard from './components/PatientCard';
 export default function Home() {
     return (
         <main>
-            <Example />
             <PatientCard></PatientCard>
         </main>
     );
