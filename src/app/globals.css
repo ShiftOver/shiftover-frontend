@@ -4,10 +4,22 @@
 @tailwind components;
 @tailwind utilities;
 
-.patientcard-bg {
-    background-color: white;
+:root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: #F3F1F2;
+}
+
+body {
+    color: rgb(var(--foreground-rgb));
+    background: var(--background-start-rgb);
+        
 }
 
 .border-full {
     border-radius: 999px;
+}
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
 }
