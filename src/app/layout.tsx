@@ -1,6 +1,8 @@
+// app/layout.tsx or wherever your RootLayout is defined
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import Navbar from './components/Navbar'; // Import the Navbar component
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,7 +18,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang='en'>
-            <body className={inter.className}>{children}</body>
+            <body className={inter.className}>
+                <div className='flex'>
+                    <Navbar />
+                    <main className='ml-64 flex-1 p-4'>{children}</main>
+                </div>
+            </body>
         </html>
     );
 }
