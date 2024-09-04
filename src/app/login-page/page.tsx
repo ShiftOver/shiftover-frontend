@@ -3,8 +3,8 @@ import React from 'react';
 
 export default function LoginPage() {
     return (
-        <main className='bg-gray-100 flex min-h-screen items-center justify-center'>
-            <div className='bg-white relative h-[834px] w-[1194px] overflow-hidden rounded-lg shadow-lg'>
+        <main className='flex min-h-screen items-center justify-center bg-shiftover-white-1'>
+            <div className='relative h-[834px] w-[1194px] overflow-hidden rounded-lg bg-shiftover-white-1 shadow-lg'>
                 {/* Left Section - Image */}
                 <div className='absolute left-[-93px] top-[150px] h-[533px] w-[718px]'>
                     <Image
@@ -43,8 +43,13 @@ export default function LoginPage() {
                                 placeholder='Enter Password'
                             />
                         </div>
-
-                        <div className='mb-6'>
+                        <button
+                            type='button'
+                            className='w-[181px] rounded-[22px] border border-[#007ba7]/20 bg-[#007ba7]/60 p-2.5 font-sans text-base text-shiftover-white-2 shadow transition-all duration-500 hover:bg-[#007ba7]/80 active:bg-[#007ba7]'
+                        >
+                            Login
+                        </button>
+                        <div className='mb-6 mt-6'>
                             <a
                                 href='#'
                                 className='font-sans text-base text-[#ee2323] underline'
@@ -52,13 +57,6 @@ export default function LoginPage() {
                                 Forgot Password?
                             </a>
                         </div>
-
-                        <button
-                            type='button'
-                            className='text-white w-[181px] rounded-[22px] border border-[#1fa9c4]/20 bg-[#1fa9c4]/60 p-2.5 font-sans text-base shadow'
-                        >
-                            Login
-                        </button>
                     </form>
                 </div>
             </div>
