@@ -17,12 +17,20 @@ const config: Config = {
             'shiftover-blue': '#1fa9c4',
             'shiftover-gray': '#484848',
             'shiftover-teal': '#5deecc',
+            white: '#FFFFFF',
             text: {
                 cardheader: '#1E1E1E',
                 carddescription: '#828080',
             },
         },
         fontSize: {
+            header: [
+                '36px',
+                {
+                    lineHeight: '42.96px',
+                    fontWeight: '500',
+                },
+            ],
             cardheader: [
                 '20px',
                 {
