@@ -6,13 +6,12 @@
 
 :root {
     --foreground-rgb: 0, 0, 0;
-    --background-start-rgb: #F3F1F2;
+    --background-start-rgb: #f3f1f2;
 }
 
 body {
     color: rgb(var(--foreground-rgb));
     background: var(--background-start-rgb);
-        
 }
 
 .border-full {

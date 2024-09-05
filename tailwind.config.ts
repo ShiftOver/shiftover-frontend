@@ -59,6 +59,13 @@ const config: Config = {
                     fontWeight: '390',
                 },
             ],
+            logo: [
+                '34px',
+                {
+                    lineHeight: '40.56px',
+                    fontWeight: '500',
+                },
+            ],
         },
         extend: {
             backgroundImage: {
