@@ -21,7 +21,7 @@ export default function RootLayout({
             <body className={inter.className}>
                 <div className='flex'>
                     <Navbar />
-                    <main className='ml-64 flex-1 p-4'>{children}</main>
+                    <main className='flex-1'>{children}</main>
                 </div>
             </body>
         </html>
