@@ -21,7 +21,7 @@ const Navbar: React.FC = () => {
                             className={`bg-white transition-all duration-300 ${expanded ? 'h-10 w-12' : 'h-10 w-12'}`}
                         />
                         {expanded && (
-                            <span className='ml-4 text-4xl font-semibold text-shiftover-black'>
+                            <span className='ml-4 text-logo font-semibold text-shiftover-black'>
                                 ShiftOver
                             </span>
                         )}
@@ -31,13 +31,13 @@ const Navbar: React.FC = () => {
                     <div className='flex flex-col space-y-6'>
                         <button className='flex items-center'>
                             <img
-                                className={`items-center justify-center bg-shiftover-white-2 transition-all duration-300 ${expanded ? 'h-12 w-12 rounded-full' : 'h-12 w-12 rounded-full'}`}
+                                className={`items-center justify-center bg-shiftover-white-2 transition-all duration-300 ${expanded ? 'h-12 w-12 rounded-[200px]' : 'h-12 w-12 rounded-[200px]'}`}
                                 src='/assets/nurse.png'
                                 alt='Profile Icon'
                             />
                         </button>
                         <button className='flex items-center'>
-                            <div className='bg-shiftover-white-20 flex h-10 w-10 items-center justify-center rounded-full'>
+                            <div className='flex h-10 w-10 items-center justify-center rounded-[200px] bg-shiftover-white-2 shadow-[0_2px_4px_0_rgba(0,0,0,0.25)]'>
                                 <img
                                     src='/assets/folder-outline.svg'
                                     alt='My Ward Icon'
@@ -45,13 +45,13 @@ const Navbar: React.FC = () => {
                                 />
                             </div>
                             {expanded && (
-                                <span className='ml-4 text-lg font-semibold text-shiftover-black'>
+                                <span className='text-lg ml-4 font-semibold text-shiftover-black'>
                                     My Ward
                                 </span>
                             )}
                         </button>
                         <button className='flex items-center'>
-                            <div className='flex h-10 w-10 items-center justify-center rounded-full bg-shiftover-white-2'>
+                            <div className='flex h-10 w-10 items-center justify-center rounded-[200px] bg-shiftover-white-2 shadow-[0_2px_4px_0_rgba(0,0,0,0.25)]'>
                                 <img
                                     src='/assets/folder-account-outline.svg'
                                     alt='Shared Ward Icon'
@@ -59,13 +59,13 @@ const Navbar: React.FC = () => {
                                 />
                             </div>
                             {expanded && (
-                                <span className='ml-4 text-lg font-semibold text-shiftover-black'>
+                                <span className='text-lg ml-4 font-semibold text-shiftover-black'>
                                     Shared Ward
                                 </span>
                             )}
                         </button>
                         <button className='flex items-center'>
-                            <div className='flex h-10 w-10 items-center justify-center rounded-full bg-shiftover-white-2'>
+                            <div className='flex h-10 w-10 items-center justify-center rounded-[200px] bg-shiftover-white-2 shadow-[0_2px_4px_0_rgba(0,0,0,0.25)]'>
                                 <img
                                     src='/assets/calendar-account.svg'
                                     alt='Schedule Icon'
@@ -73,7 +73,7 @@ const Navbar: React.FC = () => {
                                 />
                             </div>
                             {expanded && (
-                                <span className='ml-4 text-lg font-semibold text-shiftover-black'>
+                                <span className='text-lg ml-4 font-semibold text-shiftover-black'>
                                     Schedule
                                 </span>
                             )}
@@ -81,7 +81,7 @@ const Navbar: React.FC = () => {
 
                         {/* Logout Button */}
                         <button className='flex items-center'>
-                            <div className='flex h-10 w-10 items-center justify-center rounded-full bg-shiftover-blue'>
+                            <div className='flex h-10 w-10 items-center justify-center rounded-[200px] bg-shiftover-blue shadow-[0_2px_4px_0_rgba(0,0,0,0.25)]'>
                                 <img
                                     src='/assets/logout.svg'
                                     alt='Logout Icon'
@@ -95,7 +95,7 @@ const Navbar: React.FC = () => {
                 {/* Help Section */}
                 <div>
                     <button className='flex items-center'>
-                        <div className='flex h-10 w-10 items-center justify-center rounded-full border-4 border-shiftover-blue bg-shiftover-white-2'>
+                        <div className='flex h-10 w-10 items-center justify-center rounded-[200px] border-4 border-shiftover-blue bg-shiftover-white-2 shadow-[0_2px_4px_0_rgba(0,0,0,0.25)]'>
                             <img
                                 src='/assets/help.svg'
                                 alt='Help Icon'
