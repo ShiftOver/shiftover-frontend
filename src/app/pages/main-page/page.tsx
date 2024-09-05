@@ -8,7 +8,7 @@ export default function Main() {
                 <HeaderBlog name='My Ward' />
             </div>
             <div className='mt-[28px] overflow-x-hidden pb-[10px]'>
-                <div className='grid w-fit w-max grid-cols-4 gap-[42px]'>
+                <div className='grid w-max grid-cols-4 gap-[42px]'>
                     <PatientCard info={{ id: 'id' }} />
                     <PatientCard info={{ name: 'thanapong', gender: 'F' }} />
                     <PatientCard />
