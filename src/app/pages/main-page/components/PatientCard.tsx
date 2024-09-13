@@ -8,7 +8,7 @@ export type PatientCardProps = {
 };
 export default function PatientCard({ info }: PatientCardProps) {
     return (
-        <div className='relative h-129 min-w-[229px] max-w-[229px] rounded-21 bg-white font-shiftover-font shadow-[0_2px_4px_0_rgba(0,0,0,0.25)]'>
+        <div className='relative h-129 min-w-[229px] max-w-[280px] rounded-21 bg-white font-shiftover-font shadow-[0_2px_4px_0_rgba(0,0,0,0.25)]'>
             <div className='flex flex-row justify-between pl-15 pr-18 pt-13'>
                 <p className='text-cardheader text-text-cardheader'>
                     Room {info ? room : 'No.'}
