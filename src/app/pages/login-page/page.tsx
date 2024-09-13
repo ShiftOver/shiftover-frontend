@@ -20,7 +20,7 @@ export default function LoginPage() {
         try {
             // Fetch user details by userId
             const response = await fetch(
-                `http://localhost:8080/v1/user/${userId}`
+                `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/user/${userId}`
             );
             const userData = await response.json();
 
