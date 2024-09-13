@@ -1,7 +1,51 @@
+'use client';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation'; // Import useRouter from Next.js
 import Image from 'next/image';
-import React from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../../config/firebase'; // Import the initialized auth
 
 export default function LoginPage() {
+    const [userId, setUserId] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const router = useRouter(); // Initialize useRouter
+
+    const handleLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+
+        try {
+            // Fetch user details by userId
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/user/${userId}`
+            );
+            const userData = await response.json();
+
+            if (userData && userData.email) {
+                // Use the email and password to sign in with Firebase
+                await signInWithEmailAndPassword(
+                    auth,
+                    userData.email,
+                    password
+                );
+                console.log('Logged in successfully');
+                router.push('/pages/main-page'); // Redirect to the main page on successful login
+            } else {
+                setError('User not found');
+            }
+        } catch (error) {
+            console.error('Login failed:', error);
+            setError(
+                'Login failed. Please check your credentials and try again.'
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <main className='flex min-h-screen items-center justify-center bg-shiftover-white-1'>
             <div className='rounded-lg relative h-[834px] w-[1194px] overflow-hidden bg-shiftover-white-1 shadow-lg'>
@@ -21,7 +65,7 @@ export default function LoginPage() {
                         Welcome to ShiftOver
                     </h2>
 
-                    <form className='mt-6'>
+                    <form className='mt-6' onSubmit={handleLogin}>
                         <div className='mb-4 h-[77px]'>
                             <label className='text-black font-sans text-xl block font-bold'>
                                 User ID
@@ -30,6 +74,9 @@ export default function LoginPage() {
                                 className='text-base w-[450px] rounded-[10px] border border-[#f5f2f2] bg-[#f4f2f2] p-2.5 text-[#817f7f] focus:outline-none'
                                 type='text'
                                 placeholder='Enter User ID'
+                                value={userId}
+                                onChange={(e) => setUserId(e.target.value)}
+                                required
                             />
                         </div>
 
@@ -41,14 +88,19 @@ export default function LoginPage() {
                                 className='text-base w-[450px] rounded-[10px] border border-[#f5f2f2] bg-[#f4f2f2] p-2.5 text-[#817f7f] focus:outline-none'
                                 type='password'
                                 placeholder='Enter Password'
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
                             />
                         </div>
                         <button
-                            type='button'
+                            type='submit'
                             className='font-sans text-base w-[181px] rounded-[22px] border border-[#007ba7]/20 bg-[#007ba7]/60 p-2.5 text-shiftover-white-2 shadow transition-all duration-500 hover:bg-[#007ba7]/80 active:bg-[#007ba7]'
+                            disabled={loading}
                         >
-                            Login
+                            {loading ? 'Logging in...' : 'Login'}
                         </button>
+                        {error && <p className='text-red-500 mt-4'>{error}</p>}
                         <div className='mb-6 mt-6'>
                             <a
                                 href='#'
