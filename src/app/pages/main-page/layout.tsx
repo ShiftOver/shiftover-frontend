@@ -1,5 +1,7 @@
+'use client';
 // app/dashboard/layout.tsx or pages/dashboard/layout.tsx
 import Navbar from '../../components/Navbar';
+import { RecoilRoot } from 'recoil';
 
 export default function DashboardLayout({
     children,
@@ -8,8 +10,12 @@ export default function DashboardLayout({
 }) {
     return (
         <div className='flex'>
-            <Navbar />
-            <main className='flex-1'>{children}</main>
+            <RecoilRoot>
+                <Navbar />
+                <main className='ml-[var(--navbar-width)] flex-1'>
+                    {children}
+                </main>
+            </RecoilRoot>
         </div>
     );
 }
