@@ -32,7 +32,7 @@ export default function LoginPage() {
                     password
                 );
                 console.log('Logged in successfully');
-                router.push('/pages/main-page'); // Redirect to the main page on successful login
+                router.push('/pages/main-page/patient-page'); // Redirect to the main page on successful login
             } else {
                 setError('User not found');
             }
