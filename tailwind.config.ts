@@ -15,8 +15,14 @@ const config: Config = {
             'shiftover-white-1': '#f7faf5',
             'shiftover-white-2': '#f5f2f2',
             'shiftover-blue': '#1fa9c4',
+            'shiftover-oldgreen': '#8bb9bf',
+            'shiftover-lightblue': '#b5ddf7',
+            'shiftover-pink': '#fcd4dd',
+            'shiftover-purple': '#c4c4f8',
+            'shiftover-oldpurple': '#d7b4db',
             'shiftover-gray': '#484848',
             'shiftover-teal': '#5deecc',
+            'shiftover-gray-text': '#b7b1b1',
             white: '#FFFFFF',
             text: {
                 cardheader: '#1E1E1E',
@@ -59,17 +65,17 @@ const config: Config = {
                     fontWeight: '390',
                 },
             ],
-            patientHeader: [
-                '16px',
-                {
-                    lineHeight: '19.09px',
-                    fontWeight: '590',
-                },
-            ],
             logo: [
                 '34px',
                 {
                     lineHeight: '40.56px',
+                    fontWeight: '500',
+                },
+            ],
+            subheader: [
+                '11px',
+                {
+                    lineHeight: '13.32px',
                     fontWeight: '500',
                 },
             ],
