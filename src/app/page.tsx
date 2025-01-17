@@ -3,7 +3,10 @@ export default function Home() {
         <main>
             <a href='/pages/login-page'>Login Page</a>
             <br />
-            <a href='/pages/main-page/patient-page'>Main Page</a>
+            <br />
+            <a href='/pages/main-page/patient-page/patient-page'>Main Page</a>
+            <br />
+            <a href='/pages/main-page/shared-page'>Shared Page</a>
             <br />
             <a href='/pages/main-page/shared-page'>Shared Page</a>
             <br />
