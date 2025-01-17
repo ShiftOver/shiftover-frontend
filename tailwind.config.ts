@@ -59,6 +59,13 @@ const config: Config = {
                     fontWeight: '390',
                 },
             ],
+            patientHeader: [
+                '16px',
+                {
+                    lineHeight: '19.09px',
+                    fontWeight: '590',
+                },
+            ],
             logo: [
                 '34px',
                 {
