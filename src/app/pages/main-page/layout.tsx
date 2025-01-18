@@ -12,7 +12,7 @@ export default function DashboardLayout({
         <div className='flex'>
             <RecoilRoot>
                 <Navbar />
-                <main className='ml-[var(--navbar-width)] flex-1'>
+                <main className='z-10 ml-[var(--navbar-width)] flex-1 rounded-l-[39px] bg-shiftover-white-2 shadow-[0_2px_4px_0_rgba(0,0,0,0.25)]'>
                     {children}
                 </main>
             </RecoilRoot>

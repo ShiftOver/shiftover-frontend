@@ -15,8 +15,15 @@ const config: Config = {
             'shiftover-white-1': '#f7faf5',
             'shiftover-white-2': '#f5f2f2',
             'shiftover-blue': '#1fa9c4',
+            'shiftover-oldgreen': '#8bb9bf',
+            'shiftover-lightblue': '#b5ddf7',
+            'shiftover-pink': '#fcd4dd',
+            'shiftover-redpink': '#e55f7d',
+            'shiftover-purple': '#c4c4f8',
+            'shiftover-oldpurple': '#d7b4db',
             'shiftover-gray': '#484848',
             'shiftover-teal': '#5deecc',
+            'shiftover-gray-text': '#b7b1b1',
             white: '#FFFFFF',
             text: {
                 cardheader: '#1E1E1E',
@@ -35,7 +42,7 @@ const config: Config = {
                 '20px',
                 {
                     lineHeight: '23.87px',
-                    fontWeight: '390',
+                    fontWeight: '500',
                 },
             ],
             cardname: [
@@ -63,6 +70,13 @@ const config: Config = {
                 '34px',
                 {
                     lineHeight: '40.56px',
+                    fontWeight: '500',
+                },
+            ],
+            subheader: [
+                '11px',
+                {
+                    lineHeight: '13.32px',
                     fontWeight: '500',
                 },
             ],
