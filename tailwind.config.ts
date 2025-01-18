@@ -18,6 +18,7 @@ const config: Config = {
             'shiftover-oldgreen': '#8bb9bf',
             'shiftover-lightblue': '#b5ddf7',
             'shiftover-pink': '#fcd4dd',
+            'shiftover-redpink': '#e55f7d',
             'shiftover-purple': '#c4c4f8',
             'shiftover-oldpurple': '#d7b4db',
             'shiftover-gray': '#484848',
@@ -41,7 +42,7 @@ const config: Config = {
                 '20px',
                 {
                     lineHeight: '23.87px',
-                    fontWeight: '390',
+                    fontWeight: '500',
                 },
             ],
             cardname: [

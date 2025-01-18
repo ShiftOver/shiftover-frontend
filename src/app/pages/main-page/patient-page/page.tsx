@@ -4,12 +4,12 @@ import PatientCard from '../components/PatientCard';
 import HeaderBlog from '@/app/components/Header';
 import { selectedPatient } from '@/recoil/atoms/main-page.atom';
 import { useEffect, useState } from 'react';
-import MonitoringNuringRecord from '../components/MonitoringNursingRecord';
-import ChartReview from '../components/ChartReview';
-import NursingAssessmentForm from '../components/NursingAssessmentForm';
-import Medications from '../components/Medications';
-import Nursing from '../components/Nursing';
-import Notes from '../components/Notes';
+import MonitoringNuringRecord from './components/MonitoringNursingRecord';
+import ChartReview from './components/ChartReview';
+import NursingAssessmentForm from './components/NursingAssessmentForm';
+import Medications from './components/Medications';
+import Nursing from './components/Nursing';
+import Notes from './components/Notes';
 
 export default function Main() {
     const [patient, setPatient] = useRecoilState<string>(selectedPatient);
