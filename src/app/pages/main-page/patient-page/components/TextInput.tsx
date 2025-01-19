@@ -9,6 +9,7 @@ export type TextInputProps = {
     style?: string;
     row?: number;
     unit?: string;
+    disabled?: boolean;
 };
 
 export default function TextInput({
@@ -18,6 +19,7 @@ export default function TextInput({
     style,
     row,
     unit,
+    disabled,
 }: TextInputProps) {
     const classText =
         'ml-[5px] h-[18px] bg-[#f6f3f3] ' + (style ? style : 'w-full');
@@ -38,6 +40,11 @@ export default function TextInput({
         }
     }, [value, row]);
 
+    useEffect(() => {
+        setInputValues(['']);
+        onChange('');
+    }, [disabled]);
+
     return (
         <div className='mr-[10px] flex flex-row'>
             <div className='whitespace-nowrap'>{placeHolder}</div>
@@ -53,6 +60,7 @@ export default function TextInput({
                         value={inputValue}
                         onChange={(e) => handleChange(index, e.target.value)}
                         className={classText}
+                        disabled={disabled}
                     />
                 ))}
             </div>

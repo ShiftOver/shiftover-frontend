@@ -18,7 +18,9 @@ export default function PersonalData({ id }: PersonalDataProps) {
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
     const [modeOfArrival, setModeOfArrival] = useState('');
+    const [modeOfArrivalOther, setModeOfArrivalOther] = useState('');
     const [admittedForm, setAdmittedForm] = useState('');
+    const [admittedFormOther, setAdmittedFormOther] = useState('');
     const [diagnosis, setDiagnosis] = useState('');
     const [chiefComplaint, setChiefComplaint] = useState('');
     const [pastIllness, setPastIllness] = useState('');
@@ -161,8 +163,9 @@ export default function PersonalData({ id }: PersonalDataProps) {
                                 />
                                 <TextInput
                                     placeHolder='Other'
-                                    value={weight}
-                                    onChange={setWeight}
+                                    value={modeOfArrivalOther}
+                                    onChange={setModeOfArrivalOther}
+                                    disabled={modeOfArrival !== 'Other'}
                                     style={'w-[89px]'}
                                 ></TextInput>
                             </div>
@@ -206,8 +209,9 @@ export default function PersonalData({ id }: PersonalDataProps) {
                                 />
                                 <TextInput
                                     placeHolder='Other'
-                                    value={weight}
-                                    onChange={setWeight}
+                                    value={admittedFormOther}
+                                    onChange={setAdmittedFormOther}
+                                    disabled={admittedForm !== 'Other'}
                                     style={'w-[89px]'}
                                 ></TextInput>
                             </div>

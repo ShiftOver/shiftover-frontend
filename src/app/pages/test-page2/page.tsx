@@ -35,25 +35,6 @@ function App() {
             )}
         </Draggable>
     );
-    const draggableMarkup2 = (
-        <Draggable
-            id='Type'
-            isOver={isOver}
-            isDropped={isDropped}
-            position={position}
-        >
-            {isDropped || isOver ? (
-                <div className={'h-[8rem] w-[6rem] rounded-21 bg-[#50d71e]'}>
-                    <div>Name: Tassanai</div>
-                    <div>Surname: Wijitjunyakul</div>
-                </div>
-            ) : (
-                <div
-                    className={'h-[3rem] w-[3rem] rounded-21 bg-[#adc213]'}
-                ></div>
-            )}
-        </Draggable>
-    );
 
     return (
         <div style={{ margin: 10 }}>

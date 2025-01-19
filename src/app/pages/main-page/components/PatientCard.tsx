@@ -56,7 +56,7 @@ export default function PatientCard({ info }: PatientCardProps) {
                         </button>
                         {clicked ? (
                             <div
-                                className='fixed z-50 ml-[35px] mt-[-13px] text-text-carddescription'
+                                className='fixed z-20 ml-[35px] mt-[-13px] text-text-carddescription'
                                 ref={popUpRef}
                             >
                                 <ThreeDotPopUp option={['asd', 'asw', 'as']} />

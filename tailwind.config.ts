@@ -56,6 +56,13 @@ const config: Config = {
                     fontWeight: '390',
                 },
             ],
+            heavyname: [
+                '16px',
+                {
+                    lineHeight: '19.09px',
+                    fontWeight: '590',
+                },
+            ],
             detailheader: [
                 '19.21px',
                 {
