@@ -1,4 +1,4 @@
-import NursingList from '../../components/NursingList';
+import NursingList from './NursingList';
 
 export type NursingProps = {
     id: any;
