@@ -15,15 +15,19 @@ const config: Config = {
             'shiftover-white-1': '#f7faf5',
             'shiftover-white-2': '#f5f2f2',
             'shiftover-blue': '#1fa9c4',
+            'shiftover-oldblue': '#addce3',
             'shiftover-oldgreen': '#8bb9bf',
+            'shiftover-mediumblue': '#7ec3f1',
             'shiftover-lightblue': '#b5ddf7',
             'shiftover-pink': '#fcd4dd',
             'shiftover-redpink': '#e55f7d',
             'shiftover-purple': '#c4c4f8',
+            'shiftover-mediumpurple': '#8c8ce5',
             'shiftover-oldpurple': '#d7b4db',
             'shiftover-gray': '#484848',
             'shiftover-teal': '#5deecc',
             'shiftover-gray-text': '#b7b1b1',
+            'shiftover-cardtext': '#828080',
             white: '#FFFFFF',
             text: {
                 cardheader: '#1E1E1E',
@@ -52,6 +56,13 @@ const config: Config = {
                     fontWeight: '390',
                 },
             ],
+            detailheader: [
+                '19.21px',
+                {
+                    lineHeight: '22.92px',
+                    fontWeight: '390',
+                },
+            ],
             carddescription: [
                 '10px',
                 {
@@ -77,6 +88,13 @@ const config: Config = {
                 '11px',
                 {
                     lineHeight: '13.32px',
+                    fontWeight: '500',
+                },
+            ],
+            save: [
+                '24px',
+                {
+                    lineHeight: '28.64px',
                     fontWeight: '500',
                 },
             ],
