@@ -1,10 +1,22 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../config/firebase';
 
 const Navbar: React.FC = () => {
     const [expanded, setExpanded] = useState(true);
     const router = useRouter();
+
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            router.push('/pages/login-page'); // Redirect to login page after logout
+        } catch (error) {
+            console.error('Error signing out:', error);
+        }
+    };
+
     return (
         <div
             className={`h-screen transition-all duration-500 ${expanded ? 'w-64' : 'w-24'}`}
@@ -94,7 +106,10 @@ const Navbar: React.FC = () => {
                             </button>
 
                             {/* Logout Button */}
-                            <button className='flex items-center'>
+                            <button
+                                className='flex items-center'
+                                onClick={handleLogout}
+                            >
                                 <div className='flex h-10 w-10 items-center justify-center rounded-[200px] bg-shiftover-blue shadow-[0_2px_4px_0_rgba(0,0,0,0.25)]'>
                                     <img
                                         src='/assets/logout.svg'
