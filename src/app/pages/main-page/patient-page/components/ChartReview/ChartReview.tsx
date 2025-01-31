@@ -7,6 +7,7 @@ import { Draggable } from './Draggable';
 import SpiritualCulturalNeeds from './NursingAssessmentForm/SpiritualCulturalNeeds';
 import NutritionalMetabolism from './NursingAssessmentForm/NutritionalMetabolism';
 import Cardiopulmonary from './NursingAssessmentForm/Cardiopulmonary';
+import { MiniDroppable } from './MiniDroppable';
 export type ChartReviewProps = {
     id: any;
 };
@@ -72,11 +73,15 @@ export default function ChartReview({ id }: ChartReviewProps) {
                         isDropped={nurseAssessmentForm['Cardiopulmonary']}
                     ></Cardiopulmonary>
                 );
+            default:
+                return <></>;
         }
     };
-
+    const [isDrag, setIsDrag] = useState(<></>);
+    const [drag, setDrag] = useState('');
     function handleDragStart(event: any) {
         changeState(event.active.id, false);
+        setDrag(event.active.id);
     }
 
     function handleDragEnd(event: any) {
@@ -85,11 +90,17 @@ export default function ChartReview({ id }: ChartReviewProps) {
         } else {
             changeState(event.active.id, false);
         }
+        setDrag('');
+        setIsDrag(<></>);
     }
 
     useEffect(() => {
-        isOver ? setOpen(false) : setOpen(true);
-    }, [isOver]);
+        if (isOver) {
+            setIsDrag(find(drag));
+            setOpen(false);
+        } else {
+        }
+    }, [isOver, drag]);
 
     return (
         <div className='relative'>
@@ -110,8 +121,18 @@ export default function ChartReview({ id }: ChartReviewProps) {
                             <Droppable
                                 setIsOver={setIsOver}
                                 id='1'
-                                style={!open ? 'w-full' : 'w-[900px]'}
+                                style={
+                                    'h-[1000px] bg-[#303030] ' +
+                                    (!open ? 'w-full' : 'w-[900px]')
+                                }
                             >
+                                {/* <MiniDroppable
+                                    setIsOver={setIsOver}
+                                    id='2'
+                                    style={
+                                        'w-[40px] h-[40px] bg-[#c80f0f] border-[2px]'
+                                    }
+                                ></MiniDroppable> */}
                                 {notAvailable}
                             </Droppable>
                             <div style={{ marginLeft: 10 }}></div>
@@ -139,7 +160,7 @@ export default function ChartReview({ id }: ChartReviewProps) {
                         </div>
                     </div>
                 ) : (
-                    <>{available}</>
+                    <>{isDrag}</>
                 )}
             </DndContext>
         </div>

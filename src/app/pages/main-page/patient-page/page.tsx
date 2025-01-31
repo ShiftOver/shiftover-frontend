@@ -196,6 +196,22 @@ export default function Main() {
                         />
                         <PatientCard />
                         <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
                     </div>
                 )}
             </div>

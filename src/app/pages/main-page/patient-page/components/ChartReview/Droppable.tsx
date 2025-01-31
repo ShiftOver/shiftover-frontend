@@ -12,10 +12,7 @@ export function Droppable({ children, setIsOver, id, style = '' }: any) {
     }, [isOver, setIsOver]);
 
     return (
-        <div
-            ref={setNodeRef}
-            className={'relative h-[1000px] bg-[#303030] p-[10px] ' + style}
-        >
+        <div ref={setNodeRef} className={'relative p-[10px] ' + style}>
             {children}
         </div>
     );
