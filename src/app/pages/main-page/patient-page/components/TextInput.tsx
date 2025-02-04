@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 export type TextInputProps = {
     value: any;
     onChange: any;
-    placeHolder: string;
+    placeHolder?: string;
     style?: string;
     row?: number;
     unit?: string;
@@ -21,8 +21,7 @@ export default function TextInput({
     unit,
     disabled,
 }: TextInputProps) {
-    const classText =
-        'ml-[5px] h-[18px] bg-[#f6f3f3] ' + (style ? style : 'w-full');
+    const classText = 'h-[18px] bg-[#f6f3f3] ' + (style ? style : 'w-full');
 
     const [inputValues, setInputValues] = useState<string[]>([value]);
 
@@ -46,8 +45,12 @@ export default function TextInput({
     }, [disabled]);
 
     return (
-        <div className='mr-[10px] flex flex-row'>
-            <div className='whitespace-nowrap'>{placeHolder}</div>
+        <div className='mr-[5px] flex flex-row'>
+            {placeHolder ? (
+                <div className='mr-[5px] whitespace-nowrap'>{placeHolder}</div>
+            ) : (
+                <></>
+            )}
             <div
                 className={
                     'flex flex-col gap-[11px] ' + (style ? style : 'w-full')
@@ -64,7 +67,7 @@ export default function TextInput({
                     />
                 ))}
             </div>
-            {unit ? <div className='ml-[10px]'>{unit}</div> : <></>}
+            {unit ? <div className=''>{unit}</div> : <></>}
         </div>
     );
 }
