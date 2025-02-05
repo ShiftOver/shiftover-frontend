@@ -2,6 +2,7 @@ import { useState } from 'react';
 import CardHolder from '../../CardHolder';
 import SaveButton from '../../SaveButton';
 import TextInput from '../../TextInput';
+import RadioButton from '../../Radiobutton';
 
 export type SpiritualNutritionalProps = {
     id: any;
@@ -18,6 +19,20 @@ export default function SpiritualNutritional({
     const [anxietyOther, setAnxietyOther] = useState('');
     const [supportSystem, setSupportSystem] = useState('');
     const [supportSystemOther, setSupportSystemOther] = useState('');
+    const [diet, setDiet] = useState('');
+    const [appetite, setAppetite] = useState('');
+    const [specialDiet, setSpecialDiet] = useState('');
+    const [specialDietOther, setSpecialDietOther] = useState('');
+    const [feeding, setFeeding] = useState('');
+    const [swallowing, setSwallowing] = useState('');
+    const [gI, setGI] = useState('');
+    const [gIOther, setGIOther] = useState('');
+    const [weight, setWeight] = useState('');
+    const [weightChange, setWeightChange] = useState('');
+    const [weightLoss, setWeightLoss] = useState('');
+    const [weightLossDuration, setWeightLossDuration] = useState('');
+    const [weightGain, setWeightGain] = useState('');
+    const [weightGainDuration, setWeightGainDuration] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -26,8 +41,8 @@ export default function SpiritualNutritional({
         console.log(formData);
     };
     return (
-        <div className='justify-items-center'>
-            <div className='w-full justify-items-start'>
+        <div className='ml-[27px] mt-[23px] justify-items-center'>
+            <div className='flex w-full flex-col justify-items-start gap-[31px]'>
                 <CardHolder
                     path='personalLogo'
                     type='NurseAssessmentForm'
@@ -131,59 +146,41 @@ export default function SpiritualNutritional({
                         </div>
                         <div className='flex flex-row'>
                             <p className='mr-[30px]'>Support System:</p>
-                            <input
-                                type='radio'
-                                id='None'
+                            <RadioButton
+                                value={supportSystem}
+                                onChange={setSupportSystem}
                                 name='supportSystem'
-                                value='None'
-                                checked={supportSystem === 'None'}
-                                onChange={() => setSupportSystem('None')}
-                            />
-                            <p className='ml-[6px] mr-[20px]'>None</p>
-                            <input
-                                type='radio'
-                                id='Parents'
+                                placeHolder='None'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={supportSystem}
+                                onChange={setSupportSystem}
                                 name='supportSystem'
-                                value='Parents'
-                                checked={supportSystem === 'Parents'}
-                                onChange={() => setSupportSystem('Parents')}
-                            />
-                            <p className='ml-[6px] mr-[20px]'>Parents</p>
-                            <input
-                                type='radio'
-                                id='Spouse & Family'
+                                placeHolder='Parents'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={supportSystem}
+                                onChange={setSupportSystem}
                                 name='supportSystem'
-                                value='Spouse & Family'
-                                checked={supportSystem === 'Spouse & Family'}
-                                onChange={() =>
-                                    setSupportSystem('Spouse & Family')
-                                }
-                            />
-                            <p className='ml-[6px] mr-[20px]'>
-                                Spouse & Family
-                            </p>
-                            <input
-                                type='radio'
-                                id='Friend(s)'
+                                placeHolder='Spouse & Family'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={supportSystem}
+                                onChange={setSupportSystem}
                                 name='supportSystem'
-                                value='Friend(s)'
-                                checked={supportSystem === 'Friend(s)'}
-                                onChange={() => setSupportSystem('Friend(s)')}
-                            />
-                            <p className='ml-[6px] mr-[20px]'>Friend(s)</p>
-                            <input
-                                type='radio'
-                                id='Religious Activity'
+                                placeHolder='Friend(s)'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={supportSystem}
+                                onChange={setSupportSystem}
                                 name='supportSystem'
-                                value='Religious Activity'
-                                checked={supportSystem === 'Religious Activity'}
-                                onChange={() =>
-                                    setSupportSystem('Religious Activity')
-                                }
-                            />
-                            <p className='ml-[6px] mr-[20px]'>
-                                Religious Activity
-                            </p>
+                                placeHolder='Religious Activity'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
                             <input
                                 type='radio'
                                 id='Other'
@@ -200,6 +197,287 @@ export default function SpiritualNutritional({
                                     disabled={supportSystem !== 'Other'}
                                     style={'w-[99px]'}
                                 ></TextInput>
+                            </div>
+                        </div>
+                    </div>
+                </CardHolder>
+                <CardHolder
+                    path='stomach'
+                    type='NurseAssessmentForm'
+                    name='Nutrition/ Metabolism'
+                >
+                    <div className='ml-[19px] flex w-[986px] flex-col gap-[12px]'>
+                        <div className='flex flex-row'>
+                            <RadioButton
+                                value={diet}
+                                onChange={setDiet}
+                                name='Diet'
+                                placeHolder='Ordinary Diet'
+                                style='ml-[6px] mr-[29px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={diet}
+                                onChange={setDiet}
+                                name='Diet'
+                                placeHolder='Soft Diet'
+                                style='ml-[6px] mr-[29px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={diet}
+                                onChange={setDiet}
+                                name='Diet'
+                                placeHolder='NPO'
+                                style='ml-[6px] mr-[29px]'
+                            ></RadioButton>
+                        </div>
+                        <div className='flex flex-row'>
+                            <p className='mr-[23px]'>Appetite:</p>
+                            <RadioButton
+                                value={appetite}
+                                onChange={setAppetite}
+                                name='Appetite'
+                                placeHolder='Good'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={appetite}
+                                onChange={setAppetite}
+                                name='Appetite'
+                                placeHolder='Fair'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={appetite}
+                                onChange={setAppetite}
+                                name='Appetite'
+                                placeHolder='Poor'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                        </div>
+                        <div className='flex flex-row'>
+                            <p className='mr-[23px]'>Special Diet:</p>
+                            <RadioButton
+                                value={specialDiet}
+                                onChange={setSpecialDiet}
+                                name='Special Diet'
+                                placeHolder='DM'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={specialDiet}
+                                onChange={setSpecialDiet}
+                                name='Special Diet'
+                                placeHolder='Low Na'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={specialDiet}
+                                onChange={setSpecialDiet}
+                                name='Special Diet'
+                                placeHolder='Low Prot.'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={specialDiet}
+                                onChange={setSpecialDiet}
+                                name='Special Diet'
+                                placeHolder='High Prot.'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={specialDiet}
+                                onChange={setSpecialDiet}
+                                name='Special Diet'
+                                placeHolder='Other'
+                                style='ml-[6px] mr-[20px]'
+                            >
+                                <TextInput
+                                    placeHolder='Other'
+                                    value={specialDietOther}
+                                    onChange={setSpecialDietOther}
+                                    disabled={specialDiet !== 'Other'}
+                                    style={'w-[99px]'}
+                                ></TextInput>
+                            </RadioButton>
+                        </div>
+                        <div className='flex flex-row'>
+                            <p className='mr-[20px]'>Feeding:</p>
+                            <RadioButton
+                                value={feeding}
+                                onChange={setFeeding}
+                                name='Feeding'
+                                placeHolder='Self'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={feeding}
+                                onChange={setFeeding}
+                                name='Feeding'
+                                placeHolder='Assisted'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={feeding}
+                                onChange={setFeeding}
+                                name='Feeding'
+                                placeHolder='NG/ OG'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={feeding}
+                                onChange={setFeeding}
+                                name='Feeding'
+                                placeHolder='Gastronomy/ Jejunostomy tube'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={feeding}
+                                onChange={setFeeding}
+                                name='Feeding'
+                                placeHolder='Parenteral Nutrition'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                        </div>
+                        <div className='flex flex-row'>
+                            <p className='mr-[20px]'>Swallowing Difficulty:</p>
+                            <RadioButton
+                                value={swallowing}
+                                onChange={setSwallowing}
+                                name='Swallowing Difficulty'
+                                placeHolder='None'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={swallowing}
+                                onChange={setSwallowing}
+                                name='Swallowing Difficulty'
+                                placeHolder='Solid'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={swallowing}
+                                onChange={setSwallowing}
+                                name='Swallowing Difficulty'
+                                placeHolder='Liquid'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                        </div>
+                        <div className='flex flex-row'>
+                            <p className='mr-[20px]'>GI. Problem:</p>
+                            <RadioButton
+                                value={gI}
+                                onChange={setGI}
+                                name='GI. Problem'
+                                placeHolder='None'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={gI}
+                                onChange={setGI}
+                                name='GI. Problem'
+                                placeHolder='Nausea'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={gI}
+                                onChange={setGI}
+                                name='GI. Problem'
+                                placeHolder='Vomiting'
+                                style='ml-[6px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={gI}
+                                onChange={setGI}
+                                name='GI. Problem'
+                                placeHolder='Other'
+                                style='ml-[6px] mr-[20px]'
+                            >
+                                <TextInput
+                                    placeHolder='Other'
+                                    value={gIOther}
+                                    onChange={setGIOther}
+                                    disabled={gI !== 'Other'}
+                                    style={'w-[99px]'}
+                                ></TextInput>
+                            </RadioButton>
+                        </div>
+                        <div className='flex flex-row'>
+                            <p className='mr-[20px]'>Weight Change:</p>
+                            <RadioButton
+                                value={weight}
+                                onChange={setWeight}
+                                name='Weight'
+                                placeHolder='Unknown'
+                                style='ml-[7px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={weight}
+                                onChange={setWeight}
+                                name='Weight'
+                                placeHolder='No'
+                                style='ml-[7px] mr-[20px]'
+                            ></RadioButton>
+                            <RadioButton
+                                value={weight}
+                                onChange={setWeight}
+                                name='Weight'
+                                placeHolder='Yes'
+                                style='ml-[7px] mr-[20px]'
+                            ></RadioButton>
+                        </div>
+                        <div className='flex flex-row'>
+                            <p className='ml-[14px] mr-[20px]'>If yes:</p>
+                            <div className='flex flex-col gap-[12px]'>
+                                <div className='flex flex-row'>
+                                    <RadioButton
+                                        value={weightChange}
+                                        onChange={setWeightChange}
+                                        name='Weight Change'
+                                        placeHolder='Loss'
+                                        style='ml-[6px]'
+                                    >
+                                        <TextInput
+                                            placeHolder='Loss'
+                                            value={weightLoss}
+                                            onChange={setWeightLoss}
+                                            disabled={weightChange !== 'Loss'}
+                                            style={'w-[75px]'}
+                                        ></TextInput>
+                                        <TextInput
+                                            placeHolder='kg/'
+                                            value={weightLossDuration}
+                                            onChange={setWeightLossDuration}
+                                            disabled={weightChange !== 'Loss'}
+                                            style={'w-[92px]'}
+                                        ></TextInput>
+                                        wk/ mth/ yr
+                                    </RadioButton>
+                                </div>
+                                <div className='flex flex-row'>
+                                    <RadioButton
+                                        value={weightChange}
+                                        onChange={setWeightChange}
+                                        name='Weight Change'
+                                        placeHolder='Gain'
+                                        style='ml-[6px] mr-[20px]'
+                                    >
+                                        <TextInput
+                                            placeHolder='Gain'
+                                            value={weightGain}
+                                            onChange={setWeightGain}
+                                            disabled={weightChange !== 'Gain'}
+                                            style={'w-[75px]'}
+                                        ></TextInput>
+                                        <TextInput
+                                            placeHolder='kg/'
+                                            value={weightGainDuration}
+                                            onChange={setWeightGainDuration}
+                                            disabled={weightChange !== 'Gain'}
+                                            style={'w-[92px]'}
+                                        ></TextInput>
+                                        wk/ mth/ yr
+                                    </RadioButton>
+                                </div>
                             </div>
                         </div>
                     </div>

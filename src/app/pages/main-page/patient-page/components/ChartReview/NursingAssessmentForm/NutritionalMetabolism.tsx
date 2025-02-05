@@ -15,7 +15,7 @@ export default function NutritionalMetabolism({
     return (
         <Draggable id={id} isOver={isOver} isDropped={isDropped}>
             <CardHolderReview
-                path='nutrition'
+                path='stomach'
                 type='NurseAssessmentForm'
                 name='Nutrition/ Metabolism'
                 full={isDropped || isOver}

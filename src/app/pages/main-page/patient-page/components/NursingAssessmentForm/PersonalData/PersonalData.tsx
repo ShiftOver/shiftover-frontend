@@ -80,7 +80,7 @@ export default function PersonalData({ id }: PersonalDataProps) {
     };
 
     return (
-        <div className='justify-items-center'>
+        <div className='ml-[27px] mt-[23px] justify-items-center'>
             <div className='w-full justify-items-start'>
                 <CardHolder
                     path='personalLogo'
