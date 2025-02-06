@@ -9,6 +9,7 @@ export type RadioButtonProps = {
     placeHolder: string;
     style?: string;
     children?: React.ReactNode;
+    disabled?: boolean;
 };
 
 export default function RadioButton({
@@ -18,6 +19,7 @@ export default function RadioButton({
     style,
     name,
     children,
+    disabled,
 }: RadioButtonProps) {
     return (
         <div className='flex flex-row'>
@@ -28,6 +30,7 @@ export default function RadioButton({
                 value={placeHolder}
                 checked={value === placeHolder}
                 onChange={() => onChange(placeHolder)}
+                disabled={disabled}
             />
             <div className={'flex flex-row ' + (style ? style : '')}>
                 {children ? children : placeHolder}

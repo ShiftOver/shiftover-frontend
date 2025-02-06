@@ -21,7 +21,7 @@ export default function TextInput({
     unit,
     disabled,
 }: TextInputProps) {
-    const classText = 'h-[18px] bg-[#f6f3f3] ' + (style ? style : 'w-full');
+    const classText = 'h-[18px] bg-[#f6f3f3] ';
 
     const [inputValues, setInputValues] = useState<string[]>([value]);
 

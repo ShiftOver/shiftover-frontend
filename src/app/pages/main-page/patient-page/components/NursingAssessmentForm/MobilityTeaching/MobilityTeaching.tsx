@@ -17,6 +17,8 @@ export default function MobilityTeaching({ id }: MobilityTeachingProps) {
     const [injury, setInjury] = useState('');
     const [injuryYes, setInjuryYes] = useState('');
     const [dominantHand, setDominantHand] = useState('');
+    const [information, setInformation] = useState('');
+    const [informationOther, setInformationOther] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -184,7 +186,128 @@ export default function MobilityTeaching({ id }: MobilityTeachingProps) {
                     path='information'
                     type='NurseAssessmentForm'
                     name='Information/ Teaching/ Learning'
-                ></CardHolder>
+                >
+                    <div className='ml-[14px] flex grid w-[986px] flex-col gap-[11px]'>
+                        <div className='flex flex-row'>
+                            <div className='mr-[75px] flex flex-col gap-[11px]'>
+                                <RadioButton
+                                    value={information}
+                                    onChange={setInformation}
+                                    name='Information'
+                                    placeHolder='Orientation'
+                                    style='ml-[6px]'
+                                ></RadioButton>
+                                <RadioButton
+                                    value={information}
+                                    onChange={setInformation}
+                                    name='Information'
+                                    placeHolder='Medication'
+                                    style='ml-[6px]'
+                                ></RadioButton>
+                                <RadioButton
+                                    value={information}
+                                    onChange={setInformation}
+                                    name='Information'
+                                    placeHolder='Self Care'
+                                    style='ml-[6px]'
+                                ></RadioButton>
+                            </div>
+                            <div className='mr-[21px] flex flex-col gap-[11px]'>
+                                <RadioButton
+                                    value={information}
+                                    onChange={setInformation}
+                                    name='Information'
+                                    placeHolder='Disease Process'
+                                    style='ml-[6px]'
+                                ></RadioButton>
+                                <RadioButton
+                                    value={information}
+                                    onChange={setInformation}
+                                    name='Information'
+                                    placeHolder='Pre/ Post - Op. Teaching'
+                                    style='ml-[6px]'
+                                ></RadioButton>
+                                <RadioButton
+                                    value={information}
+                                    onChange={setInformation}
+                                    name='Information'
+                                    placeHolder='Diet Changes'
+                                    style='ml-[6px]'
+                                ></RadioButton>
+                            </div>
+                            <div className='mr-[75px] flex flex-col gap-[11px]'>
+                                <RadioButton
+                                    value={information}
+                                    onChange={setInformation}
+                                    name='Information'
+                                    placeHolder='Signs/ Symptoms to Report to Med. Staff'
+                                    style='ml-[6px]'
+                                ></RadioButton>
+                                <RadioButton
+                                    value={information}
+                                    onChange={setInformation}
+                                    name='Information'
+                                    placeHolder='Infection Control'
+                                    style='ml-[6px]'
+                                ></RadioButton>
+                                <div className='flex flex-row gap-[95px]'>
+                                    <RadioButton
+                                        value={information}
+                                        onChange={setInformation}
+                                        name='Information'
+                                        placeHolder='Activity'
+                                        style='ml-[6px]'
+                                    ></RadioButton>
+                                    <RadioButton
+                                        value={information}
+                                        onChange={setInformation}
+                                        name='Information'
+                                        placeHolder='Equiptment'
+                                        style='ml-[6px]'
+                                    ></RadioButton>
+                                </div>
+                            </div>
+                            <div className='flex flex-col gap-[11px]'>
+                                <RadioButton
+                                    value={information}
+                                    onChange={setInformation}
+                                    name='Information'
+                                    placeHolder='Test/ Process Treatment'
+                                    style='ml-[6px]'
+                                ></RadioButton>
+                                <RadioButton
+                                    value={information}
+                                    onChange={setInformation}
+                                    name='Information'
+                                    placeHolder='Wound/ Ostomy Care'
+                                    style='ml-[6px]'
+                                ></RadioButton>
+                                <RadioButton
+                                    value={information}
+                                    onChange={setInformation}
+                                    name='Information'
+                                    placeHolder='Safety'
+                                    style='ml-[6px]'
+                                ></RadioButton>
+                            </div>
+                        </div>
+                        <RadioButton
+                            value={information}
+                            onChange={setInformation}
+                            name='Information'
+                            placeHolder='Other'
+                            style='ml-[6px]'
+                        >
+                            <TextInput
+                                placeHolder='Other'
+                                value={informationOther}
+                                onChange={setInformationOther}
+                                disabled={information !== 'Other'}
+                                style={'w-[883px]'}
+                            ></TextInput>
+                        </RadioButton>
+                    </div>
+                </CardHolder>
             </div>
             <div className='mt-[23px]'>
                 <SaveButton onClick={handleSubmit}></SaveButton>
