@@ -105,6 +105,13 @@ const config: Config = {
                     fontWeight: '500',
                 },
             ],
+            graph: [
+                '8.08px',
+                {
+                    lineHeight: '9.65px',
+                    fontWeight: '500',
+                },
+            ],
         },
         extend: {
             backgroundImage: {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import CardHolder from '../../CardHolder';
+import SaveButton from '../../SaveButton';
 
 export type SkinProps = {
     id: any;
@@ -8,6 +9,12 @@ export type SkinProps = {
 export default function Skin({ id }: SkinProps) {
     const [age, setAge] = useState('Adult');
     const [details, setDetails] = useState('');
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const formData = {};
+        console.log(formData);
+    };
     useEffect(() => {
         switch (age) {
             case 'Adult':
@@ -48,10 +55,19 @@ export default function Skin({ id }: SkinProps) {
                     )}
                 </button>
             </div>
-            <div className='ml-[29px] mr-[29px] mt-[22px]'>
-                <CardHolder path='human' type='NurseAssessmentForm' name='Skin'>
-                    <div className='ml-[14px] flex w-[986px] flex-col gap-[12px]'></div>
-                </CardHolder>
+            <div className='ml-[27px] mt-[23px] justify-items-center'>
+                <div className='flex w-full flex-col justify-items-start gap-[31px]'>
+                    <CardHolder
+                        path='human'
+                        type='NurseAssessmentForm'
+                        name='Skin'
+                    >
+                        <div className='ml-[14px] flex w-[986px] flex-col gap-[12px]'></div>
+                    </CardHolder>
+                </div>
+                <div className='mb-[23px] mt-[23px]'>
+                    <SaveButton onClick={handleSubmit}></SaveButton>
+                </div>
             </div>
         </div>
     );

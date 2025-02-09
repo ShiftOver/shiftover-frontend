@@ -483,7 +483,7 @@ export default function SpiritualNutritional({
                     </div>
                 </CardHolder>
             </div>
-            <div className='mt-[23px]'>
+            <div className='mb-[23px] mt-[23px]'>
                 <SaveButton onClick={handleSubmit}></SaveButton>
             </div>
         </div>

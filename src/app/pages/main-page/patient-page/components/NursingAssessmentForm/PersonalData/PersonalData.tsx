@@ -775,7 +775,7 @@ export default function PersonalData({ id }: PersonalDataProps) {
                     </CardHolder>
                 </div>
             </div>
-            <div className='mt-[23px]'>
+            <div className='mb-[23px] mt-[23px]'>
                 <SaveButton onClick={handleSubmit}></SaveButton>
             </div>
         </div>
