@@ -1,27 +1,30 @@
 import CardHolderReview from '../CardHolderReview';
-import { Draggable } from '../Draggable';
+import { Draggable } from '../test/Draggable';
 
 export type CardiopulmonaryProps = {
     isDropped?: any;
-    isOver: any;
+    isOver?: any;
     id: any;
+    isCollide?: boolean;
 };
 
 export default function Cardiopulmonary({
     isDropped = false,
     isOver,
+    isCollide,
     id,
 }: CardiopulmonaryProps) {
     return (
-        <Draggable id={id} isOver={isOver} isDropped={isDropped}>
+        <Draggable id={id}>
             <CardHolderReview
                 path='lung'
                 type='NurseAssessmentForm'
                 name='Cardiopulmonary'
                 full={isDropped || isOver}
+                collide={isCollide}
             >
-                <div className='mb-[19px] ml-[14px] mr-[52px] flex flex-row items-start gap-[83px]'>
-                    <div className='flex flex-col items-start gap-[12px]'>
+                <div className='mb-[19px] ml-[14px] flex w-[705px] flex-row items-start'>
+                    <div className='flex w-[264px] flex-col items-start gap-[12px]'>
                         <div>Pulmonary:</div>
                         <div>Rate: Eupnea</div>
                         <div>Rhythm/ Depth: Regular </div>
@@ -30,7 +33,7 @@ export default function Cardiopulmonary({
                         <div>Sputum: None </div>
                         <div>Current treatment: None </div>
                     </div>
-                    <div className='mr-[252px] flex flex-col items-start gap-[12px]'>
+                    <div className='ml-[5px] flex w-[337px] flex-col items-start gap-[12px]'>
                         <div>Cardiovascular:</div>
                         <div>Pulse Rhythm: Regular</div>
                         <div>Pulse Amplitude: Strong</div>

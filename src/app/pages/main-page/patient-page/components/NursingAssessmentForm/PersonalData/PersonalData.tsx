@@ -2,6 +2,7 @@ import { useState } from 'react';
 import CardHolder from '../../CardHolder';
 import SaveButton from '../../SaveButton';
 import TextInput from '../../TextInput';
+import Image from 'next/image';
 
 export type PersonalDataProps = {
     id: any;
@@ -89,9 +90,10 @@ export default function PersonalData({ id }: PersonalDataProps) {
                 >
                     <div className='w-[1000px]'>
                         <div className='ml-[12px] mr-[12px] flex'>
-                            <img
+                            <Image
                                 src='https://picsum.photos/id/237/200/300'
                                 className='border-full h-[84px] w-[86px]'
+                                alt=''
                             />
                             <div className='ml-[8px] flex flex-col gap-[12px] text-cardnumber text-shiftover-cardtext'>
                                 <div className='flex flex-row'>
@@ -114,7 +116,7 @@ export default function PersonalData({ id }: PersonalDataProps) {
                                         style={'w-[50px]'}
                                     ></TextInput>
                                     <TextInput
-                                        placeHolder='Eduction'
+                                        placeHolder='Education'
                                         value={education}
                                         onChange={setEducation}
                                         style={'w-[172px]'}
@@ -304,14 +306,12 @@ export default function PersonalData({ id }: PersonalDataProps) {
                                     value={allergies}
                                     onChange={setAllergies}
                                     style={'w-[234px]'}
-                                    row={2}
                                 ></TextInput>
                                 <TextInput
                                     placeHolder='Reactions'
                                     value={reactions}
                                     onChange={setReactions}
                                     style={'w-[234px]'}
-                                    row={2}
                                 ></TextInput>
                             </div>
                         </div>

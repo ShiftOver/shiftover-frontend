@@ -1,11 +1,13 @@
 'use client';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useDraggable } from '@dnd-kit/core';
 
 export function Draggable(props: any) {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: props.id,
     });
+
+    const gridSize = 20; // pixels
 
     const style = {
         ...(transform
@@ -16,8 +18,16 @@ export function Draggable(props: any) {
     };
 
     return (
-        <button ref={setNodeRef} style={style} {...listeners} {...attributes}>
-            {props.children}
+        <button
+            style={style}
+            {...listeners} // Move listeners to the div
+            {...attributes} // Move attributes to the div
+            ref={setNodeRef}
+            className='h-fit w-fit'
+        >
+            {/* Draggable div with ref */}
+
+            <div>{props.children}</div>
         </button>
     );
 }

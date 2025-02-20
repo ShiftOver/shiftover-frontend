@@ -1,19 +1,21 @@
 import CardHolderReview from '../CardHolderReview';
-import { Draggable } from '../Draggable';
+import { Draggable } from '../test/Draggable';
 
 export type SpiritualCulturalNeedsProps = {
     isDropped?: any;
-    isOver: any;
+    isOver?: any;
     id: any;
+    isCollide?: boolean;
 };
 
 export default function SpiritualCulturalNeeds({
     isDropped = false,
     isOver,
+    isCollide,
     id,
 }: SpiritualCulturalNeedsProps) {
     return (
-        <Draggable id={id} isOver={isOver} isDropped={isDropped}>
+        <Draggable id={id}>
             <CardHolderReview
                 path='personalLogo'
                 type='NurseAssessmentForm'
@@ -23,8 +25,9 @@ export default function SpiritualCulturalNeeds({
                         : 'Spiritual/ Cultural Needs'
                 }
                 full={isDropped || isOver}
+                collide={isCollide}
             >
-                <div className='mb-[19px] ml-[14px] mr-[52px] flex flex-col items-start gap-[12px]'>
+                <div className='mb-[19px] ml-[14px] flex w-[515px] flex-col items-start gap-[12px]'>
                     <div>Religion Buddhism</div>
                     <div>
                         Special Religious/ Cultural considerations for

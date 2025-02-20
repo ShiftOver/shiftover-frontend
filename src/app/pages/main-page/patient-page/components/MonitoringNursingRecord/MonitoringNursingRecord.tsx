@@ -1,6 +1,8 @@
 import CardHolder from '../CardHolder';
 import SaveButton from '../SaveButton';
 import DChart from '../DChart';
+import GraphInput from './GraphInput';
+import DateInput from '../DateInput';
 
 export type MonitoringNursingRecordProps = {
     id: any;
@@ -25,45 +27,10 @@ export default function MonitoringNuringRecord({
                         name='Vital Sign (HR)'
                     >
                         <div className='flex w-[317px] flex-col'>
-                            <div>Date: 21/05/2024</div>
-                            <div className='mb-[28.63px] ml-[29.61px] mt-[12.99px] flex w-fit flex-row border-r-[1px] border-dashed border-[#828080] text-graph'>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        2
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        6
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        10
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        14
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        18
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        22
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
+                            <div className='ml-[14.41px] text-date text-shiftover-gray-text'>
+                                <DateInput></DateInput>
                             </div>
+                            <GraphInput></GraphInput>
                             <DChart></DChart>
                         </div>
                     </CardHolder>
@@ -73,45 +40,10 @@ export default function MonitoringNuringRecord({
                         name='Vital Sign (NIPB)'
                     >
                         <div className='flex w-[317px] flex-col'>
-                            <div>Date: 21/05/2024</div>
-                            <div className='mb-[28.63px] ml-[29.61px] mt-[12.99px] flex w-fit flex-row border-r-[1px] border-dashed border-[#828080] text-graph'>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        2
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        6
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        10
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        14
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        18
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        22
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
+                            <div className='ml-[14.41px] text-date text-shiftover-gray-text'>
+                                <DateInput></DateInput>
                             </div>
+                            <GraphInput></GraphInput>
                             <DChart></DChart>
                         </div>
                     </CardHolder>
@@ -121,45 +53,10 @@ export default function MonitoringNuringRecord({
                         name='Vital Sign (SpO2)'
                     >
                         <div className='flex w-[317px] flex-col'>
-                            <div>Date: 21/05/2024</div>
-                            <div className='mb-[28.63px] ml-[29.61px] mt-[12.99px] flex w-fit flex-row border-r-[1px] border-dashed border-[#828080] text-graph'>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        2
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        6
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        10
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        14
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        18
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        22
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
+                            <div className='ml-[14.41px] text-date text-shiftover-gray-text'>
+                                <DateInput></DateInput>
                             </div>
+                            <GraphInput></GraphInput>
                             <DChart></DChart>
                         </div>
                     </CardHolder>
@@ -171,45 +68,10 @@ export default function MonitoringNuringRecord({
                         name='Vital Sign (RR)'
                     >
                         <div className='flex w-[317px] flex-col'>
-                            <div>Date: 21/05/2024</div>
-                            <div className='mb-[28.63px] ml-[29.61px] mt-[12.99px] flex w-fit flex-row border-r-[1px] border-dashed border-[#828080] text-graph'>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        2
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        6
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        10
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        14
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        18
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        22
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
+                            <div className='ml-[14.41px] text-date text-shiftover-gray-text'>
+                                <DateInput></DateInput>
                             </div>
+                            <GraphInput></GraphInput>
                             <DChart></DChart>
                         </div>
                     </CardHolder>
@@ -219,45 +81,10 @@ export default function MonitoringNuringRecord({
                         name='Vital Sign (T)'
                     >
                         <div className='flex w-[317px] flex-col'>
-                            <div>Date: 21/05/2024</div>
-                            <div className='mb-[28.63px] ml-[29.61px] mt-[12.99px] flex w-fit flex-row border-r-[1px] border-dashed border-[#828080] text-graph'>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        2
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        6
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        10
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        14
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        18
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        22
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
+                            <div className='ml-[14.41px] text-date text-shiftover-gray-text'>
+                                <DateInput></DateInput>
                             </div>
+                            <GraphInput></GraphInput>
                             <DChart></DChart>
                         </div>
                     </CardHolder>
@@ -267,45 +94,10 @@ export default function MonitoringNuringRecord({
                         name='Pain scale'
                     >
                         <div className='flex w-[317px] flex-col'>
-                            <div>Date: 21/05/2024</div>
-                            <div className='mb-[28.63px] ml-[29.61px] mt-[12.99px] flex w-fit flex-row border-r-[1px] border-dashed border-[#828080] text-graph'>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        2
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        6
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        10
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        14
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        18
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        22
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
+                            <div className='ml-[14.41px] text-date text-shiftover-gray-text'>
+                                <DateInput></DateInput>
                             </div>
+                            <GraphInput></GraphInput>
                             <DChart></DChart>
                         </div>
                     </CardHolder>
@@ -317,45 +109,10 @@ export default function MonitoringNuringRecord({
                         name='Vital Sign (FHR)'
                     >
                         <div className='flex w-[317px] flex-col'>
-                            <div>Date: 21/05/2024</div>
-                            <div className='mb-[28.63px] ml-[29.61px] mt-[12.99px] flex w-fit flex-row border-r-[1px] border-dashed border-[#828080] text-graph'>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        2
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        6
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        10
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        14
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        18
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
-                                <div className='flex h-[29.49px] w-[22.6px] flex-col items-center border-l-[1px] border-dashed border-[#828080]'>
-                                    <div className='w-[23px] border-b-[0.95px] border-[#828080] text-center'>
-                                        22
-                                    </div>
-                                    <input className='h-[15.7px] w-[18.08px] border-b-[0.95px] border-[#828080] text-center' />
-                                </div>
+                            <div className='ml-[14.41px] text-date text-shiftover-gray-text'>
+                                <DateInput></DateInput>
                             </div>
+                            <GraphInput></GraphInput>
                             <DChart></DChart>
                         </div>
                     </CardHolder>

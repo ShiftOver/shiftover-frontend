@@ -1,12 +1,15 @@
 'use client';
 
+import Image from 'next/image';
+
 export type CardHolderReviewProps = {
     info?: any;
-    path: string;
+    path?: string;
     type: string;
     name: string;
     children?: React.ReactNode;
     full: boolean;
+    collide?: boolean;
 };
 
 export default function CardHolderReview({
@@ -16,6 +19,7 @@ export default function CardHolderReview({
     name,
     children,
     full,
+    collide,
 }: CardHolderReviewProps) {
     let color;
     let textcolor;
@@ -32,16 +36,22 @@ export default function CardHolderReview({
             color = 'bg-shiftover-purple';
             textcolor = 'text-shiftover-mediumpurple';
             break;
+        case 'Nursing':
+            color = 'bg-shiftover-pink';
+            textcolor = 'text-shiftover-redpink';
+            break;
     }
     return (
         <div
-            className={`relative flex flex-row rounded-[21.61px] shadow-[0_2.4px_4.8px_0px_rgba(0,0,0,0.25)] ${full ? 'w-fit' : 'w-[269px]'}`}
+            className={`relative flex flex-row rounded-[21.61px] bg-white ${full ? 'w-fit' : 'w-[269px]'} ${collide ? 'border border-[#ff0f0f]' : 'shadow-[0_2.4px_4.8px_0px_rgba(0,0,0,0.25)]'}`}
         >
-            <div className={`${color} w-[24px] rounded-l-[21.61px]`}></div>
+            <div
+                className={`${collide ? 'bg-[#ff0f0f]' : color} w-[24px] rounded-l-[21.61px]`}
+            ></div>
             <div className='rounded-r-[21.61px] bg-white'>
                 <div className='mx-[12px] my-[11px] flex flex-row items-center'>
-                    {full ? (
-                        <img
+                    {full && path ? (
+                        <Image
                             src={'/assets/' + path + '.svg'}
                             alt='path'
                             className='fill-blue-500 h-6 w-6'

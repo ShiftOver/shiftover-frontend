@@ -1,26 +1,29 @@
 import CardHolderReview from '../CardHolderReview';
-import { Draggable } from '../Draggable';
+import { Draggable } from '../test/Draggable';
 
 export type NutritionalMetabolismProps = {
     isDropped?: any;
-    isOver: any;
+    isOver?: any;
+    isCollide?: boolean;
     id: any;
 };
 
 export default function NutritionalMetabolism({
     isDropped = false,
     isOver,
+    isCollide,
     id,
 }: NutritionalMetabolismProps) {
     return (
-        <Draggable id={id} isOver={isOver} isDropped={isDropped}>
+        <Draggable id={id}>
             <CardHolderReview
                 path='stomach'
                 type='NurseAssessmentForm'
                 name='Nutrition/ Metabolism'
                 full={isDropped || isOver}
+                collide={isCollide}
             >
-                <div className='mb-[19px] ml-[14px] mr-[52px] flex flex-col items-start gap-[12px]'>
+                <div className='mb-[14px] ml-[14px] flex w-[448px] flex-col items-start gap-[12px]'>
                     <div>Ordinary Diet</div>
                     <div>Appetite: Good</div>
                     <div>Special Diet: DM </div>
