@@ -1,3 +1,4 @@
+import { table } from 'console';
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
@@ -28,6 +29,7 @@ const config: Config = {
             'shiftover-teal': '#5deecc',
             'shiftover-gray-text': '#b7b1b1',
             'shiftover-cardtext': '#828080',
+            'shiftover-mediumblack': '#9a9696',
             white: '#FFFFFF',
             text: {
                 cardheader: '#1E1E1E',
@@ -54,6 +56,13 @@ const config: Config = {
                 {
                     lineHeight: '19.09px',
                     fontWeight: '390',
+                },
+            ],
+            heavyname: [
+                '16px',
+                {
+                    lineHeight: '19.09px',
+                    fontWeight: '590',
                 },
             ],
             detailheader: [
@@ -95,6 +104,27 @@ const config: Config = {
                 '24px',
                 {
                     lineHeight: '28.64px',
+                    fontWeight: '500',
+                },
+            ],
+            graph: [
+                '8.08px',
+                {
+                    lineHeight: '9.65px',
+                    fontWeight: '500',
+                },
+            ],
+            date: [
+                '9.6px',
+                {
+                    lineHeight: '11.46px',
+                    fontWeight: '500',
+                },
+            ],
+            table: [
+                '12px',
+                {
+                    lineHeight: '14.32px',
                     fontWeight: '500',
                 },
             ],

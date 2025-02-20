@@ -159,7 +159,7 @@ export default function NursingAssessmentForm({
                     )}
                 </button>
             </div>
-            <div className='ml-[27px] mr-[29px] mt-[23px]'>{details}</div>
+            <div className='mr-[29px]'>{details}</div>
         </div>
     );
 }

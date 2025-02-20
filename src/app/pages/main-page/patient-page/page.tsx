@@ -5,7 +5,7 @@ import HeaderBlog from '@/app/components/Header';
 import { selectedPatient } from '@/recoil/atoms/main-page.atom';
 import { useEffect, useState } from 'react';
 import MonitoringNuringRecord from './components/MonitoringNursingRecord/MonitoringNursingRecord';
-import ChartReview from './components/ChartReview/ChartReview';
+import ChartReview from './components/ChartReview/test/ChartReview2';
 import NursingAssessmentForm from './components/NursingAssessmentForm/NursingAssessmentForm';
 import Medications from './components/Medications/Medications';
 import Nursing from './components/Nursing/Nursing';
@@ -194,6 +194,22 @@ export default function Main() {
                         <PatientCard
                             info={{ name: 'thanapong', gender: 'F' }}
                         />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
+                        <PatientCard />
                         <PatientCard />
                         <PatientCard />
                     </div>
