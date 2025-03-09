@@ -3,6 +3,7 @@ import ThreeDotPopUp from '@/app/components/ThreeDotPopUp';
 import { useEffect, useRef, useState } from 'react';
 import { selectedPatient } from '@/recoil/atoms/main-page.atom';
 import { useRecoilState } from 'recoil';
+import { useRouter } from 'next/navigation';
 
 const room = '101';
 const name = 'Mr Henry G';
@@ -10,12 +11,13 @@ const gender = 'F';
 const age = '23';
 const patientNo = 'HN# 000001';
 export type PatientCardProps = {
-    info?: any;
+    id?: string;
 };
-export default function PatientCard({ info }: PatientCardProps) {
+export default function PatientCard({ id }: PatientCardProps) {
     const [clicked, setClicked] = useState(false);
     const popUpRef = useRef<HTMLDivElement>(null);
     const [, setPatient] = useRecoilState<string>(selectedPatient);
+    const router = useRouter();
     const handleClickOutside = (event: MouseEvent) => {
         if (
             popUpRef.current &&
@@ -40,9 +42,9 @@ export default function PatientCard({ info }: PatientCardProps) {
         <div className='relative h-129 min-w-[229px] max-w-[280px] rounded-21 bg-white font-shiftover-font shadow-[0_2px_4px_0_rgba(0,0,0,0.25)]'>
             <div className='flex flex-row justify-between pl-15 pr-18 pt-13'>
                 <p className='text-cardheader text-text-cardheader'>
-                    Room {info ? room : 'No.'}
+                    Room {id ? room : 'No.'}
                 </p>
-                {info ? (
+                {id ? (
                     <div className='flex'>
                         <button
                             onClick={() => {
@@ -65,11 +67,12 @@ export default function PatientCard({ info }: PatientCardProps) {
                     </div>
                 ) : null}
             </div>
-            {info ? (
+            {id ? (
                 <button
                     className='pt-[5px]'
                     onClick={() => {
-                        setPatient(name);
+                        setPatient(id);
+                        router.push(`/pages/main-page/patient-page/${id}`);
                     }}
                 >
                     <div className='flex flex-row pl-[15px] pt-[2px] text-text-carddescription'>
@@ -91,7 +94,11 @@ export default function PatientCard({ info }: PatientCardProps) {
                 </button>
             ) : (
                 <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
-                    <button>
+                    <button
+                        onClick={() => {
+                            setPatient('creating');
+                        }}
+                    >
                         <img src='/assets/addcircle.svg' alt='Settings' />
                     </button>
                 </div>

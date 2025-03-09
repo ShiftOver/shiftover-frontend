@@ -2,49 +2,51 @@
 import React, { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { Droppable } from './Droppable';
-import Cardiopulmonary from '../NursingAssessmentForm/Cardiopulmonary';
 import {
     DndContext,
     DragOverlay,
+    KeyboardSensor,
     MouseSensor,
     PointerSensor,
     pointerWithin,
     rectIntersection,
+    TouchSensor,
     useSensor,
     useSensors,
 } from '@dnd-kit/core';
 import { createSnapModifier } from '@dnd-kit/modifiers';
-import NutritionalMetabolism from '../NursingAssessmentForm/NutritionalMetabolism';
-import SpiritualCulturalNeeds from '../NursingAssessmentForm/SpiritualCulturalNeeds';
-import PersonalData from '../NursingAssessmentForm/PersonalData';
-import DischargePlanCare from '../NursingAssessmentForm/DischargePlanCare';
-import EliminationReproductive from '../NursingAssessmentForm/EliminationReproductive';
-import PainManagement from '../NursingAssessmentForm/PainManagement';
-import Mobility from '../NursingAssessmentForm/Mobility';
-import Skin from '../NursingAssessmentForm/Skin';
-import Neuromuscular from '../NursingAssessmentForm/Neuromuscular';
-import TeachingLearningNeeds from '../NursingAssessmentForm/TeachingLearningNeeds';
-import BloodPressure from '../MonitoringNursingRecord/BloodPressure';
-import FetalHeartRateMin from '../MonitoringNursingRecord/FetalHeartRateMin';
-import FluidIntakeOutput from '../MonitoringNursingRecord/FluidIntakeOutput';
-import HeartRateMin from '../MonitoringNursingRecord/HeartRateMin';
-import NeurologicalFunction from '../MonitoringNursingRecord/NeurologicalFunction';
-import OxygenSaturation from '../MonitoringNursingRecord/OxygenSaturation';
-import PainScore from '../MonitoringNursingRecord/PainScore';
-import Remark from '../MonitoringNursingRecord/Remark';
-import RespirationMin from '../MonitoringNursingRecord/RespirationMin';
-import Temperature from '../MonitoringNursingRecord/Temperature';
-import DropsMedication from '../Medications/DropsMedication';
-import ActivityFlow from '../Nursing/ActivityFlow';
-import ImplantPatchesMedication from '../Medications/ImplantPatchesMedication';
-import IntravenousInfusion from '../Medications/IntravenousInfusion';
-import OralMedication from '../Medications/OralMedication';
-import SuppositoriesMedication from '../Medications/SuppositoriesMedication';
-import TropicalMedication from '../Medications/TropicalMedication';
-import DischargeForm from '../Nursing/DischargeForm';
-import FocusList from '../Nursing/FocusList';
-import InjectionsMedications from '../Medications/InjectionsMedications';
-import FocusNote from '../Nursing/FocusNote';
+import NutritionalMetabolism from './NursingAssessmentForm/NutritionalMetabolism';
+import Cardiopulmonary from './NursingAssessmentForm/Cardiopulmonary';
+import SpiritualCulturalNeeds from './NursingAssessmentForm/SpiritualCulturalNeeds';
+import PersonalData from './NursingAssessmentForm/PersonalData';
+import DischargePlanCare from './NursingAssessmentForm/DischargePlanCare';
+import EliminationReproductive from './NursingAssessmentForm/EliminationReproductive';
+import PainManagement from './NursingAssessmentForm/PainManagement';
+import Mobility from './NursingAssessmentForm/Mobility';
+import Skin from './NursingAssessmentForm/Skin';
+import Neuromuscular from './NursingAssessmentForm/Neuromuscular';
+import TeachingLearningNeeds from './NursingAssessmentForm/TeachingLearningNeeds';
+import BloodPressure from './MonitoringNursingRecord/BloodPressure';
+import FetalHeartRateMin from './MonitoringNursingRecord/FetalHeartRateMin';
+import FluidIntakeOutput from './MonitoringNursingRecord/FluidIntakeOutput';
+import HeartRateMin from './MonitoringNursingRecord/HeartRateMin';
+import NeurologicalFunction from './MonitoringNursingRecord/NeurologicalFunction';
+import OxygenSaturation from './MonitoringNursingRecord/OxygenSaturation';
+import PainScore from './MonitoringNursingRecord/PainScore';
+import Remark from './MonitoringNursingRecord/Remark';
+import RespirationMin from './MonitoringNursingRecord/RespirationMin';
+import Temperature from './MonitoringNursingRecord/Temperature';
+import DropsMedication from './Medications/DropsMedication';
+import ActivityFlow from './Nursing/ActivityFlow';
+import ImplantPatchesMedication from './Medications/ImplantPatchesMedication';
+import IntravenousInfusion from './Medications/IntravenousInfusion';
+import OralMedication from './Medications/OralMedication';
+import SuppositoriesMedication from './Medications/SuppositoriesMedication';
+import TropicalMedication from './Medications/TropicalMedication';
+import DischargeForm from './Nursing/DischargeForm';
+import FocusList from './Nursing/FocusList';
+import InjectionsMedications from './Medications/InjectionsMedications';
+import FocusNote from './Nursing/FocusNote';
 import {
     restrictToParentElement,
     restrictToVerticalAxis,
@@ -180,7 +182,12 @@ export default function ChartReview({ id }: ChartReviewProps) {
     const [droppedComponents, setDroppedComponents] = useState<{
         [key: string]: { left: number; top: number };
     }>({});
-
+    const sensors = useSensors(
+        // useSensor(MouseSensor),
+        useSensor(TouchSensor)
+        // useSensor(KeyboardSensor),
+        // useSensor(PointerSensor)
+    );
     useEffect(() => {
         const handleScroll = () => {
             const scrollY = window.scrollY;
@@ -203,6 +210,10 @@ export default function ChartReview({ id }: ChartReviewProps) {
             window.removeEventListener('scroll', handleScroll);
         };
     }, [open]);
+
+    useEffect(() => {
+        console.log(droppedComponents);
+    }, [droppedComponents]);
 
     const gridSize = 20; // pixels
     const snapToGridModifier = createSnapModifier(gridSize);
@@ -238,7 +249,7 @@ export default function ChartReview({ id }: ChartReviewProps) {
     }
 
     function handleDragEnd(event: any) {
-        console.log(event.collisions);
+        console.log(event.active.rect.current);
 
         if (event.over && event.over.id) {
             const { x, y } = event.delta;
@@ -291,6 +302,47 @@ export default function ChartReview({ id }: ChartReviewProps) {
         setIsCollide(false);
     }
 
+    // function handleDragEnd(event: any) {
+    //     if (!event.active || !event.over) return;
+
+    //     const { x, y } = event.active.rect.current.translated || { x: 0, y: 0 };
+    //     const { left, top } = event.active.rect.current;
+    //     const droppableElement = document.getElementById('big'); // Get the main droppable area
+    //     if (!droppableElement) return;
+
+    //     // Get bounding rectangle of the droppable container
+    //     const droppableRect = droppableElement.getBoundingClientRect();
+
+    //     // Calculate position relative to the droppable container
+    //     const relativeX = x - droppableRect.left;
+    //     const relativeY = y - droppableRect.top;
+
+    //     // Snap to the grid
+    //     const snappedX = Math.round(relativeX / gridSize) * gridSize;
+    //     const snappedY = Math.round(relativeY / gridSize) * gridSize;
+
+    //     console.log(
+    //         x,
+    //         event.active.rect.current.translated,
+    //         event.active.rect.current
+    //     );
+    //     // Update position only if within bounds
+    //     if (
+    //         snappedX >= 0 &&
+    //         snappedY >= 0 &&
+    //         snappedX + 100 <= droppableRect.width &&
+    //         snappedY + 100 <= droppableRect.height
+    //     ) {
+    //         setDroppedComponents((prev) => ({
+    //             ...prev,
+    //             [event.active.id]: {
+    //                 left: snappedX,
+    //                 top: snappedY,
+    //             },
+    //         }));
+    //     }
+    // }
+
     useEffect(() => {
         console.log(isOver);
         if (isOver) {
@@ -304,9 +356,10 @@ export default function ChartReview({ id }: ChartReviewProps) {
                 onDragStart={handleDragStart}
                 onDragMove={handleDragMove}
                 onDragEnd={handleDragEnd}
-                modifiers={[snapToGridModifier, restrictToWindowEdges]}
+                modifiers={[snapToGridModifier]}
                 collisionDetection={rectIntersection}
                 // autoScroll={false}
+                sensors={sensors}
             >
                 <div className='h-[2800px]'>
                     <Droppable
@@ -315,7 +368,7 @@ export default function ChartReview({ id }: ChartReviewProps) {
                         collide={isCollide}
                         style={
                             'h-full bg-[#111111] ' +
-                            (!open ? 'w-full' : 'w-[900px]')
+                            (!open ? 'w-full' : 'w-[400px]')
                         }
                     >
                         <div className='relative'>
@@ -365,7 +418,9 @@ export default function ChartReview({ id }: ChartReviewProps) {
                             <Image
                                 src='/assets/minus.svg'
                                 alt='minus'
-                                className='fill-blue-500 h-6 w-6'
+                                className='fill-blue-500'
+                                width={24}
+                                height={24}
                             />
                         </button>
                         <div className='ml-[15px] mt-[41px] text-heavyname'>
@@ -408,7 +463,9 @@ export default function ChartReview({ id }: ChartReviewProps) {
                         <Image
                             src='/assets/plus.svg'
                             alt='plus'
-                            className='fill-blue-500 h-6 w-6'
+                            className='fill-blue-500'
+                            width={24}
+                            height={24}
                         />
                     </button>
                 )}

@@ -23,7 +23,6 @@ export default function LoginPage() {
                 `${process.env.NEXT_PUBLIC_API_BASE_URL}/v1/user/${userId}`
             );
             const userData = await response.json();
-
             if (userData && userData.email) {
                 // Use the email and password to sign in with Firebase
                 await signInWithEmailAndPassword(

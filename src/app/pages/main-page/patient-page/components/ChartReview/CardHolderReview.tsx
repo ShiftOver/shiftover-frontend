@@ -54,7 +54,9 @@ export default function CardHolderReview({
                         <Image
                             src={'/assets/' + path + '.svg'}
                             alt='path'
-                            className='fill-blue-500 h-6 w-6'
+                            className='fill-blue-500'
+                            width={24}
+                            height={24}
                         />
                     ) : (
                         <></>

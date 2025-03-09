@@ -84,6 +84,7 @@ export default function SpiritualNutritional({
                                 placeHolder='( If yes, describe '
                                 value={specialReligionDescription}
                                 onChange={setSpecialReligionDescription}
+                                disabled={specialReligion === 'No'}
                                 style={'w-[813px]'}
                             ></TextInput>
                             {')'}

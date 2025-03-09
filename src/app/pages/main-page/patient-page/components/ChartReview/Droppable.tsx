@@ -30,7 +30,7 @@ export function Droppable({
     }, [collide, isOver, setIsOver]);
 
     return (
-        <div ref={setNodeRef} className={'relative ' + style}>
+        <div ref={setNodeRef} className={'relative ' + style} id={id}>
             {children}
         </div>
     );

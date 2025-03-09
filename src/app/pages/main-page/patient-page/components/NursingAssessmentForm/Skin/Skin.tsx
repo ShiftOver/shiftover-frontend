@@ -27,7 +27,7 @@ export default function Skin({ id }: SkinProps) {
     }, [age, id]);
     return (
         <div>
-            <div className='mt-[12.98px] flex h-[26px] flex-row text-subheader text-shiftover-oldgreen'>
+            <div className='relative mt-[12.98px] flex h-[26px] flex-row text-subheader text-shiftover-oldgreen'>
                 <button
                     className='w-[105.08px] shadow-[0_1.27px_1.27px_0px_rgba(0,0,0,0.25)]'
                     onClick={() => {

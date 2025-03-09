@@ -22,6 +22,7 @@ const config: Config = {
             'shiftover-lightblue': '#b5ddf7',
             'shiftover-pink': '#fcd4dd',
             'shiftover-redpink': '#e55f7d',
+            'shiftover-pinkpurple': '#D050DE',
             'shiftover-purple': '#c4c4f8',
             'shiftover-mediumpurple': '#8c8ce5',
             'shiftover-oldpurple': '#d7b4db',
@@ -125,6 +126,34 @@ const config: Config = {
                 '12px',
                 {
                     lineHeight: '14.32px',
+                    fontWeight: '500',
+                },
+            ],
+            medicineHeader: [
+                '8px',
+                {
+                    lineHeight: '9.55px',
+                    fontWeight: '500',
+                },
+            ],
+            medicineType: [
+                '5px',
+                {
+                    lineHeight: '5px',
+                    fontWeight: '390',
+                },
+            ],
+            neurological: [
+                '8px',
+                {
+                    lineHeight: '9.55px',
+                    fontWeight: '390',
+                },
+            ],
+            fluidHeader: [
+                '7.74px',
+                {
+                    lineHeight: '9.24px',
                     fontWeight: '500',
                 },
             ],

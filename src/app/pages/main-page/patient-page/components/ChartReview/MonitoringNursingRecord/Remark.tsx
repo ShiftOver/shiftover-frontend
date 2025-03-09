@@ -1,5 +1,5 @@
 import CardHolderReview from '../CardHolderReview';
-import { Draggable } from '../test/Draggable';
+import { Draggable } from '../Draggable';
 
 export type RemarkProps = {
     isDropped?: any;

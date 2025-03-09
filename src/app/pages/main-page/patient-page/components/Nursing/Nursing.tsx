@@ -206,7 +206,9 @@ export default function Nursing({ id }: NursingProps) {
                                     <Image
                                         src='/assets/plus.svg'
                                         alt='plus'
-                                        className='fill-blue-500 h-6 w-6'
+                                        className='fill-blue-500'
+                                        width={24}
+                                        height={24}
                                     />
                                 </button>
                                 <DateInput></DateInput>
@@ -234,7 +236,7 @@ export default function Nursing({ id }: NursingProps) {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='mx-[1px] mt-[10px] flex flex-col gap-[10px]'>
+                                <div className='mx-[1px] mt-[10px] flex flex-col gap-[10px] pb-[10px]'>
                                     {focusNote.map((val: any, index: any) => {
                                         return (
                                             <div
@@ -330,7 +332,9 @@ export default function Nursing({ id }: NursingProps) {
                                     <Image
                                         src='/assets/plus.svg'
                                         alt='plus'
-                                        className='fill-blue-500 h-6 w-6'
+                                        className='fill-blue-500'
+                                        width={24}
+                                        height={24}
                                     />
                                 </button>
                                 <DateInput></DateInput>
@@ -351,7 +355,7 @@ export default function Nursing({ id }: NursingProps) {
                                         Resolved
                                     </div>
                                 </div>
-                                <div className='mx-[1px] mt-[10px] flex flex-col gap-[10px]'>
+                                <div className='mx-[1px] mt-[10px] flex flex-col gap-[10px] pb-[10px]'>
                                     {focusList.map((val: any, index: any) => {
                                         return (
                                             <div

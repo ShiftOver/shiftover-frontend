@@ -9,7 +9,7 @@ import EliminationPainManagement from './EliminationPainManagement/EliminationPa
 import Discharge from './Discharge/Discharge';
 
 export type NursingAssessmentFormProps = {
-    id: any;
+    id?: any;
 };
 
 export default function NursingAssessmentForm({
@@ -53,12 +53,13 @@ export default function NursingAssessmentForm({
     }, [subHeader, id]);
     return (
         <div>
-            <div className='mt-[10px] flex h-[26px] flex-row text-subheader text-shiftover-oldgreen'>
+            <div className='relative mt-[10px] flex h-[26px] flex-row text-subheader text-shiftover-oldgreen'>
                 <button
                     className='w-[105.08px] shadow-[0_1.27px_1.27px_0px_rgba(0,0,0,0.25)]'
                     onClick={() => {
                         setSubHeader('Personal Data');
                     }}
+                    disabled={!id}
                 >
                     Personal data
                     {subHeader == 'Personal Data' ? (
@@ -72,6 +73,7 @@ export default function NursingAssessmentForm({
                     onClick={() => {
                         setSubHeader('Spiritual/ Nutritional');
                     }}
+                    disabled={!id}
                 >
                     Spiritual/ Nutritional
                     {subHeader == 'Spiritual/ Nutritional' ? (
@@ -85,6 +87,7 @@ export default function NursingAssessmentForm({
                     onClick={() => {
                         setSubHeader('Skin');
                     }}
+                    disabled={!id}
                 >
                     Skin
                     {subHeader == 'Skin' ? (
@@ -98,6 +101,7 @@ export default function NursingAssessmentForm({
                     onClick={() => {
                         setSubHeader('Cardiopulmonary');
                     }}
+                    disabled={!id}
                 >
                     Cardiopulmonary
                     {subHeader == 'Cardiopulmonary' ? (
@@ -111,6 +115,7 @@ export default function NursingAssessmentForm({
                     onClick={() => {
                         setSubHeader('Neuromuscular');
                     }}
+                    disabled={!id}
                 >
                     Neuromuscular
                     {subHeader == 'Neuromuscular' ? (
@@ -124,6 +129,7 @@ export default function NursingAssessmentForm({
                     onClick={() => {
                         setSubHeader('Mobility/ Teaching');
                     }}
+                    disabled={!id}
                 >
                     Mobility/ Teaching
                     {subHeader == 'Mobility/ Teaching' ? (
@@ -137,6 +143,7 @@ export default function NursingAssessmentForm({
                     onClick={() => {
                         setSubHeader('Elimination/ Pain Management');
                     }}
+                    disabled={!id}
                 >
                     Elimination/ Pain Management
                     {subHeader == 'Elimination/ Pain Management' ? (
@@ -150,6 +157,7 @@ export default function NursingAssessmentForm({
                     onClick={() => {
                         setSubHeader('Discharge');
                     }}
+                    disabled={!id}
                 >
                     Discharge
                     {subHeader == 'Discharge' ? (

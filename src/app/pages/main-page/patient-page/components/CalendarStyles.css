@@ -1,0 +1,16 @@
+/* CalendarStyles.css */
+.custom-calendar {
+    width: 250px;
+    height: 250px;
+    max-width: 100%;
+    font-size: 0.875rem;
+    color: gray;
+}
+
+.custom-calendar * {
+    color: gray !important;
+}
+
+.calendar-tile {
+    height: 30px;
+}
