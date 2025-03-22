@@ -241,7 +241,7 @@ export default function Nursing({ id }: NursingProps) {
                                         return (
                                             <div
                                                 className='flex flex-row'
-                                                key={'Note' + val}
+                                                key={'Note' + index}
                                             >
                                                 <div className='w-[115px]'>
                                                     <input
@@ -360,7 +360,7 @@ export default function Nursing({ id }: NursingProps) {
                                         return (
                                             <div
                                                 className='flex flex-row'
-                                                key={'List' + val}
+                                                key={'List' + index}
                                             >
                                                 <div className='flex w-[56px] justify-center'>
                                                     <input

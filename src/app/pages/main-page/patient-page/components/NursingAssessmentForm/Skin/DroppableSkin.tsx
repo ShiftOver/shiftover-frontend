@@ -1,20 +1,24 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDroppable } from '@dnd-kit/core';
 
-export type DropNoteProps = {
+export type DroppableSkinProps = {
     children: React.ReactNode;
     id: any;
     style?: any;
 };
 
-export function DropNote({ children, id, style = '' }: DropNoteProps) {
+export function DroppableSkin({
+    children,
+    id,
+    style = '',
+}: DroppableSkinProps) {
     const { setNodeRef } = useDroppable({
         id: id,
     });
 
     return (
-        <div ref={setNodeRef} className={'absolute ' + style}>
+        <div ref={setNodeRef} className={'relative ' + style} id={id}>
             {children}
         </div>
     );

@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import CardHolder from '../../CardHolder';
 import RadioButton from '../../Radiobutton';
 import SaveButton from '../../SaveButton';
@@ -45,12 +45,12 @@ export default function EliminationPainManagement({
     const [painDescribe, setPainDescribe] = useState('');
     const [painDescribeOther, setPainDescribeOther] = useState('');
     const [intensity, setIntensity] = useState<number | null>(null);
-    const [intensityPart, setIntensityPart] = useState([<></>]);
+    const intensityValues = Array.from({ length: 11 }, (_, i) => i);
     const [painAffect, setPainAffect] = useState('');
     const [painRelieves, setPainRelieves] = useState('');
     const [painRelievesOther, setPainRelievesOther] = useState('');
     const [painRelievesMedication, setPainRelievesMedication] = useState('');
-    const intensityDiv = (num: number, bool?: number | null) => {
+    const intensityDiv = (num: number, selected?: number | null) => {
         let description;
         switch (num) {
             case 0:
@@ -103,20 +103,19 @@ export default function EliminationPainManagement({
                 );
                 break;
         }
+
         return (
             <button
+                key={num} // Unique key added
                 className='flex flex-1 flex-col items-center justify-end'
-                onClick={() => {
-                    setIntensity(num);
-                }}
+                onClick={() => setIntensity(num)}
             >
                 {description ? description : <></>}
-                {num == bool ? (
+                {num === selected ? (
                     <div className='radius-[40px] my-[3px] h-[19px] w-[5px] bg-[#828080]' />
                 ) : (
                     <div className='my-[3px] h-[19px] w-[1px] border border-[#828080]' />
                 )}
-
                 <p>{num}</p>
             </button>
         );
@@ -127,20 +126,7 @@ export default function EliminationPainManagement({
         const formData = {};
         console.log(formData);
     };
-    useEffect(() => {
-        let intensityList = [];
-        for (let i = 0; i <= 10; i++) {
-            intensityList.push(intensityDiv(i));
-        }
-        setIntensityPart(intensityList);
-    }, []);
-    useEffect(() => {
-        let intensityList = [];
-        for (let i = 0; i <= 10; i++) {
-            intensityList.push(intensityDiv(i, intensity));
-        }
-        setIntensityPart(intensityList);
-    }, [intensity]);
+
     return (
         <div className='ml-[27px] mt-[23px] justify-items-center'>
             <div className='flex w-full flex-col justify-items-start gap-[15px]'>
@@ -747,7 +733,11 @@ export default function EliminationPainManagement({
                         <div className='flex flex-row'>
                             <p className='mr-[21px]'>intensity:</p>
                             <div className='flex w-[824px] flex-row'>
-                                {intensityPart.map((div) => div)}
+                                {intensityValues.map((num) => (
+                                    <React.Fragment key={num}>
+                                        {intensityDiv(num, intensity)}
+                                    </React.Fragment>
+                                ))}
                             </div>
                         </div>
                         <div className='flex flex-row'>
@@ -885,8 +875,8 @@ export default function EliminationPainManagement({
                                     >
                                         <TextInput
                                             placeHolder='Other'
-                                            value={painRelievesMedication}
-                                            onChange={setPainRelievesMedication}
+                                            value={painRelievesOther}
+                                            onChange={setPainRelievesOther}
                                             disabled={painRelieves !== 'Other'}
                                             style={'w-[209px]'}
                                         ></TextInput>

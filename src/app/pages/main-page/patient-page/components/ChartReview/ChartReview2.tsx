@@ -15,37 +15,43 @@ import {
     useSensors,
 } from '@dnd-kit/core';
 import { createSnapModifier } from '@dnd-kit/modifiers';
-import NutritionalMetabolism from './NursingAssessmentForm/NutritionalMetabolism';
-import Cardiopulmonary from './NursingAssessmentForm/Cardiopulmonary';
-import SpiritualCulturalNeeds from './NursingAssessmentForm/SpiritualCulturalNeeds';
-import PersonalData from './NursingAssessmentForm/PersonalData';
-import DischargePlanCare from './NursingAssessmentForm/DischargePlanCare';
-import EliminationReproductive from './NursingAssessmentForm/EliminationReproductive';
-import PainManagement from './NursingAssessmentForm/PainManagement';
-import Mobility from './NursingAssessmentForm/Mobility';
-import Skin from './NursingAssessmentForm/Skin';
-import Neuromuscular from './NursingAssessmentForm/Neuromuscular';
-import TeachingLearningNeeds from './NursingAssessmentForm/TeachingLearningNeeds';
-import BloodPressure from './MonitoringNursingRecord/BloodPressure';
-import FetalHeartRateMin from './MonitoringNursingRecord/FetalHeartRateMin';
-import FluidIntakeOutput from './MonitoringNursingRecord/FluidIntakeOutput';
-import HeartRateMin from './MonitoringNursingRecord/HeartRateMin';
-import NeurologicalFunction from './MonitoringNursingRecord/NeurologicalFunction';
-import OxygenSaturation from './MonitoringNursingRecord/OxygenSaturation';
-import PainScore from './MonitoringNursingRecord/PainScore';
-import Remark from './MonitoringNursingRecord/Remark';
-import RespirationMin from './MonitoringNursingRecord/RespirationMin';
-import Temperature from './MonitoringNursingRecord/Temperature';
-import DropsMedication from './Medications/DropsMedication';
+import {
+    Cardiopulmonary,
+    SpiritualCulturalNeeds,
+    PersonalData,
+    DischargePlanCare,
+    EliminationReproductive,
+    PainManagement,
+    NutritionalMetabolism,
+    Mobility,
+    Skin,
+    Neuromuscular,
+    TeachingLearningNeeds,
+} from './NursingAssessmentForm';
+import {
+    BloodPressure,
+    FetalHeartRateMin,
+    FluidIntakeOutput,
+    HeartRateMin,
+    NeurologicalFunction,
+    OxygenSaturation,
+    PainScore,
+    Remark,
+    RespirationMin,
+    Temperature,
+} from './MonitoringNursingRecord';
+import {
+    DropsMedication,
+    ImplantPatchesMedication,
+    InjectionsMedications,
+    IntravenousInfusion,
+    OralMedication,
+    SuppositoriesMedication,
+    TropicalMedication,
+} from './Medications';
 import ActivityFlow from './Nursing/ActivityFlow';
-import ImplantPatchesMedication from './Medications/ImplantPatchesMedication';
-import IntravenousInfusion from './Medications/IntravenousInfusion';
-import OralMedication from './Medications/OralMedication';
-import SuppositoriesMedication from './Medications/SuppositoriesMedication';
-import TropicalMedication from './Medications/TropicalMedication';
 import DischargeForm from './Nursing/DischargeForm';
 import FocusList from './Nursing/FocusList';
-import InjectionsMedications from './Medications/InjectionsMedications';
 import FocusNote from './Nursing/FocusNote';
 import {
     restrictToParentElement,
@@ -183,11 +189,14 @@ export default function ChartReview({ id }: ChartReviewProps) {
         [key: string]: { left: number; top: number };
     }>({});
     const sensors = useSensors(
-        // useSensor(MouseSensor),
-        useSensor(TouchSensor)
+        useSensor(MouseSensor)
+        // useSensor(TouchSensor)
         // useSensor(KeyboardSensor),
         // useSensor(PointerSensor)
     );
+    const [offsetX, setOffsetX] = useState(0);
+    const [offsetY, setOffsetY] = useState(0);
+    const [initialScrollY, setInitialScrollY] = useState(0);
     useEffect(() => {
         const handleScroll = () => {
             const scrollY = window.scrollY;
@@ -211,15 +220,28 @@ export default function ChartReview({ id }: ChartReviewProps) {
         };
     }, [open]);
 
-    useEffect(() => {
-        console.log(droppedComponents);
-    }, [droppedComponents]);
-
     const gridSize = 20; // pixels
     const snapToGridModifier = createSnapModifier(gridSize);
 
     function handleDragStart(event: any) {
         setIsDrag(event.active.id);
+        console.log(event.active);
+        const target = document.querySelector(
+            `[data-draggable-id="${event.active.id}"]`
+        );
+
+        if (!target) return;
+
+        const rect = target.getBoundingClientRect(); // Get actual bounding box
+
+        setOffsetX(event.activatorEvent.clientX - rect.left);
+        setOffsetY(event.activatorEvent.clientY - rect.top);
+
+        if (event.activatorEvent) {
+            setInitialScrollY(
+                window.scrollY || document.documentElement.scrollTop
+            );
+        }
     }
 
     function handleDragMove(event: any) {
@@ -231,16 +253,18 @@ export default function ChartReview({ id }: ChartReviewProps) {
         const { x, y } = event.delta;
         if (
             event.active.id in droppedComponents &&
-            (Math.ceil(
-                (droppedComponents[event.active.id].left + x) / gridSize
-            ) *
-                gridSize <
-                0 ||
-                Math.ceil(
-                    (droppedComponents[event.active.id].top + y) / gridSize
-                ) *
-                    gridSize <
-                    0)
+            //     (Math.ceil(
+            //     (droppedComponents[event.active.id].left + x) / gridSize
+            // ) *
+            //     gridSize <
+            //     0
+            (droppedComponents[event.active.id].left + x < 0 ||
+                // Math.ceil(
+                //     (droppedComponents[event.active.id].top + y) / gridSize
+                // ) *
+                //     gridSize <
+                //     0)
+                droppedComponents[event.active.id].top + y < 0)
         ) {
             setIsOut(true);
         } else {
@@ -249,17 +273,29 @@ export default function ChartReview({ id }: ChartReviewProps) {
     }
 
     function handleDragEnd(event: any) {
-        console.log(event.active.rect.current);
+        const currentScrollY =
+            window.scrollY || document.documentElement.scrollTop;
 
-        if (event.over && event.over.id) {
+        // Calculate the difference in scroll position (can be positive or negative)
+        const scrollDiffY = currentScrollY - initialScrollY;
+        if (event.over && event.over.id == 'big') {
             const { x, y } = event.delta;
             if (!(event.active.id in droppedComponents)) {
                 if (!isCollide) {
                     setDroppedComponents((prev) => ({
                         ...prev,
                         [event.active.id]: {
-                            left: 0,
-                            top: 0,
+                            left:
+                                event.activatorEvent.clientX +
+                                x -
+                                event.over.rect.left -
+                                offsetX,
+                            top:
+                                event.activatorEvent.clientY +
+                                y -
+                                event.over.rect.top -
+                                offsetY -
+                                scrollDiffY,
                         },
                     }));
                 }
@@ -269,15 +305,17 @@ export default function ChartReview({ id }: ChartReviewProps) {
                         ...prev,
                         [event.active.id]: {
                             left:
-                                Math.ceil(
-                                    ((prev[event.active.id]?.left || 0) + x) /
-                                        gridSize
-                                ) * gridSize,
+                                // Math.ceil(
+                                //     ((prev[event.active.id]?.left || 0) + x) /
+                                //         gridSize
+                                // ) * gridSize,
+                                (prev[event.active.id]?.left || 0) + x,
                             top:
-                                Math.ceil(
-                                    ((prev[event.active.id]?.top || 0) + y) /
-                                        gridSize
-                                ) * gridSize,
+                                // Math.ceil(
+                                //     ((prev[event.active.id]?.top || 0) + y) /
+                                //         gridSize
+                                // ) * gridSize,
+                                (prev[event.active.id]?.top || 0) + y,
                         },
                     }));
                 }
@@ -289,7 +327,7 @@ export default function ChartReview({ id }: ChartReviewProps) {
                 });
             }
         } else {
-            if (event.active.id in droppedComponents) {
+            if (!isCollide && event.active.id in droppedComponents) {
                 setDroppedComponents((prev) => {
                     const updated = { ...prev };
                     delete updated[event.active.id];
@@ -344,7 +382,6 @@ export default function ChartReview({ id }: ChartReviewProps) {
     // }
 
     useEffect(() => {
-        console.log(isOver);
         if (isOver) {
             setOpen(false);
         }
@@ -356,7 +393,7 @@ export default function ChartReview({ id }: ChartReviewProps) {
                 onDragStart={handleDragStart}
                 onDragMove={handleDragMove}
                 onDragEnd={handleDragEnd}
-                modifiers={[snapToGridModifier]}
+                // modifiers={[snapToGridModifier]}
                 collisionDetection={rectIntersection}
                 // autoScroll={false}
                 sensors={sensors}
@@ -372,7 +409,6 @@ export default function ChartReview({ id }: ChartReviewProps) {
                         }
                     >
                         <div className='relative'>
-                            <div className='hello'></div>
                             {Object.entries(droppedComponents).map(
                                 ([key, position]) => {
                                     const Component =
