@@ -1,15 +1,102 @@
+import { useState } from 'react';
 import CardHolder from '../CardHolder';
 import SaveButton from '../SaveButton';
+
+import EachMedication from './EachMedication';
 
 export type MedicationsProps = {
     id: any;
 };
 
 export default function Medications({ id }: MedicationsProps) {
+    const [injection, setInjection] = useState([
+        {
+            type: '',
+            medication: '',
+            dose: '',
+            route: '',
+            frequency: '',
+            time: '',
+            signature: '',
+        },
+    ]);
+
+    const [intravenous, setIntravenous] = useState([
+        {
+            type: '',
+            medication: '',
+            dose: '',
+            route: '',
+            frequency: '',
+            time: '',
+            signature: '',
+        },
+    ]);
+
+    const [oral, setOral] = useState([
+        {
+            type: '',
+            medication: '',
+            dose: '',
+            route: '',
+            frequency: '',
+            time: '',
+            signature: '',
+        },
+    ]);
+
+    const [tropical, setTropical] = useState([
+        {
+            type: '',
+            medication: '',
+            dose: '',
+            route: '',
+            frequency: '',
+            time: '',
+            signature: '',
+        },
+    ]);
+
+    const [drop, setDrop] = useState([
+        {
+            type: '',
+            medication: '',
+            dose: '',
+            route: '',
+            frequency: '',
+            time: '',
+            signature: '',
+        },
+    ]);
+
+    const [implant, setImplant] = useState([
+        {
+            type: '',
+            medication: '',
+            dose: '',
+            route: '',
+            frequency: '',
+            time: '',
+            signature: '',
+        },
+    ]);
+
+    const [suppositories, setSuppositories] = useState([
+        {
+            type: '',
+            medication: '',
+            dose: '',
+            route: '',
+            frequency: '',
+            time: '',
+            signature: '',
+        },
+    ]);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const formData = {};
+        const formData = { injection };
         console.log(formData);
     };
     return (
@@ -21,14 +108,82 @@ export default function Medications({ id }: MedicationsProps) {
                         type='Medications'
                         name='Injection Medication'
                     >
-                        <div className='w-[387px]'></div>
+                        {injection.map((med, index) => (
+                            <div key={index}>
+                                <EachMedication
+                                    index={index}
+                                    onChange={setInjection}
+                                />
+                                {index === injection.length - 1 ? (
+                                    <div className='ml-[15px] mr-[20px] mt-[2px] flex h-[23px] flex-row justify-end border-b-[1px] border-[#828080] pb-[3px]'>
+                                        <button
+                                            className='h-[20px] w-[20px] bg-[#f6f3f3]'
+                                            onClick={() => {
+                                                setInjection((prev) => {
+                                                    return [
+                                                        ...prev,
+                                                        {
+                                                            type: '',
+                                                            medication: '',
+                                                            dose: '',
+                                                            route: '',
+                                                            frequency: '',
+                                                            time: '',
+                                                            signature: '',
+                                                        },
+                                                    ];
+                                                });
+                                            }}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className='ml-[15px] mr-[20px] mt-[2px] flex h-[23px] flex-row justify-end border-b-[1px] border-[#828080] pb-[3px]'></div>
+                                )}
+                            </div>
+                        ))}
                     </CardHolder>
                     <CardHolder
                         path='injection'
                         type='Medications'
                         name='Intravenous Medication'
                     >
-                        <div className='w-[387px]'></div>
+                        {intravenous.map((med, index) => (
+                            <div key={index}>
+                                <EachMedication
+                                    index={index}
+                                    onChange={setIntravenous}
+                                />
+                                {index === intravenous.length - 1 ? (
+                                    <div className='ml-[15px] mr-[20px] mt-[2px] flex h-[23px] flex-row justify-end border-b-[1px] border-[#828080] pb-[3px]'>
+                                        <button
+                                            className='h-[20px] w-[20px] bg-[#f6f3f3]'
+                                            onClick={() => {
+                                                setIntravenous((prev) => {
+                                                    return [
+                                                        ...prev,
+                                                        {
+                                                            type: '',
+                                                            medication: '',
+                                                            dose: '',
+                                                            route: '',
+                                                            frequency: '',
+                                                            time: '',
+                                                            signature: '',
+                                                        },
+                                                    ];
+                                                });
+                                            }}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className='ml-[15px] mr-[20px] mt-[2px] flex h-[23px] flex-row justify-end border-b-[1px] border-[#828080] pb-[3px]'></div>
+                                )}
+                            </div>
+                        ))}
                     </CardHolder>
                 </div>
                 <div className='flex flex-row gap-[42px]'>
@@ -37,14 +192,82 @@ export default function Medications({ id }: MedicationsProps) {
                         type='Medications'
                         name='Oral Medication'
                     >
-                        <div className='w-[387px]'></div>
+                        {oral.map((med, index) => (
+                            <div key={index}>
+                                <EachMedication
+                                    index={index}
+                                    onChange={setOral}
+                                />
+                                {index === oral.length - 1 ? (
+                                    <div className='ml-[15px] mr-[20px] mt-[2px] flex h-[23px] flex-row justify-end border-b-[1px] border-[#828080] pb-[3px]'>
+                                        <button
+                                            className='h-[20px] w-[20px] bg-[#f6f3f3]'
+                                            onClick={() => {
+                                                setOral((prev) => {
+                                                    return [
+                                                        ...prev,
+                                                        {
+                                                            type: '',
+                                                            medication: '',
+                                                            dose: '',
+                                                            route: '',
+                                                            frequency: '',
+                                                            time: '',
+                                                            signature: '',
+                                                        },
+                                                    ];
+                                                });
+                                            }}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className='ml-[15px] mr-[20px] mt-[2px] flex h-[23px] flex-row justify-end border-b-[1px] border-[#828080] pb-[3px]'></div>
+                                )}
+                            </div>
+                        ))}
                     </CardHolder>
                     <CardHolder
                         path='claps'
                         type='Medications'
                         name='Tropical Medication'
                     >
-                        <div className='w-[387px]'></div>
+                        {tropical.map((med, index) => (
+                            <div key={index}>
+                                <EachMedication
+                                    index={index}
+                                    onChange={setTropical}
+                                />
+                                {index === tropical.length - 1 ? (
+                                    <div className='ml-[15px] mr-[20px] mt-[2px] flex h-[23px] flex-row justify-end border-b-[1px] border-[#828080] pb-[3px]'>
+                                        <button
+                                            className='h-[20px] w-[20px] bg-[#f6f3f3]'
+                                            onClick={() => {
+                                                setTropical((prev) => {
+                                                    return [
+                                                        ...prev,
+                                                        {
+                                                            type: '',
+                                                            medication: '',
+                                                            dose: '',
+                                                            route: '',
+                                                            frequency: '',
+                                                            time: '',
+                                                            signature: '',
+                                                        },
+                                                    ];
+                                                });
+                                            }}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className='ml-[15px] mr-[20px] mt-[2px] flex h-[23px] flex-row justify-end border-b-[1px] border-[#828080] pb-[3px]'></div>
+                                )}
+                            </div>
+                        ))}
                     </CardHolder>
                 </div>
                 <div className='flex flex-row gap-[42px]'>
@@ -53,14 +276,82 @@ export default function Medications({ id }: MedicationsProps) {
                         type='Medications'
                         name='Drop Medication'
                     >
-                        <div className='w-[387px]'></div>
+                        {drop.map((med, index) => (
+                            <div key={index}>
+                                <EachMedication
+                                    index={index}
+                                    onChange={setDrop}
+                                />
+                                {index === drop.length - 1 ? (
+                                    <div className='ml-[15px] mr-[20px] mt-[2px] flex h-[23px] flex-row justify-end border-b-[1px] border-[#828080] pb-[3px]'>
+                                        <button
+                                            className='h-[20px] w-[20px] bg-[#f6f3f3]'
+                                            onClick={() => {
+                                                setDrop((prev) => {
+                                                    return [
+                                                        ...prev,
+                                                        {
+                                                            type: '',
+                                                            medication: '',
+                                                            dose: '',
+                                                            route: '',
+                                                            frequency: '',
+                                                            time: '',
+                                                            signature: '',
+                                                        },
+                                                    ];
+                                                });
+                                            }}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className='ml-[15px] mr-[20px] mt-[2px] flex h-[23px] flex-row justify-end border-b-[1px] border-[#828080] pb-[3px]'></div>
+                                )}
+                            </div>
+                        ))}
                     </CardHolder>
                     <CardHolder
                         path='zip'
                         type='Medications'
                         name='Implant/ Patches Medication'
                     >
-                        <div className='w-[387px]'></div>
+                        {implant.map((med, index) => (
+                            <div key={index}>
+                                <EachMedication
+                                    index={index}
+                                    onChange={setImplant}
+                                />
+                                {index === implant.length - 1 ? (
+                                    <div className='ml-[15px] mr-[20px] mt-[2px] flex h-[23px] flex-row justify-end border-b-[1px] border-[#828080] pb-[3px]'>
+                                        <button
+                                            className='h-[20px] w-[20px] bg-[#f6f3f3]'
+                                            onClick={() => {
+                                                setImplant((prev) => {
+                                                    return [
+                                                        ...prev,
+                                                        {
+                                                            type: '',
+                                                            medication: '',
+                                                            dose: '',
+                                                            route: '',
+                                                            frequency: '',
+                                                            time: '',
+                                                            signature: '',
+                                                        },
+                                                    ];
+                                                });
+                                            }}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className='ml-[15px] mr-[20px] mt-[2px] flex h-[23px] flex-row justify-end border-b-[1px] border-[#828080] pb-[3px]'></div>
+                                )}
+                            </div>
+                        ))}
                     </CardHolder>
                 </div>
                 <CardHolder
@@ -68,10 +359,44 @@ export default function Medications({ id }: MedicationsProps) {
                     type='Medications'
                     name='Suppositories Medication'
                 >
-                    <div className='w-[387px]'></div>
+                    {suppositories.map((med, index) => (
+                        <div key={index}>
+                            <EachMedication
+                                index={index}
+                                onChange={setSuppositories}
+                            />
+                            {index === suppositories.length - 1 ? (
+                                <div className='ml-[15px] mr-[20px] mt-[2px] flex h-[23px] flex-row justify-end border-b-[1px] border-[#828080] pb-[3px]'>
+                                    <button
+                                        className='h-[20px] w-[20px] bg-[#f6f3f3]'
+                                        onClick={() => {
+                                            setSuppositories((prev) => {
+                                                return [
+                                                    ...prev,
+                                                    {
+                                                        type: '',
+                                                        medication: '',
+                                                        dose: '',
+                                                        route: '',
+                                                        frequency: '',
+                                                        time: '',
+                                                        signature: '',
+                                                    },
+                                                ];
+                                            });
+                                        }}
+                                    >
+                                        +
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className='ml-[15px] mr-[20px] mt-[2px] flex h-[23px] flex-row justify-end border-b-[1px] border-[#828080] pb-[3px]'></div>
+                            )}
+                        </div>
+                    ))}
                 </CardHolder>
             </div>
-            <div className='mt-[23px]'>
+            <div className='mb-[23px] mt-[23px]'>
                 <SaveButton onClick={handleSubmit}></SaveButton>
             </div>
         </div>

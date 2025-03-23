@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useDroppable } from '@dnd-kit/core';
 
-export type SkinProps = {
+export type DroppableProps = {
     children: React.ReactNode;
     setIsOver: any;
     collide?: any;
@@ -16,7 +16,7 @@ export function Droppable({
     collide,
     id,
     style = '',
-}: SkinProps) {
+}: DroppableProps) {
     const { isOver, setNodeRef } = useDroppable({
         id: id,
     });
@@ -30,7 +30,7 @@ export function Droppable({
     }, [collide, isOver, setIsOver]);
 
     return (
-        <div ref={setNodeRef} className={'relative ' + style}>
+        <div ref={setNodeRef} className={'relative ' + style} id={id}>
             {children}
         </div>
     );

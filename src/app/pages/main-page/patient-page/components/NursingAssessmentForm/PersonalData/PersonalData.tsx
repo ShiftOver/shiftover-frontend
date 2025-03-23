@@ -1,23 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CardHolder from '../../CardHolder';
 import SaveButton from '../../SaveButton';
 import TextInput from '../../TextInput';
 import Image from 'next/image';
+import { createPatient } from '@/api';
+import ArrayInput from '../../ArrayInput';
+import NumberInput from '../../NumberInput';
+import DoubleInput from '../../DoubleInput';
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { storage } from '@/config/firebase';
 
 export type PersonalDataProps = {
-    id: any;
+    id?: any;
 };
 
 export default function PersonalData({ id }: PersonalDataProps) {
-    const [name, setName] = useState('');
-    const [age, setAge] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [dateOfBirth, setDateOfBirth] = useState('');
     const [sex, setSex] = useState('');
     const [education, setEducation] = useState('');
     const [occupation, setOccupation] = useState('');
     const [admissionDate, setAdmissionDate] = useState('');
     const [time, setTime] = useState('');
-    const [height, setHeight] = useState('');
-    const [weight, setWeight] = useState('');
+    const [height, setHeight] = useState<string | number>('');
+    const [weight, setWeight] = useState<string | number>('');
     const [modeOfArrival, setModeOfArrival] = useState('');
     const [modeOfArrivalOther, setModeOfArrivalOther] = useState('');
     const [admittedForm, setAdmittedForm] = useState('');
@@ -27,12 +34,13 @@ export default function PersonalData({ id }: PersonalDataProps) {
     const [pastIllness, setPastIllness] = useState('');
     const [pastIllnessHistory, setPastIllnessHistory] = useState('');
     const [familyIllnessHistory, setFamilyIllnessHistory] = useState('');
-    const [allergies, setAllergies] = useState('');
-    const [reactions, setReactions] = useState('');
-    const [temp, setTemp] = useState('');
-    const [hr, setHr] = useState('');
-    const [resp, setResp] = useState('');
-    const [bP, setBP] = useState('');
+    const [allergies, setAllergies] = useState(['']);
+    const [reactions, setReactions] = useState(['']);
+    const [temp, setTemp] = useState<null | number>(null);
+    const [hr, setHr] = useState<string | number>('');
+    const [resp, setResp] = useState<string | number>('');
+    const [bPSystol, setBPSystol] = useState<string | number>('');
+    const [bPDiastol, setBPDiastol] = useState<string | number>('');
     const [tobacco, setTobacco] = useState('');
     const [tobaccoQuit, setTobaccoQuit] = useState('');
     const [tobaccoSmokedDuration, setTobaccoSmokedDuration] = useState('');
@@ -56,7 +64,7 @@ export default function PersonalData({ id }: PersonalDataProps) {
     const [drugContinuousDuration, setDrugContinuousDuration] = useState('');
     const [exercise, setExercise] = useState('');
     const [exerciseFrequency, setExerciseFrequency] = useState('');
-    const [sleepHour, setSleepHour] = useState('');
+    const [sleepHour, setSleepHour] = useState<string | number>('');
     const [sleep, setSleep] = useState('');
     const [sleepHelp, setSleepHelp] = useState('');
     const [informationProvider, setInformationProvider] = useState('');
@@ -65,19 +73,174 @@ export default function PersonalData({ id }: PersonalDataProps) {
     const [emergencyNotify, setEmergencyNotify] = useState('');
     const [relationship, setRelationship] = useState('');
     const [phone, setPhone] = useState('');
+    const [error, setError] = useState<null | string>(null);
+    const [imageUrl, setImageUrl] = useState<string>(''); // Current image URL (Firebase or preview)
+    const [selectedFile, setSelectedFile] = useState<File | null>(null); // File selected by user
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (id) {
+            const fetchImage = async () => {
+                try {
+                    const imageRef = ref(storage, `profile/${id}`);
+                    const url = await getDownloadURL(imageRef);
+                    setImageUrl(url);
+                } catch (error) {
+                    console.error('Error getting image URL:', error);
+                }
+            };
+
+            fetchImage();
+        }
+    }, []);
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setSelectedFile(file);
+            const previewUrl = URL.createObjectURL(file);
+            setImageUrl(previewUrl); // Update preview
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const formData = {
-            name,
-            admissionDate,
-            tobacco,
-            alcohol,
-            alcoholContinuous,
-            drug,
-        };
-        console.log(formData);
+        if (!id) {
+            if (
+                !firstName ||
+                !lastName ||
+                !['male', 'female', 'other'].includes(sex) ||
+                !dateOfBirth
+            ) {
+                alert(
+                    `Please fill in the required form.  ${firstName ? '' : 'firstname'} ${lastName ? '' : 'lastName'} ${['male', 'female', 'other'].includes(sex) ? '' : 'sex must be male or female or other'} ${dateOfBirth ? '' : 'dateOfBirth'}`
+                );
+            } else {
+                const formData = {
+                    firstName,
+                    lastName,
+                    profilePictureUrl: '',
+                    sex,
+                    education,
+                    occupation,
+                    dateOfBirth,
+                    height: height ? height : 0,
+                    weight: weight ? weight : 0,
+                    modeOfArrival:
+                        modeOfArrival == 'Other'
+                            ? `Other:${modeOfArrivalOther}`
+                            : modeOfArrival,
+                    admittedForm:
+                        admittedForm == 'Other'
+                            ? `Other:${admittedFormOther}`
+                            : admittedForm,
+                    initialVitalSigns: {
+                        temperature: temp,
+                        heartRate: hr ? hr : 0,
+                        respiratoryRate: resp ? resp : 0,
+                        bloodPressure: {
+                            systol: bPSystol ? bPSystol : 0,
+                            diastol: bPDiastol ? bPDiastol : 0,
+                        },
+                    },
+                    diagnosis,
+                    chiefComplaint,
+                    pastIllness,
+                    pastIllnessHistory,
+                    familyIllnessHistory,
+                    allergies: allergies.map((value) => {
+                        return { name: value };
+                    }),
+
+                    reactions: reactions.map((value) => {
+                        return { data: value };
+                    }),
+                    tobacco: {
+                        status: tobacco,
+                        quitInfo: {
+                            smokedDuration: tobaccoSmokedDuration,
+                            quitDuration: tobaccoQuitDuration,
+                        },
+                        continuousInfo: {
+                            duration: tobaccoContinuous,
+                        },
+                    },
+                    alcohol: {
+                        status: alcohol,
+                        quitInfo: {
+                            smokedDuration: alcoholSmokedDuration,
+                            quitDuration: alcoholQuitDuration,
+                        },
+                        continuousInfo: {
+                            frequency: alcoholContinuousFrequency,
+                            duration: alcoholContinuousDuration,
+                        },
+                    },
+                    drug: {
+                        status: drug,
+                        quitInfo: {
+                            smokedDuration: drugSmokedDuration,
+                            quitDuration: drugQuitDuration,
+                        },
+                        continuousInfo: {
+                            frequency: drugContinuousFrequency,
+                            duration: drugContinuousDuration,
+                        },
+                    },
+                    exercise: {
+                        status: exercise,
+                        frequency: exerciseFrequency,
+                    },
+                    sleep: {
+                        amount: sleepHour ? sleepHour : 0,
+                        status: sleep,
+                        helper: sleepHelp,
+                    },
+                    information: {
+                        providedBy:
+                            informationProvider == 'Other'
+                                ? `Other:${informationProviderOther}`
+                                : informationProvider,
+                        emergencyContact: {
+                            name: emergencyNotify,
+                            relationship: relationship,
+                            phoneNumber: phone,
+                        },
+                    },
+                };
+                console.log(formData);
+                setError(null);
+                try {
+                    await createPatient(formData);
+                    if (selectedFile) {
+                        const imageRef = ref(storage, 'Cat03.jpg'); // Overwrite or change filename as needed
+                        await uploadBytes(imageRef, selectedFile);
+                        const url = await getDownloadURL(imageRef);
+                        setImageUrl(url); // Update with new Firebase URL
+                        setSelectedFile(null); // Clear temp file
+                        alert('Image uploaded successfully!');
+                    }
+                } catch (err) {
+                    setError('Failed to create patient. Please try again.');
+                }
+            }
+        } else {
+            //wait for update
+            try {
+                if (selectedFile) {
+                    const imageRef = ref(storage, 'Cat03.jpg'); // Overwrite or change filename as needed
+                    await uploadBytes(imageRef, selectedFile);
+                    const url = await getDownloadURL(imageRef);
+                    setImageUrl(url); // Update with new Firebase URL
+                    setSelectedFile(null); // Clear temp file
+                    alert('Image uploaded successfully!');
+                }
+            } catch (err) {
+                setError('Failed to create patient. Please try again.');
+            }
+            console.log(id);
+        }
     };
 
     return (
@@ -90,24 +253,51 @@ export default function PersonalData({ id }: PersonalDataProps) {
                 >
                     <div className='w-[1000px]'>
                         <div className='ml-[12px] mr-[12px] flex'>
-                            <Image
-                                src='https://picsum.photos/id/237/200/300'
-                                className='border-full h-[84px] w-[86px]'
-                                alt=''
+                            <button
+                                onClick={() => fileInputRef.current?.click()}
+                                className=''
+                            >
+                                {imageUrl ? (
+                                    <Image
+                                        src={imageUrl}
+                                        className='border-full h-[84px] w-[84px]'
+                                        width={84}
+                                        height={84}
+                                        alt=''
+                                    />
+                                ) : (
+                                    <div className='border-full flex h-[84px] w-[84px] items-center justify-center bg-[#f6f3f3]'>
+                                        +
+                                    </div>
+                                )}
+                            </button>
+                            <input
+                                type='file'
+                                accept='image/*'
+                                ref={fileInputRef}
+                                style={{ display: 'none' }}
+                                onChange={handleImageChange}
                             />
+
                             <div className='ml-[8px] flex flex-col gap-[12px] text-cardnumber text-shiftover-cardtext'>
                                 <div className='flex flex-row'>
                                     <TextInput
                                         placeHolder='Name'
-                                        value={name}
-                                        onChange={setName}
-                                        style={'w-[186px]'}
+                                        value={firstName}
+                                        onChange={setFirstName}
+                                        style={'w-[80px]'}
                                     ></TextInput>
                                     <TextInput
-                                        placeHolder='Age'
-                                        value={age}
-                                        onChange={setAge}
-                                        style={'w-[61px]'}
+                                        placeHolder='Lastname'
+                                        value={lastName}
+                                        onChange={setLastName}
+                                        style={'w-[110px]'}
+                                    ></TextInput>
+                                    <TextInput
+                                        placeHolder='Birthdate'
+                                        value={dateOfBirth}
+                                        onChange={setDateOfBirth}
+                                        style={'w-[51px]'}
                                     ></TextInput>
                                     <TextInput
                                         placeHolder='Sex'
@@ -119,13 +309,13 @@ export default function PersonalData({ id }: PersonalDataProps) {
                                         placeHolder='Education'
                                         value={education}
                                         onChange={setEducation}
-                                        style={'w-[172px]'}
+                                        style={'w-[92px]'}
                                     ></TextInput>
                                     <TextInput
                                         placeHolder='Occupation'
                                         value={occupation}
                                         onChange={setOccupation}
-                                        style={'w-[116px]'}
+                                        style={'w-[103px]'}
                                     ></TextInput>
                                 </div>
                                 <div className='flex flex-row'>
@@ -141,18 +331,18 @@ export default function PersonalData({ id }: PersonalDataProps) {
                                         onChange={setTime}
                                         style={'w-[89px]'}
                                     ></TextInput>
-                                    <TextInput
+                                    <NumberInput
                                         placeHolder='Height'
                                         value={height}
                                         onChange={setHeight}
                                         style={'w-[89px]'}
-                                    ></TextInput>
-                                    <TextInput
+                                    ></NumberInput>
+                                    <NumberInput
                                         placeHolder='Weight'
                                         value={weight}
                                         onChange={setWeight}
                                         style={'w-[89px]'}
-                                    ></TextInput>
+                                    ></NumberInput>
                                 </div>
                                 <div className='flex flex-row'>
                                     <div className='mr-[20px]'>
@@ -301,52 +491,60 @@ export default function PersonalData({ id }: PersonalDataProps) {
                                 onChange={setFamilyIllnessHistory}
                             ></TextInput>
                             <div className='flex flex-row gap-[5px]'>
-                                <TextInput
+                                <ArrayInput
                                     placeHolder='Allergies (Drug, Food, Others)'
                                     value={allergies}
                                     onChange={setAllergies}
                                     style={'w-[234px]'}
-                                ></TextInput>
-                                <TextInput
+                                ></ArrayInput>
+                                <ArrayInput
                                     placeHolder='Reactions'
                                     value={reactions}
                                     onChange={setReactions}
                                     style={'w-[234px]'}
-                                ></TextInput>
+                                ></ArrayInput>
                             </div>
                         </div>
                         <div className='absolute right-[10px] top-[100px] h-[174px] w-[201px] rounded-[5px] border-[1px] border-[#b7b1b1] shadow-[0_4px_4px_0px_rgba(0,0,0,0.25)]'>
                             <div className='ml-[10px] mt-[10px]'>
                                 Vital Sign:
                                 <div className='ml-[7px] mt-[8px] flex flex-col gap-[15px]'>
-                                    <TextInput
+                                    <DoubleInput
                                         placeHolder='Temp'
                                         value={temp}
                                         onChange={setTemp}
                                         style='w-[82px]'
                                         unit='C'
-                                    ></TextInput>
-                                    <TextInput
+                                    ></DoubleInput>
+                                    <NumberInput
                                         placeHolder='HR'
                                         value={hr}
                                         onChange={setHr}
                                         style='w-[82px]'
                                         unit='/ min'
-                                    ></TextInput>
-                                    <TextInput
+                                    ></NumberInput>
+                                    <NumberInput
                                         placeHolder='Resp'
                                         value={resp}
                                         onChange={setResp}
                                         style='w-[82px]'
                                         unit='/ min'
-                                    ></TextInput>
-                                    <TextInput
-                                        placeHolder='Temp'
-                                        value={bP}
-                                        onChange={setBP}
-                                        style='w-[82px]'
-                                        unit='mmHg'
-                                    ></TextInput>
+                                    ></NumberInput>
+                                    <div className='flex flex-row'>
+                                        <NumberInput
+                                            placeHolder='BP'
+                                            value={bPSystol}
+                                            onChange={setBPSystol}
+                                            style='w-[38px]'
+                                        ></NumberInput>
+                                        /
+                                        <NumberInput
+                                            value={bPDiastol}
+                                            onChange={setBPDiastol}
+                                            style='ml-[4px] w-[38px]'
+                                            unit='mmHg'
+                                        ></NumberInput>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -674,12 +872,12 @@ export default function PersonalData({ id }: PersonalDataProps) {
                     >
                         <div className='ml-[24px] mt-[3px] flex w-[286px] flex-col gap-[14px]'>
                             <div className='flex flex-row'>
-                                <TextInput
+                                <NumberInput
                                     placeHolder='Sleep/ Rest'
                                     value={sleepHour}
                                     onChange={setSleepHour}
                                     style={'w-[96px]'}
-                                ></TextInput>
+                                ></NumberInput>
                                 hr/ day
                             </div>
                             <div className='flex flex-row'>
@@ -767,8 +965,8 @@ export default function PersonalData({ id }: PersonalDataProps) {
                             ></TextInput>
                             <TextInput
                                 placeHolder='Phone #'
-                                value={emergencyNotify}
-                                onChange={setEmergencyNotify}
+                                value={phone}
+                                onChange={setPhone}
                                 style={'w-[205px]'}
                             ></TextInput>
                         </div>

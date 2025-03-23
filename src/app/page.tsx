@@ -7,9 +7,7 @@ export default function Home() {
             <br />
             <a href='/pages/main-page/shared-page'>Shared Page</a>
             <br />
-            <a href='/pages/test-page'>Test Page</a>
-            <br />
-            <a href='/pages/test-page2'>Test Page2</a>
+            <a href='/pages/main-page/test'>test</a>
         </main>
     );
 }

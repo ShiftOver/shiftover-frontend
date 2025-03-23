@@ -2,12 +2,10 @@
 import React, { useRef } from 'react';
 import { useDraggable } from '@dnd-kit/core';
 
-export function Draggable(props: any) {
+export function DraggableSkin(props: any) {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: props.id,
     });
-
-    const gridSize = 20; // pixels
 
     const style = {
         ...(transform
@@ -25,8 +23,6 @@ export function Draggable(props: any) {
             ref={setNodeRef}
             className='h-fit w-fit'
         >
-            {/* Draggable div with ref */}
-
             <div>{props.children}</div>
         </button>
     );

@@ -34,7 +34,7 @@ export default function CardHolder({
     return (
         <div className='relative flex w-fit flex-row rounded-[21.61px] shadow-[0_2.4px_4.8px_0px_rgba(0,0,0,0.25)]'>
             <div className={`${color} w-[24px] rounded-l-[21.61px]`}></div>
-            <div className='mb-[28px]'>
+            <div className='mb-[25px]'>
                 <div className='mx-[12px] my-[11px] flex flex-row items-center'>
                     <img
                         src={'/assets/' + path + '.svg'}

@@ -9,6 +9,7 @@ export type TextInputProps = {
     style?: string;
     unit?: string;
     disabled?: boolean;
+    height?: string;
 };
 
 export default function TextInput({
@@ -18,6 +19,7 @@ export default function TextInput({
     style,
     unit,
     disabled,
+    height,
 }: TextInputProps) {
     useEffect(() => {
         if (disabled) {
@@ -43,7 +45,7 @@ export default function TextInput({
                     id={value}
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
-                    className='h-[18px] bg-[#f6f3f3]'
+                    className={`bg-[#f6f3f3] ${height ? height : 'h-[18px]'}`}
                     disabled={disabled}
                 />
             </div>

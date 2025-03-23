@@ -11,7 +11,7 @@ const Navbar: React.FC = () => {
     const handleLogout = async () => {
         try {
             await signOut(auth);
-            router.push('/pages/login-page'); // Redirect to login page after logout
+            router.push('/pages/login-page');
         } catch (error) {
             console.error('Error signing out:', error);
         }
@@ -26,7 +26,6 @@ const Navbar: React.FC = () => {
             >
                 <div className='flex h-full flex-col justify-between'>
                     <div>
-                        {/* Logo Section */}
                         <button
                             onClick={() => setExpanded(!expanded)}
                             className='mb-12 flex items-center'
@@ -43,7 +42,6 @@ const Navbar: React.FC = () => {
                             )}
                         </button>
 
-                        {/* Icons and Text Section */}
                         <div className='flex flex-col space-y-6'>
                             <button className='flex items-center'>
                                 <img
@@ -90,44 +88,18 @@ const Navbar: React.FC = () => {
                                     </span>
                                 )}
                             </button>
-                            <button className='flex items-center'>
-                                <div className='flex h-10 w-10 items-center justify-center rounded-[200px] bg-shiftover-white-2 shadow-[0_2px_4px_0_rgba(0,0,0,0.25)]'>
-                                    <img
-                                        src='/assets/calendar-account.svg'
-                                        alt='Schedule Icon'
-                                        className='h-6 w-6'
-                                    />
-                                </div>
-                                {expanded && (
-                                    <span className='text-lg ml-4 font-semibold text-shiftover-black'>
-                                        Schedule
-                                    </span>
-                                )}
-                            </button>
-
-                            {/* Logout Button */}
-                            <button
-                                className='flex items-center'
-                                onClick={handleLogout}
-                            >
-                                <div className='flex h-10 w-10 items-center justify-center rounded-[200px] bg-shiftover-blue shadow-[0_2px_4px_0_rgba(0,0,0,0.25)]'>
-                                    <img
-                                        src='/assets/logout.svg'
-                                        alt='Logout Icon'
-                                        className='h-6 w-6'
-                                    />
-                                </div>
-                            </button>
                         </div>
                     </div>
 
-                    {/* Help Section */}
                     <div>
-                        <button className='flex items-center'>
-                            <div className='flex h-10 w-10 items-center justify-center rounded-[200px] border-4 border-shiftover-blue bg-shiftover-white-2 shadow-[0_2px_4px_0_rgba(0,0,0,0.25)]'>
+                        <button
+                            className='flex items-center'
+                            onClick={handleLogout}
+                        >
+                            <div className='flex h-10 w-10 items-center justify-center rounded-[200px] bg-shiftover-blue shadow-[0_2px_4px_0_rgba(0,0,0,0.25)]'>
                                 <img
-                                    src='/assets/help.svg'
-                                    alt='Help Icon'
+                                    src='/assets/logout.svg'
+                                    alt='Logout Icon'
                                     className='h-6 w-6'
                                 />
                             </div>

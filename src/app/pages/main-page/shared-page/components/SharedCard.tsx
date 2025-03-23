@@ -52,14 +52,14 @@ export default function SharedCard({ info, room }: SharedCardProps) {
             >
                 <div className='mx-[20px] mt-[10px] pb-[17px]'>
                     <div className='grid grid-cols-4 gap-x-[42px] gap-y-[17px]'>
-                        <PatientCard info={{ id: 'id' }} />
-                        <PatientCard info={{ id: 'id' }} />
-                        <PatientCard info={{ id: 'id' }} />
-                        <PatientCard info={{ id: 'id' }} />
-                        <PatientCard info={{ id: 'id' }} />
-                        <PatientCard info={{ id: 'id' }} />
-                        <PatientCard info={{ id: 'id' }} />
-                        <PatientCard info={{ id: 'id' }} />
+                        <PatientCard id='id' />
+                        <PatientCard id='id' />
+                        <PatientCard id='id' />
+                        <PatientCard id='id' />
+                        <PatientCard id='id' />
+                        <PatientCard id='id' />
+                        <PatientCard id='id' />
+                        <PatientCard id='id' />
                     </div>
                 </div>
             </div>

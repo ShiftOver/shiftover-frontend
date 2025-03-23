@@ -9,21 +9,11 @@ interface DataPoint {
     hr: number | null;
 }
 
-// Sample Data (Two Repeating Sequences)
-const chartData: DataPoint[] = [
-    { hour: '2025-02-09:2', hr: 62 },
-    { hour: '2025-02-09:6', hr: 75 },
-    { hour: '2025-02-09:10', hr: 79 },
-    { hour: '2025-02-09:14', hr: 72 },
-    { hour: '2025-02-09:18', hr: 74 },
-    { hour: '2025-02-09:22', hr: 65 },
-    { hour: '2025-02-10:2', hr: null },
-    { hour: '2025-02-10:6', hr: null },
-    { hour: '2025-02-10:10', hr: null },
-    { hour: '2025-02-10:14', hr: null },
-    { hour: '2025-02-10:18', hr: null },
-    { hour: '2025-02-10:22', hr: null },
-];
+export type D3LineChartProps = {
+    Domain?: any;
+    chartData: DataPoint[];
+    tick?: number;
+};
 
 // **Chart Size (Keep Width Fixed)**
 const WIDTH = 317;
@@ -31,8 +21,16 @@ const HEIGHT = 127;
 const MARGIN = { top: 10, right: 50, bottom: 25, left: 25 };
 const SHIFT_RIGHT = 11; // Move only data points & labels
 
-export default function D3LineChart() {
+export default function D3LineChart({
+    Domain,
+    chartData,
+    tick,
+}: D3LineChartProps) {
     const ref = useRef<SVGSVGElement | null>(null);
+
+    const uniqueDates = Array.from(
+        new Set(chartData.map((d) => d.hour.split(':')[0].split('-')[2]))
+    );
 
     useEffect(() => {
         if (!ref.current) return;
@@ -64,7 +62,7 @@ export default function D3LineChart() {
 
         const yScale = d3
             .scaleLinear()
-            .domain([40, 140])
+            .domain([Domain[0], Domain[Domain.length - 1]])
             .range([HEIGHT - MARGIN.bottom, MARGIN.top]);
 
         // **Draw Horizontal Grid (Y-axis grid)**
@@ -74,7 +72,7 @@ export default function D3LineChart() {
             .call(
                 d3
                     .axisLeft(yScale)
-                    .ticks(5) // Reduce number of Y-axis ticks
+                    .ticks(tick ? tick : 5) // Reduce number of Y-axis ticks
                     .tickSize(-WIDTH + MARGIN.left + MARGIN.right - 22) // Extend grid lines across chart
                     .tickFormat(() => '') // Hide Y-axis tick labels
             )
@@ -154,6 +152,32 @@ export default function D3LineChart() {
             .attr('cy', (d) => yScale(d.hr as number))
             .attr('r', 2)
             .attr('fill', '#1fa9c4');
+        const dateScale = d3
+            .scaleBand()
+            .domain(uniqueDates)
+            .range([MARGIN.left, WIDTH - MARGIN.right + 22]);
+
+        const dateAxis = d3
+            .axisTop(dateScale)
+            .tickValues(uniqueDates)
+            .tickFormat((d) => `${d}`)
+            .tickSize(0);
+
+        const dateAxisGroup = svg
+            .append('g')
+            .attr('class', 'date-axis')
+            .attr('transform', `translate(0,${MARGIN.top})`)
+            .call(dateAxis);
+
+        // Remove the axis line
+        dateAxisGroup.select('path').attr('stroke', 'none');
+
+        // Style the tick labels
+        dateAxisGroup
+            .selectAll('text')
+            .style('font-size', '10px')
+            .style('text-anchor', 'middle')
+            .style('fill', (d, i) => (i === 0 ? '#828080' : '#1fa9c4')); // Gray for first, blue for second
 
         // **X-Axis (Expanded, Without Shifting Line)**
         const xAxis = d3
@@ -188,7 +212,7 @@ export default function D3LineChart() {
             .call(
                 d3
                     .axisLeft(yScale)
-                    .tickValues([40, 60, 80, 100, 120, 140]) // Show only these labels
+                    .tickValues(Domain) // Show only these labels
                     .tickFormat((d) => d.toString()) // Ensure labels display correctly
                     .tickSize(0) // Removes tick lines but keeps labels
             );
@@ -208,7 +232,7 @@ export default function D3LineChart() {
             .attr('stroke-dasharray', '2 2') // Dashed line style
             .attr('stroke-opacity', 0.1)
             .attr('stroke-width', 1);
-    }, []);
+    }, [chartData, Domain]);
 
     return <svg ref={ref} />;
 }

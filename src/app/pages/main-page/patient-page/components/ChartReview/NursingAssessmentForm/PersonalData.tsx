@@ -1,5 +1,5 @@
 import CardHolderReview from '../CardHolderReview';
-import { Draggable } from '../test/Draggable';
+import { Draggable } from '../Draggable';
 import Image from 'next/image';
 
 export type PersonalDataProps = {
@@ -29,6 +29,8 @@ export default function PersonalData({
                         <Image
                             src='https://picsum.photos/id/237/200/300'
                             className='border-full h-[84px] w-[86px]'
+                            width={86}
+                            height={84}
                             alt=''
                         />
                         <div className='ml-[8px] flex flex-col gap-[12px] text-cardnumber text-shiftover-cardtext'>

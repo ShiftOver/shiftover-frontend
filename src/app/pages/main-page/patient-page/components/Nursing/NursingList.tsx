@@ -32,6 +32,8 @@ export default function NursingList({
                             }`}
                             src='/assets/dropdownpink.svg'
                             alt='Settings'
+                            width={12}
+                            height={12}
                         />
                     </div>
                 </button>
