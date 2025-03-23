@@ -189,58 +189,55 @@ export default function ChartReview({ id }: ChartReviewProps) {
         [key: string]: { left: number; top: number };
     }>({});
     const sensors = useSensors(
-        useSensor(MouseSensor)
-        // useSensor(TouchSensor)
+        // useSensor(MouseSensor)
+        useSensor(TouchSensor)
         // useSensor(KeyboardSensor),
         // useSensor(PointerSensor)
     );
     const [offsetX, setOffsetX] = useState(0);
     const [offsetY, setOffsetY] = useState(0);
     const [initialScrollY, setInitialScrollY] = useState(0);
+    const sidebarRef = useRef<HTMLDivElement>(null);
+    const [sidebarScrollY, setSidebarScrollY] = useState(0);
     useEffect(() => {
-        const handleScroll = () => {
-            const scrollY = window.scrollY;
-
-            if (open) {
-                setIsFixed(scrollY > 130);
-            } else {
-                setIsFixed(false);
-            }
-
-            if (scrollY > 150) {
-                setIsButtonFixed(true);
-            } else {
-                setIsButtonFixed(false);
-            }
+        const handleWindowScroll = () => {
+            const scrollY =
+                window.scrollY || document.documentElement.scrollTop;
+            setIsFixed(scrollY > 130);
+            setIsButtonFixed(scrollY > 150);
         };
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleWindowScroll);
+
         return () => {
-            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('scroll', handleWindowScroll);
         };
-    }, [open]);
+    }, []);
 
     const gridSize = 20; // pixels
     const snapToGridModifier = createSnapModifier(gridSize);
 
     function handleDragStart(event: any) {
         setIsDrag(event.active.id);
-        console.log(event.active);
         const target = document.querySelector(
             `[data-draggable-id="${event.active.id}"]`
         );
+        if (sidebarRef.current && target) {
+            setSidebarScrollY(sidebarRef.current.scrollTop);
+            const rect = target.getBoundingClientRect(); // Get actual bounding box
 
-        if (!target) return;
+            if (event.activatorEvent?.targetTouches?.length > 0) {
+                setOffsetX(
+                    event.activatorEvent.targetTouches[0].clientX - rect.left
+                );
+                setOffsetY(
+                    event.activatorEvent.targetTouches[0].clientY - rect.top
+                );
+            } else {
+            }
 
-        const rect = target.getBoundingClientRect(); // Get actual bounding box
-
-        setOffsetX(event.activatorEvent.clientX - rect.left);
-        setOffsetY(event.activatorEvent.clientY - rect.top);
-
-        if (event.activatorEvent) {
-            setInitialScrollY(
-                window.scrollY || document.documentElement.scrollTop
-            );
+            // setOffsetX(event.activatorEvent.clientX - rect.left);
+            // setOffsetY(event.activatorEvent.clientY - rect.top);
         }
     }
 
@@ -276,8 +273,6 @@ export default function ChartReview({ id }: ChartReviewProps) {
         const currentScrollY =
             window.scrollY || document.documentElement.scrollTop;
 
-        // Calculate the difference in scroll position (can be positive or negative)
-        const scrollDiffY = currentScrollY - initialScrollY;
         if (event.over && event.over.id == 'big') {
             const { x, y } = event.delta;
             if (!(event.active.id in droppedComponents)) {
@@ -286,16 +281,19 @@ export default function ChartReview({ id }: ChartReviewProps) {
                         ...prev,
                         [event.active.id]: {
                             left:
-                                event.activatorEvent.clientX +
+                                // event.activatorEvent.clientX +
+                                event.activatorEvent.targetTouches[0].clientX +
                                 x -
                                 event.over.rect.left -
                                 offsetX,
                             top:
-                                event.activatorEvent.clientY +
+                                // event.activatorEvent.clientY +
+                                event.activatorEvent.targetTouches[0].clientY +
                                 y -
                                 event.over.rect.top -
                                 offsetY -
-                                scrollDiffY,
+                                currentScrollY +
+                                sidebarScrollY,
                         },
                     }));
                 }
@@ -339,47 +337,6 @@ export default function ChartReview({ id }: ChartReviewProps) {
         setIsOver(false);
         setIsCollide(false);
     }
-
-    // function handleDragEnd(event: any) {
-    //     if (!event.active || !event.over) return;
-
-    //     const { x, y } = event.active.rect.current.translated || { x: 0, y: 0 };
-    //     const { left, top } = event.active.rect.current;
-    //     const droppableElement = document.getElementById('big'); // Get the main droppable area
-    //     if (!droppableElement) return;
-
-    //     // Get bounding rectangle of the droppable container
-    //     const droppableRect = droppableElement.getBoundingClientRect();
-
-    //     // Calculate position relative to the droppable container
-    //     const relativeX = x - droppableRect.left;
-    //     const relativeY = y - droppableRect.top;
-
-    //     // Snap to the grid
-    //     const snappedX = Math.round(relativeX / gridSize) * gridSize;
-    //     const snappedY = Math.round(relativeY / gridSize) * gridSize;
-
-    //     console.log(
-    //         x,
-    //         event.active.rect.current.translated,
-    //         event.active.rect.current
-    //     );
-    //     // Update position only if within bounds
-    //     if (
-    //         snappedX >= 0 &&
-    //         snappedY >= 0 &&
-    //         snappedX + 100 <= droppableRect.width &&
-    //         snappedY + 100 <= droppableRect.height
-    //     ) {
-    //         setDroppedComponents((prev) => ({
-    //             ...prev,
-    //             [event.active.id]: {
-    //                 left: snappedX,
-    //                 top: snappedY,
-    //             },
-    //         }));
-    //     }
-    // }
 
     useEffect(() => {
         if (isOver) {
@@ -446,6 +403,7 @@ export default function ChartReview({ id }: ChartReviewProps) {
                         className={`${
                             isFixed ? 'fixed top-0' : 'absolute top-0'
                         } right-0 z-40 h-full max-h-screen w-[321px] overflow-y-auto rounded-l-[39px] bg-white shadow-[0_2px_2px_0_rgba(0,0,0,0.25)] transition-all duration-300`}
+                        ref={sidebarRef}
                     >
                         <button
                             onClick={() => setOpen(false)}

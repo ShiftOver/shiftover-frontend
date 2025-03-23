@@ -9,7 +9,7 @@ import NursingAssessmentForm from '../components/NursingAssessmentForm/NursingAs
 import Medications from '../components/Medications/Medications';
 import Nursing from '../components/Nursing/Nursing';
 import Notes from '../components/Notes/Notes';
-import { DndContext } from '@dnd-kit/core';
+import { DndContext, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { DropNote } from '../components/DropNote';
 import { DragNote } from '../components/DragNote';
 import { restrictToHorizontalAxis } from '@dnd-kit/modifiers';
@@ -22,7 +22,14 @@ export default function Main() {
     const [header, setHeader] = useState('Review');
     const [previousheader, setPreviousHeader] = useState('Review');
     const [isDrag, setIsDrag] = useState(false);
-    const [isDrop, setIsDrop] = useState(false);
+    const [isDrop, setIsDrop] = useState('');
+
+    const sensors = useSensors(
+        // useSensor(MouseSensor),
+        useSensor(TouchSensor)
+        // useSensor(KeyboardSensor),
+        // useSensor(PointerSensor)
+    );
 
     useEffect(() => {
         if (params?.id) {
@@ -82,13 +89,12 @@ export default function Main() {
 
     function handleDragEnd(event: any) {
         if (event.over && event.over.id) {
-            setIsDrop(true);
+            setIsDrop(event.active.id);
             if (previousheader) {
                 setHeader(previousheader);
-                setPreviousHeader('');
             }
         } else {
-            setIsDrop(false);
+            setIsDrop('');
         }
 
         setIsDrag(false);
@@ -112,6 +118,7 @@ export default function Main() {
                         onDragStart={handleDragStart}
                         onDragEnd={handleDragEnd}
                         modifiers={[restrictToHorizontalAxis]}
+                        sensors={sensors}
                     >
                         <div className='relative flex h-[39.5px] flex-none flex-row tracking-tight'>
                             {header == 'Review' ? (
@@ -145,7 +152,7 @@ export default function Main() {
                                     onClick={() => {
                                         setHeader('Form');
                                         setPreviousHeader('Form');
-                                        setIsDrop(false);
+                                        setIsDrop('');
                                     }}
                                 >
                                     Nursing Assessment Form
@@ -164,7 +171,7 @@ export default function Main() {
                                     onClick={() => {
                                         setHeader('Record');
                                         setPreviousHeader('Record');
-                                        setIsDrop(false);
+                                        setIsDrop('');
                                     }}
                                 >
                                     Monitoring Nursing Record
@@ -183,7 +190,7 @@ export default function Main() {
                                     onClick={() => {
                                         setHeader('Medications');
                                         setPreviousHeader('Medications');
-                                        setIsDrop(false);
+                                        setIsDrop('');
                                     }}
                                 >
                                     Medications
@@ -202,13 +209,14 @@ export default function Main() {
                                     onClick={() => {
                                         setHeader('Nursing');
                                         setPreviousHeader('Nursing');
-                                        setIsDrop(false);
+                                        setIsDrop('');
                                     }}
                                 >
                                     Nursing
                                 </button>
                             )}
-                            {isDrop ? null : previousheader != 'Review' ? (
+                            {isDrop == 'Notes' ? null : previousheader !=
+                              'Review' ? (
                                 header == 'Notes' ? (
                                     <div>
                                         <div className='h-[10px] w-[67px] rounded-t-[10px] bg-shiftover-oldpurple'></div>
@@ -228,7 +236,7 @@ export default function Main() {
                                     </button>
                                 )
                             ) : (
-                                <DragNote id='Drag Note'>
+                                <DragNote id='Notes'>
                                     {isDrag || header == 'Notes' ? (
                                         <div>
                                             <div className='h-[10px] w-[67px] rounded-t-[10px] bg-shiftover-oldpurple'></div>
@@ -247,8 +255,8 @@ export default function Main() {
                                 id='Drop Note'
                                 style={' h-full w-[326px]  right-[0px]'}
                             >
-                                {isDrop ? (
-                                    <DragNote id='Drag Note'>
+                                {isDrop == 'Notes' ? (
+                                    <DragNote id='Notes'>
                                         <div>
                                             <div className='h-[10px] w-[67px] rounded-t-[10px] bg-shiftover-oldpurple'></div>
                                             <div className='flex h-[29.5px] items-center justify-center bg-white text-cardname text-shiftover-oldpurple'>

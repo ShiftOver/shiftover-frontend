@@ -14,15 +14,15 @@ export default function DashboardLayout({
     const router = useRouter();
 
     // Redirect to login if the user is not authenticated
-    // if (!loading && !user) {
-    //     router.push('/pages/login-page');
-    //     return null; // Prevent rendering during redirect
-    // }
+    if (!loading && !user) {
+        router.push('/pages/login-page');
+        return null; // Prevent rendering during redirect
+    }
 
-    // // Show a loading screen while authentication is being resolved
-    // if (loading) {
-    //     return <div>Loading...</div>;
-    // }
+    // Show a loading screen while authentication is being resolved
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     // Render the layout only if the user is authenticated
     return (

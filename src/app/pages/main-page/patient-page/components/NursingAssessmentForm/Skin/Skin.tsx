@@ -3,7 +3,13 @@ import CardHolder from '../../CardHolder';
 import SaveButton from '../../SaveButton';
 import RadioButton from '../../Radiobutton';
 import TextInput from '../../TextInput';
-import { DndContext } from '@dnd-kit/core';
+import {
+    DndContext,
+    MouseSensor,
+    TouchSensor,
+    useSensor,
+    useSensors,
+} from '@dnd-kit/core';
 import { DroppableSkin } from './DroppableSkin';
 import { DraggableSkin } from './DraggableSkin';
 
@@ -23,6 +29,12 @@ export default function Skin({ id }: SkinProps) {
     const [skinRadiation, setSkinRadiation] = useState('');
     const [pressureStage, setPressureStage] = useState('');
     const [initialScrollY, setInitialScrollY] = useState(0);
+    const sensors = useSensors(
+        useSensor(MouseSensor)
+        // useSensor(TouchSensor),
+        // useSensor(KeyboardSensor),
+        // useSensor(PointerSensor)
+    );
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -42,8 +54,27 @@ export default function Skin({ id }: SkinProps) {
                 window.scrollY || document.documentElement.scrollTop
             );
         }
-        event.activatorEvent.offsetX;
-        event.activatorEvent.offsetY;
+        if (event.activatorEvent?.targetTouches?.length > 0) {
+            const touch = event.activatorEvent.targetTouches[0];
+            const target = event.activatorEvent.target;
+
+            if (target instanceof HTMLElement) {
+                const rect = target.getBoundingClientRect();
+                const offsetX = touch.clientX - rect.left;
+                const offsetY = touch.clientY - rect.top;
+
+                event.activatorEvent.offsetX = offsetX;
+                event.activatorEvent.offsetY = offsetY;
+
+                event.activatorEvent.clientX =
+                    event.activatorEvent.targetTouches[0].clientX;
+                event.activatorEvent.clientY =
+                    event.activatorEvent.targetTouches[0].clientY;
+            }
+        } else {
+            event.activatorEvent.offsetX;
+            event.activatorEvent.offsetY;
+        }
     }
 
     function handleDragEnd(event: any) {
@@ -77,7 +108,6 @@ export default function Skin({ id }: SkinProps) {
 
             // Calculate the difference in scroll position (can be positive or negative)
             const scrollDiffY = currentScrollY - initialScrollY;
-
             const x =
                 activatorEvent.clientX +
                 delta.x -
@@ -219,6 +249,7 @@ export default function Skin({ id }: SkinProps) {
                                     onDragEnd={handleDragEnd}
                                     onDragStart={handleDragStart}
                                     autoScroll={true}
+                                    sensors={sensors}
                                 >
                                     <div className='flex w-[706px] flex-row'>
                                         {age == 'Adult' ? (

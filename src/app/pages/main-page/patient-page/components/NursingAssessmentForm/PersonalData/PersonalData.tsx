@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CardHolder from '../../CardHolder';
 import SaveButton from '../../SaveButton';
 import TextInput from '../../TextInput';
@@ -7,6 +7,8 @@ import { createPatient } from '@/api';
 import ArrayInput from '../../ArrayInput';
 import NumberInput from '../../NumberInput';
 import DoubleInput from '../../DoubleInput';
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { storage } from '@/config/firebase';
 
 export type PersonalDataProps = {
     id?: any;
@@ -72,9 +74,38 @@ export default function PersonalData({ id }: PersonalDataProps) {
     const [relationship, setRelationship] = useState('');
     const [phone, setPhone] = useState('');
     const [error, setError] = useState<null | string>(null);
+    const [imageUrl, setImageUrl] = useState<string>(''); // Current image URL (Firebase or preview)
+    const [selectedFile, setSelectedFile] = useState<File | null>(null); // File selected by user
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (id) {
+            const fetchImage = async () => {
+                try {
+                    const imageRef = ref(storage, `profile/${id}`);
+                    const url = await getDownloadURL(imageRef);
+                    setImageUrl(url);
+                } catch (error) {
+                    console.error('Error getting image URL:', error);
+                }
+            };
+
+            fetchImage();
+        }
+    }, []);
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setSelectedFile(file);
+            const previewUrl = URL.createObjectURL(file);
+            setImageUrl(previewUrl); // Update preview
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
         if (!id) {
             if (
                 !firstName ||
@@ -180,15 +211,34 @@ export default function PersonalData({ id }: PersonalDataProps) {
                 };
                 console.log(formData);
                 setError(null);
-
                 try {
                     await createPatient(formData);
+                    if (selectedFile) {
+                        const imageRef = ref(storage, 'Cat03.jpg'); // Overwrite or change filename as needed
+                        await uploadBytes(imageRef, selectedFile);
+                        const url = await getDownloadURL(imageRef);
+                        setImageUrl(url); // Update with new Firebase URL
+                        setSelectedFile(null); // Clear temp file
+                        alert('Image uploaded successfully!');
+                    }
                 } catch (err) {
                     setError('Failed to create patient. Please try again.');
                 }
             }
         } else {
             //wait for update
+            try {
+                if (selectedFile) {
+                    const imageRef = ref(storage, 'Cat03.jpg'); // Overwrite or change filename as needed
+                    await uploadBytes(imageRef, selectedFile);
+                    const url = await getDownloadURL(imageRef);
+                    setImageUrl(url); // Update with new Firebase URL
+                    setSelectedFile(null); // Clear temp file
+                    alert('Image uploaded successfully!');
+                }
+            } catch (err) {
+                setError('Failed to create patient. Please try again.');
+            }
             console.log(id);
         }
     };
@@ -203,13 +253,32 @@ export default function PersonalData({ id }: PersonalDataProps) {
                 >
                     <div className='w-[1000px]'>
                         <div className='ml-[12px] mr-[12px] flex'>
-                            <Image
-                                src='https://picsum.photos/id/237/200/300'
-                                className='border-full h-[84px] w-[86px]'
-                                width={86}
-                                height={84}
-                                alt=''
+                            <button
+                                onClick={() => fileInputRef.current?.click()}
+                                className=''
+                            >
+                                {imageUrl ? (
+                                    <Image
+                                        src={imageUrl}
+                                        className='border-full h-[84px] w-[84px]'
+                                        width={84}
+                                        height={84}
+                                        alt=''
+                                    />
+                                ) : (
+                                    <div className='border-full flex h-[84px] w-[84px] items-center justify-center bg-[#f6f3f3]'>
+                                        +
+                                    </div>
+                                )}
+                            </button>
+                            <input
+                                type='file'
+                                accept='image/*'
+                                ref={fileInputRef}
+                                style={{ display: 'none' }}
+                                onChange={handleImageChange}
                             />
+
                             <div className='ml-[8px] flex flex-col gap-[12px] text-cardnumber text-shiftover-cardtext'>
                                 <div className='flex flex-row'>
                                     <TextInput
