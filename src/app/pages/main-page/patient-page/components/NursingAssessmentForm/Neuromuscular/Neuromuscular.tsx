@@ -3,12 +3,32 @@ import CardHolder from '../../CardHolder';
 import RadioButton from '../../Radiobutton';
 import SaveButton from '../../SaveButton';
 import TextInput from '../../TextInput';
+import { selectedNeurosensory } from '@/recoil/atoms';
+import { useRecoilState } from 'recoil';
 
 export type NeuromuscularProps = {
     id: any;
+    handleSubmit: any;
 };
 
-export default function Neuromuscular({ id }: NeuromuscularProps) {
+export default function Neuromuscular({
+    id,
+    handleSubmit,
+}: NeuromuscularProps) {
+    const [neurosensory, setNeurosensory] =
+        useRecoilState<any>(selectedNeurosensory);
+    const useSyncNeurosensory = () => {
+        const update = (field: string, value: any) => {
+            setNeurosensory((prev: any) => ({
+                ...prev,
+                [field]: value,
+            }));
+        };
+
+        return update;
+    };
+    const updateNeurosensory = useSyncNeurosensory();
+
     const [lOC, setLOC] = useState('');
     const [vision, setVision] = useState('');
     const [visionRT, setVisionRT] = useState('');
@@ -40,12 +60,6 @@ export default function Neuromuscular({ id }: NeuromuscularProps) {
     const [movement, setMovement] = useState('');
     const [movementAbnormal, setMovementAbnormal] = useState('');
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        const formData = {};
-        console.log(formData);
-    };
     return (
         <div className='ml-[27px] mt-[23px] justify-items-center'>
             <div className='flex w-full flex-col justify-items-start gap-[37px]'>
@@ -60,15 +74,33 @@ export default function Neuromuscular({ id }: NeuromuscularProps) {
                                 Level of Consciousness (LOC):
                             </p>
                             <RadioButton
-                                value={lOC}
-                                onChange={setLOC}
+                                value={neurosensory?.levelOfConsciousness}
+                                onChange={() =>
+                                    updateNeurosensory(
+                                        'levelOfConsciousness',
+                                        'Alert'
+                                    )
+                                }
+                                checked={
+                                    neurosensory?.levelOfConsciousness ==
+                                    'Alert'
+                                }
                                 name='LOC'
                                 placeHolder='Alert, Awake and Oriented'
                                 style='ml-[6px] mr-[20px]'
                             ></RadioButton>
                             <RadioButton
-                                value={lOC}
-                                onChange={setLOC}
+                                value={neurosensory?.levelOfConsciousness}
+                                onChange={() =>
+                                    updateNeurosensory(
+                                        'levelOfConsciousness',
+                                        'Lethargic'
+                                    )
+                                }
+                                checked={
+                                    neurosensory?.levelOfConsciousness ==
+                                    'Lethargic'
+                                }
                                 name='LOC'
                                 placeHolder='Lethargic (sleepy but easily aroused)'
                                 style='ml-[6px] mr-[20px]'
@@ -76,15 +108,33 @@ export default function Neuromuscular({ id }: NeuromuscularProps) {
                         </div>
                         <div className='flex flex-row'>
                             <RadioButton
-                                value={lOC}
-                                onChange={setLOC}
+                                value={neurosensory?.levelOfConsciousness}
+                                onChange={() =>
+                                    updateNeurosensory(
+                                        'levelOfConsciousness',
+                                        'Stuporous'
+                                    )
+                                }
+                                checked={
+                                    neurosensory?.levelOfConsciousness ==
+                                    'Stuporous'
+                                }
                                 name='LOC'
                                 placeHolder='Stuporous (responsive only to noxious stimuli)'
                                 style='ml-[6px] mr-[20px]'
                             ></RadioButton>
                             <RadioButton
-                                value={lOC}
-                                onChange={setLOC}
+                                value={neurosensory?.levelOfConsciousness}
+                                onChange={() =>
+                                    updateNeurosensory(
+                                        'levelOfConsciousness',
+                                        'Comatose'
+                                    )
+                                }
+                                checked={
+                                    neurosensory?.levelOfConsciousness ==
+                                    'Comatose'
+                                }
                                 name='LOC'
                                 placeHolder='Comatose (not responsive to noxious stimuli)'
                                 style='ml-[6px] mr-[20px]'

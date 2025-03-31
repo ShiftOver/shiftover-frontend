@@ -1,7 +1,6 @@
 'use client';
 import { useRecoilState } from 'recoil';
 import HeaderBlog from '@/app/components/Header';
-import { selectedPatient } from '@/recoil/atoms/main-page.atom';
 import { useEffect, useState } from 'react';
 import MonitoringNuringRecord from '../components/MonitoringNursingRecord/MonitoringNursingRecord';
 import ChartReview from '../components/ChartReview/ChartReview2';
@@ -14,11 +13,18 @@ import { DropNote } from '../components/DropNote';
 import { DragNote } from '../components/DragNote';
 import { restrictToHorizontalAxis } from '@dnd-kit/modifiers';
 import { useParams, useRouter } from 'next/navigation';
+import { getPatientAssessmentById, getPatientById } from '@/api';
+import {
+    selectedPersonalData,
+    selectedPatient,
+    selectedSpiritual,
+} from '@/recoil/atoms';
 
 export default function Main() {
     const params = useParams();
     const router = useRouter();
     const [patient, setPatient] = useRecoilState<string>(selectedPatient);
+
     const [header, setHeader] = useState('Review');
     const [previousheader, setPreviousHeader] = useState('Review');
     const [isDrag, setIsDrag] = useState(false);
@@ -32,19 +38,8 @@ export default function Main() {
     );
 
     useEffect(() => {
-        if (params?.id) {
-            setPatient(params.id as string); // Set patient from URL
-        } else {
-            setPatient('');
-        }
+        setPatient(params.id as string);
     }, [params]);
-
-    useEffect(() => {
-        if (patient != '') {
-        } else {
-            setHeader('Form');
-        }
-    }, [patient]);
 
     const [details, setDetails] = useState(<></>);
 
@@ -99,6 +94,7 @@ export default function Main() {
 
         setIsDrag(false);
     }
+
     return (
         <div className='flex h-full flex-col pt-[28px]'>
             <button

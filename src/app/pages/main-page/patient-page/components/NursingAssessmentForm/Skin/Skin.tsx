@@ -15,9 +15,10 @@ import { DraggableSkin } from './DraggableSkin';
 
 export type SkinProps = {
     id: any;
+    handleSubmit: any;
 };
 
-export default function Skin({ id }: SkinProps) {
+export default function Skin({ id, handleSubmit }: SkinProps) {
     const [age, setAge] = useState('Adult');
     const [sex, setSex] = useState('Male');
     const [temperature, setTemperature] = useState('');
@@ -35,12 +36,7 @@ export default function Skin({ id }: SkinProps) {
         // useSensor(KeyboardSensor),
         // useSensor(PointerSensor)
     );
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
 
-        const formData = { droppedItems };
-        console.log(formData);
-    };
     const [droppedItems, setDroppedItems] = useState<
         Record<
             string,

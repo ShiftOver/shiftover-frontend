@@ -6,9 +6,13 @@ import TextInput from '../../TextInput';
 
 export type MobilityTeachingProps = {
     id: any;
+    handleSubmit: any;
 };
 
-export default function MobilityTeaching({ id }: MobilityTeachingProps) {
+export default function MobilityTeaching({
+    id,
+    handleSubmit,
+}: MobilityTeachingProps) {
     const [activity, setActivity] = useState('');
     const [activityOther, setActivityOther] = useState('');
     const [prosthetic, setProsthetic] = useState('');
@@ -20,12 +24,6 @@ export default function MobilityTeaching({ id }: MobilityTeachingProps) {
     const [information, setInformation] = useState('');
     const [informationOther, setInformationOther] = useState('');
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        const formData = {};
-        console.log(formData);
-    };
     return (
         <div className='ml-[27px] mt-[23px] justify-items-center'>
             <div className='flex w-full flex-col justify-items-start gap-[31px]'>

@@ -9,3 +9,8 @@ export const upsertPatientAssessment = async (
     );
     return response.data;
 };
+
+export const getPatientAssessmentById = async (id: string) => {
+    const response = await api.get(`/patient/assessment/${id}`);
+    return response.data;
+};

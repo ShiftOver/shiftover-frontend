@@ -4,7 +4,9 @@ import { useEffect } from 'react';
 
 export type NumberInputProps = {
     value: number | string;
-    onChange: (value: number | string) => void;
+
+    onChange: any;
+
     placeHolder?: string;
     style?: string;
     unit?: string;
@@ -22,10 +24,10 @@ export default function NumberInput({
     height,
 }: NumberInputProps) {
     useEffect(() => {
-        if (disabled) {
+        if (disabled && value !== '') {
             onChange('');
         }
-    }, [disabled, onChange]);
+    }, [disabled, onChange, value]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = e.target.value;

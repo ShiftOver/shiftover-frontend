@@ -6,9 +6,10 @@ import TextInput from '../../TextInput';
 
 export type DischargeProps = {
     id: any;
+    handleSubmit: any;
 };
 
-export default function Discharge({ id }: DischargeProps) {
+export default function Discharge({ id, handleSubmit }: DischargeProps) {
     const [one, setOne] = useState('');
     const [oneA, setOneA] = useState('');
     const [oneAYes, setOneAYes] = useState('');
@@ -39,12 +40,7 @@ export default function Discharge({ id }: DischargeProps) {
             setOneB('');
         }
     }, [one]);
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
 
-        const formData = {};
-        console.log(formData);
-    };
     return (
         <div className='ml-[27px] mt-[23px] justify-items-center'>
             <div className='flex w-full flex-col justify-items-start gap-[22px]'>

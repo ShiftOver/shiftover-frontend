@@ -1,4 +1,38 @@
-import { selectedPatient } from './main-page.atom';
-import { personalData } from './personalData.atom';
+import { selectedPatient, selectedRoom } from './main-page.atom';
+import {
+    selectedPersonalData,
+    selectedSpiritual,
+    selectedNutrition,
+    selectedSkin,
+    selectedPulmonary,
+    selectedCardiovascular,
+    selectedCardioCurrentTreatment,
+    selectedNeurosensory,
+    selectedMusculoskeletal,
+    selectedMobility,
+    selectedTeaching,
+    selectedGastrointestinal,
+    selectedGenitourinary,
+    selectedPainManagement,
+    selectedDischarge,
+} from './patientData.atom';
 
-export { selectedPatient, personalData };
+export {
+    selectedPatient,
+    selectedPersonalData,
+    selectedRoom,
+    selectedSpiritual,
+    selectedNutrition,
+    selectedSkin,
+    selectedPulmonary,
+    selectedCardiovascular,
+    selectedCardioCurrentTreatment,
+    selectedNeurosensory,
+    selectedMusculoskeletal,
+    selectedMobility,
+    selectedTeaching,
+    selectedGastrointestinal,
+    selectedGenitourinary,
+    selectedPainManagement,
+    selectedDischarge,
+};

@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
 export type RadioButtonProps = {
     value: any;
     onChange: any;
@@ -10,6 +8,7 @@ export type RadioButtonProps = {
     style?: string;
     children?: React.ReactNode;
     disabled?: boolean;
+    checked?: boolean;
 };
 
 export default function RadioButton({
@@ -20,6 +19,7 @@ export default function RadioButton({
     name,
     children,
     disabled,
+    checked,
 }: RadioButtonProps) {
     return (
         <div className='flex flex-row'>
@@ -28,7 +28,7 @@ export default function RadioButton({
                 id={placeHolder}
                 name={name}
                 value={placeHolder}
-                checked={value === placeHolder}
+                checked={checked ? checked : value === placeHolder}
                 onChange={() => onChange(placeHolder)}
                 disabled={disabled}
             />

@@ -22,10 +22,10 @@ export default function TextInput({
     height,
 }: TextInputProps) {
     useEffect(() => {
-        if (disabled) {
+        if (disabled && value !== '') {
             onChange('');
         }
-    }, [disabled, onChange]);
+    }, [disabled, onChange, value]);
 
     return (
         <div className='mr-[5px] flex flex-row items-center'>

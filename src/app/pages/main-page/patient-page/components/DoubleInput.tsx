@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 export type DoubleInputProps = {
     value: number | null;
-    onChange: (value: number | null) => void;
+    onChange: any;
     placeHolder?: string;
     style?: string;
     unit?: string;
@@ -22,10 +22,10 @@ export default function DoubleInput({
     height,
 }: DoubleInputProps) {
     useEffect(() => {
-        if (disabled) {
+        if (disabled && value !== null) {
             onChange(null);
         }
-    }, [disabled, onChange]);
+    }, [disabled, onChange, value]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;

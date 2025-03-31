@@ -1,7 +1,7 @@
 'use client';
 import ThreeDotPopUp from '@/app/components/ThreeDotPopUp';
 import { useEffect, useRef, useState } from 'react';
-import { selectedPatient } from '@/recoil/atoms/main-page.atom';
+import { selectedPatient, selectedRoom } from '@/recoil/atoms';
 import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/navigation';
 
@@ -12,11 +12,13 @@ const age = '23';
 const patientNo = 'HN# 000001';
 export type PatientCardProps = {
     id?: string;
+    room: string;
 };
-export default function PatientCard({ id }: PatientCardProps) {
+export default function PatientCard({ id, room }: PatientCardProps) {
     const [clicked, setClicked] = useState(false);
     const popUpRef = useRef<HTMLDivElement>(null);
     const [, setPatient] = useRecoilState<string>(selectedPatient);
+    const [, setRoom] = useRecoilState<string>(selectedRoom);
     const router = useRouter();
     const handleClickOutside = (event: MouseEvent) => {
         if (
@@ -71,7 +73,7 @@ export default function PatientCard({ id }: PatientCardProps) {
                 <button
                     className='pt-[5px]'
                     onClick={() => {
-                        setPatient(id);
+                        setRoom(room);
                         router.push(`/pages/main-page/patient-page/${id}`);
                     }}
                 >
@@ -96,6 +98,7 @@ export default function PatientCard({ id }: PatientCardProps) {
                 <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
                     <button
                         onClick={() => {
+                            setRoom(room);
                             setPatient('creating');
                         }}
                     >

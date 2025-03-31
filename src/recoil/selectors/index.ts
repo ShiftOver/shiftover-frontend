@@ -1,0 +1,37 @@
+import { selectedRoomPatientSelector } from './main-page.selector';
+import {
+    selectedPersonalDataSelector,
+    selectedSpiritualSelector,
+    selectedNutritionSelector,
+    selectedSkinSelector,
+    selectedPulmonarySelector,
+    selectedCardiovascularSelector,
+    selectedCardioCurrentTreatmentSelector,
+    selectedNeurosensorySelector,
+    selectedMusculoskeletalSelector,
+    selectedMobilitySelector,
+    selectedTeachingSelector,
+    selectedGastrointestinalSelector,
+    selectedGenitourinarySelector,
+    selectedPainManagementSelector,
+    selectedDischargeSelector,
+} from './patientData.selector';
+
+export {
+    selectedRoomPatientSelector,
+    selectedPersonalDataSelector,
+    selectedSpiritualSelector,
+    selectedNutritionSelector,
+    selectedSkinSelector,
+    selectedPulmonarySelector,
+    selectedCardiovascularSelector,
+    selectedCardioCurrentTreatmentSelector,
+    selectedNeurosensorySelector,
+    selectedMusculoskeletalSelector,
+    selectedMobilitySelector,
+    selectedTeachingSelector,
+    selectedGastrointestinalSelector,
+    selectedGenitourinarySelector,
+    selectedPainManagementSelector,
+    selectedDischargeSelector,
+};

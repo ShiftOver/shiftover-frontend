@@ -3,12 +3,15 @@ import CardHolder from '../../CardHolder';
 import SaveButton from '../../SaveButton';
 import TextInput from '../../TextInput';
 import Image from 'next/image';
-import { createPatient } from '@/api';
+import { createPatient, getRoom } from '@/api';
 import ArrayInput from '../../ArrayInput';
 import NumberInput from '../../NumberInput';
 import DoubleInput from '../../DoubleInput';
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { storage } from '@/config/firebase';
+import { useRecoilValue } from 'recoil';
+import { selectedRoomPatientSelector } from '@/recoil/selectors';
+import { useRouter } from 'next/navigation';
 
 export type PersonalDataProps = {
     id?: any;
@@ -77,12 +80,13 @@ export default function PersonalData({ id }: PersonalDataProps) {
     const [imageUrl, setImageUrl] = useState<string>(''); // Current image URL (Firebase or preview)
     const [selectedFile, setSelectedFile] = useState<File | null>(null); // File selected by user
     const fileInputRef = useRef<HTMLInputElement>(null);
-
+    const { selectedRoom } = useRecoilValue(selectedRoomPatientSelector);
+    const router = useRouter();
     useEffect(() => {
         if (id) {
             const fetchImage = async () => {
                 try {
-                    const imageRef = ref(storage, `profile/${id}`);
+                    const imageRef = ref(storage, `profile/${id}.jpg`);
                     const url = await getDownloadURL(imageRef);
                     setImageUrl(url);
                 } catch (error) {
@@ -118,109 +122,117 @@ export default function PersonalData({ id }: PersonalDataProps) {
                 );
             } else {
                 const formData = {
-                    firstName,
-                    lastName,
-                    profilePictureUrl: '',
-                    sex,
-                    education,
-                    occupation,
-                    dateOfBirth,
-                    height: height ? height : 0,
-                    weight: weight ? weight : 0,
-                    modeOfArrival:
-                        modeOfArrival == 'Other'
-                            ? `Other:${modeOfArrivalOther}`
-                            : modeOfArrival,
-                    admittedForm:
-                        admittedForm == 'Other'
-                            ? `Other:${admittedFormOther}`
-                            : admittedForm,
-                    initialVitalSigns: {
-                        temperature: temp,
-                        heartRate: hr ? hr : 0,
-                        respiratoryRate: resp ? resp : 0,
-                        bloodPressure: {
-                            systol: bPSystol ? bPSystol : 0,
-                            diastol: bPDiastol ? bPDiastol : 0,
+                    // roomId: selectedRoom,
+                    roomId: 'ROOM-7',
+                    patientModel: {
+                        firstName,
+                        lastName,
+                        profilePictureUrl: ``,
+                        sex,
+                        education,
+                        occupation,
+                        dateOfBirth,
+                        height: height ? height : 0,
+                        weight: weight ? weight : 0,
+                        modeOfArrival:
+                            modeOfArrival == 'Other'
+                                ? `Other:${modeOfArrivalOther}`
+                                : modeOfArrival,
+                        admittedForm:
+                            admittedForm == 'Other'
+                                ? `Other:${admittedFormOther}`
+                                : admittedForm,
+                        initialVitalSigns: {
+                            temperature: temp,
+                            heartRate: hr ? hr : 0,
+                            respiratoryRate: resp ? resp : 0,
+                            bloodPressure: {
+                                systol: bPSystol ? bPSystol : 0,
+                                diastol: bPDiastol ? bPDiastol : 0,
+                            },
                         },
-                    },
-                    diagnosis,
-                    chiefComplaint,
-                    pastIllness,
-                    pastIllnessHistory,
-                    familyIllnessHistory,
-                    allergies: allergies.map((value) => {
-                        return { name: value };
-                    }),
+                        diagnosis,
+                        chiefComplaint,
+                        pastIllness,
+                        pastIllnessHistory,
+                        familyIllnessHistory,
+                        allergies: allergies.map((value) => {
+                            return { name: value };
+                        }),
 
-                    reactions: reactions.map((value) => {
-                        return { data: value };
-                    }),
-                    tobacco: {
-                        status: tobacco,
-                        quitInfo: {
-                            smokedDuration: tobaccoSmokedDuration,
-                            quitDuration: tobaccoQuitDuration,
+                        reactions: reactions.map((value) => {
+                            return { data: value };
+                        }),
+                        tobacco: {
+                            status: tobacco,
+                            quitInfo: {
+                                smokedDuration: tobaccoSmokedDuration,
+                                quitDuration: tobaccoQuitDuration,
+                            },
+                            continuousInfo: {
+                                duration: tobaccoContinuous,
+                            },
                         },
-                        continuousInfo: {
-                            duration: tobaccoContinuous,
+                        alcohol: {
+                            status: alcohol,
+                            quitInfo: {
+                                smokedDuration: alcoholSmokedDuration,
+                                quitDuration: alcoholQuitDuration,
+                            },
+                            continuousInfo: {
+                                frequency: alcoholContinuousFrequency,
+                                duration: alcoholContinuousDuration,
+                            },
                         },
-                    },
-                    alcohol: {
-                        status: alcohol,
-                        quitInfo: {
-                            smokedDuration: alcoholSmokedDuration,
-                            quitDuration: alcoholQuitDuration,
+                        drug: {
+                            status: drug,
+                            quitInfo: {
+                                smokedDuration: drugSmokedDuration,
+                                quitDuration: drugQuitDuration,
+                            },
+                            continuousInfo: {
+                                frequency: drugContinuousFrequency,
+                                duration: drugContinuousDuration,
+                            },
                         },
-                        continuousInfo: {
-                            frequency: alcoholContinuousFrequency,
-                            duration: alcoholContinuousDuration,
+                        exercise: {
+                            status: exercise,
+                            frequency: exerciseFrequency,
                         },
-                    },
-                    drug: {
-                        status: drug,
-                        quitInfo: {
-                            smokedDuration: drugSmokedDuration,
-                            quitDuration: drugQuitDuration,
+                        sleep: {
+                            amount: sleepHour ? sleepHour : 0,
+                            status: sleep,
+                            helper: sleepHelp,
                         },
-                        continuousInfo: {
-                            frequency: drugContinuousFrequency,
-                            duration: drugContinuousDuration,
-                        },
-                    },
-                    exercise: {
-                        status: exercise,
-                        frequency: exerciseFrequency,
-                    },
-                    sleep: {
-                        amount: sleepHour ? sleepHour : 0,
-                        status: sleep,
-                        helper: sleepHelp,
-                    },
-                    information: {
-                        providedBy:
-                            informationProvider == 'Other'
-                                ? `Other:${informationProviderOther}`
-                                : informationProvider,
-                        emergencyContact: {
-                            name: emergencyNotify,
-                            relationship: relationship,
-                            phoneNumber: phone,
+                        information: {
+                            providedBy:
+                                informationProvider == 'Other'
+                                    ? `Other:${informationProviderOther}`
+                                    : informationProvider,
+                            emergencyContact: {
+                                name: emergencyNotify,
+                                relationship: relationship,
+                                phoneNumber: phone,
+                            },
                         },
                     },
                 };
-                console.log(formData);
                 setError(null);
                 try {
                     await createPatient(formData);
+                    const roomData = await getRoom('ROOM-7');
+                    const patientId = roomData.currentPatient.patientId;
                     if (selectedFile) {
-                        const imageRef = ref(storage, 'Cat03.jpg'); // Overwrite or change filename as needed
+                        const imageRef = ref(
+                            storage,
+                            `profile/${patientId}.jpg`
+                        ); // Overwrite or change filename as needed
                         await uploadBytes(imageRef, selectedFile);
                         const url = await getDownloadURL(imageRef);
                         setImageUrl(url); // Update with new Firebase URL
                         setSelectedFile(null); // Clear temp file
-                        alert('Image uploaded successfully!');
                     }
+                    router.push(`/pages/main-page/patient-page/${patientId}`);
                 } catch (err) {
                     setError('Failed to create patient. Please try again.');
                 }
@@ -229,7 +241,7 @@ export default function PersonalData({ id }: PersonalDataProps) {
             //wait for update
             try {
                 if (selectedFile) {
-                    const imageRef = ref(storage, 'Cat03.jpg'); // Overwrite or change filename as needed
+                    const imageRef = ref(storage, `profile/${id}.jpg`); // Overwrite or change filename as needed
                     await uploadBytes(imageRef, selectedFile);
                     const url = await getDownloadURL(imageRef);
                     setImageUrl(url); // Update with new Firebase URL
@@ -239,7 +251,6 @@ export default function PersonalData({ id }: PersonalDataProps) {
             } catch (err) {
                 setError('Failed to create patient. Please try again.');
             }
-            console.log(id);
         }
     };
 

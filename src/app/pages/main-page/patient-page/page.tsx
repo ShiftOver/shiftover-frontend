@@ -5,12 +5,17 @@ import HeaderBlog from '@/app/components/Header';
 import { selectedPatient } from '@/recoil/atoms/main-page.atom';
 import { useEffect, useState } from 'react';
 import NursingAssessmentForm from './components/NursingAssessmentForm/NursingAssessmentForm';
+import useAuth from '@/hooks/useAuth';
+import { getUser, getWard } from '@/api';
 
 export default function Main() {
     const [patient, setPatient] = useRecoilState<string>(selectedPatient);
     const [showContent, setShowContent] = useState(false);
+    const [room, setRoom] = useState<any>('');
     const [patientList, setPatientList] = useState(['1', '2', '3']);
     const roomCapacity = 7;
+    const { user } = useAuth();
+
     useEffect(() => {
         if (patient == 'creating') {
             setShowContent(true);
@@ -18,7 +23,24 @@ export default function Main() {
             setShowContent(false);
         }
     }, [patient]);
+    useEffect(() => {
+        if (user?.uid) {
+            getUser(user.uid)
+                .then((data) => {
+                    getWard(data.wardId)
+                        .then((data) => {
+                            console.log(data);
+                        })
 
+                        .catch((err) =>
+                            console.error('Error fetching patient', err)
+                        );
+                })
+                .catch((err) => console.error('Error fetching patient', err));
+        }
+
+        console.log(room);
+    }, [user]);
     return (
         <div className='flex h-full flex-col pt-[28px]'>
             <button
@@ -78,6 +100,7 @@ export default function Main() {
                                 <PatientCard
                                     id={patientList[index] || ''}
                                     key={index}
+                                    room={index.toString()}
                                 />
                             )
                         )}

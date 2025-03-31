@@ -6,10 +6,12 @@ import TextInput from '../../TextInput';
 
 export type EliminationPainManagementProps = {
     id: any;
+    handleSubmit: any;
 };
 
 export default function EliminationPainManagement({
     id,
+    handleSubmit,
 }: EliminationPainManagementProps) {
     const [oralCavity, setOralCavity] = useState('');
     const [oralCavityOther, setOralCavityOther] = useState('');
@@ -119,12 +121,6 @@ export default function EliminationPainManagement({
                 <p>{num}</p>
             </button>
         );
-    };
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        const formData = {};
-        console.log(formData);
     };
 
     return (
