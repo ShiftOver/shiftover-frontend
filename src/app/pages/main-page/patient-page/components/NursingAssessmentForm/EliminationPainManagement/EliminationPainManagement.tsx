@@ -3,6 +3,12 @@ import CardHolder from '../../CardHolder';
 import RadioButton from '../../Radiobutton';
 import SaveButton from '../../SaveButton';
 import TextInput from '../../TextInput';
+import { useRecoilState } from 'recoil';
+import {
+    selectedGastrointestinal,
+    selectedGenitourinary,
+    selectedPainManagement,
+} from '@/recoil/atoms';
 
 export type EliminationPainManagementProps = {
     id: any;
@@ -52,6 +58,48 @@ export default function EliminationPainManagement({
     const [painRelieves, setPainRelieves] = useState('');
     const [painRelievesOther, setPainRelievesOther] = useState('');
     const [painRelievesMedication, setPainRelievesMedication] = useState('');
+    const [gastrointestinal, setGastrointestinal] = useRecoilState<any>(
+        selectedGastrointestinal
+    );
+    const useSyncGastrointestinal = () => {
+        const update = (field: string, value: any) => {
+            setGastrointestinal((prev: any) => ({
+                ...prev,
+                [field]: value,
+            }));
+        };
+
+        return update;
+    };
+    const updateGastrointestinal = useSyncGastrointestinal();
+    const [genitourinary, setGenitourinary] = useRecoilState<any>(
+        selectedGenitourinary
+    );
+    const useSyncGenitourinary = () => {
+        const update = (field: string, value: any) => {
+            setGenitourinary((prev: any) => ({
+                ...prev,
+                [field]: value,
+            }));
+        };
+
+        return update;
+    };
+    const updateGenitourinary = useSyncGenitourinary();
+    const [painmanagement, setPainManagement] = useRecoilState<any>(
+        selectedPainManagement
+    );
+    const useSyncPainManagement = () => {
+        const update = (field: string, value: any) => {
+            setPainManagement((prev: any) => ({
+                ...prev,
+                [field]: value,
+            }));
+        };
+
+        return update;
+    };
+    const updatePainManagement = useSyncPainManagement();
     const intensityDiv = (num: number, selected?: number | null) => {
         let description;
         switch (num) {

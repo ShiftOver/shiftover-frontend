@@ -12,6 +12,8 @@ import {
 } from '@dnd-kit/core';
 import { DroppableSkin } from './DroppableSkin';
 import { DraggableSkin } from './DraggableSkin';
+import { useRecoilState } from 'recoil';
+import { selectedSkin } from '@/recoil/atoms';
 
 export type SkinProps = {
     id: any;
@@ -19,6 +21,8 @@ export type SkinProps = {
 };
 
 export default function Skin({ id, handleSubmit }: SkinProps) {
+    const [skin, setSkin] = useRecoilState<any>(selectedSkin);
+
     const [age, setAge] = useState('Adult');
     const [sex, setSex] = useState('Male');
     const [temperature, setTemperature] = useState('');

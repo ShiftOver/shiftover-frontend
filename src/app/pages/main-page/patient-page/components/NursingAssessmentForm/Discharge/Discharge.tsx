@@ -3,6 +3,8 @@ import CardHolder from '../../CardHolder';
 import RadioButton from '../../Radiobutton';
 import SaveButton from '../../SaveButton';
 import TextInput from '../../TextInput';
+import { useRecoilState } from 'recoil';
+import { selectedDischarge } from '@/recoil/atoms';
 
 export type DischargeProps = {
     id: any;
@@ -10,6 +12,7 @@ export type DischargeProps = {
 };
 
 export default function Discharge({ id, handleSubmit }: DischargeProps) {
+    const [discharge, setDischarge] = useRecoilState<any>(selectedDischarge);
     const [one, setOne] = useState('');
     const [oneA, setOneA] = useState('');
     const [oneAYes, setOneAYes] = useState('');
@@ -21,7 +24,7 @@ export default function Discharge({ id, handleSubmit }: DischargeProps) {
     const [liveWithOther, setLiveWithOther] = useState('');
     const [liveWhereOther, setLiveWhereOther] = useState('');
     const [liveWhere, setLiveWhere] = useState('');
-    const [discharge, setDischarge] = useState('');
+
     const [medication, setMedication] = useState('');
     const [env, setEnv] = useState('');
     const [treatmeant, setTreatmeant] = useState('');

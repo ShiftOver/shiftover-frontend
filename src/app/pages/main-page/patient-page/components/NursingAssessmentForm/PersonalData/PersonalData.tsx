@@ -7,31 +7,53 @@ import { createPatient, getRoom } from '@/api';
 import ArrayInput from '../../ArrayInput';
 import NumberInput from '../../NumberInput';
 import DoubleInput from '../../DoubleInput';
-import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
+import { ref, getDownloadURL, uploadBytes, listAll } from 'firebase/storage';
 import { storage } from '@/config/firebase';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { selectedRoomPatientSelector } from '@/recoil/selectors';
 import { useRouter } from 'next/navigation';
+import { selectedPersonalData } from '@/recoil/atoms';
 
 export type PersonalDataProps = {
     id?: any;
 };
 
 export default function PersonalData({ id }: PersonalDataProps) {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [dateOfBirth, setDateOfBirth] = useState('');
-    const [sex, setSex] = useState('');
-    const [education, setEducation] = useState('');
-    const [occupation, setOccupation] = useState('');
-    const [admissionDate, setAdmissionDate] = useState('');
-    const [time, setTime] = useState('');
-    const [height, setHeight] = useState<string | number>('');
-    const [weight, setWeight] = useState<string | number>('');
+    const [personalData, setPersonalData] =
+        useRecoilState<any>(selectedPersonalData);
+    const useSyncPersonalData = () => {
+        const update = (field: string, value: any) => {
+            setPersonalData((prev: any) => ({
+                ...prev,
+                [field]: value,
+            }));
+        };
+
+        return update;
+    };
+    const updatePersonalData = useSyncPersonalData();
+    const isModeOfArrivalOther =
+        personalData?.modeOfArrival?.startsWith('Other:');
+    const modeOfArrivalOther = isModeOfArrivalOther
+        ? personalData.modeOfArrival.split(':')[1]
+        : '';
+    const handleModeOfArrivalOtherChange = (value: string) => {
+        updatePersonalData('modeOfArrival', `Other:${value}`);
+    };
+
+    const isAdmittedFormOther =
+        personalData?.admittedForm?.startsWith('Other:');
+    const admittedFormOther = isAdmittedFormOther
+        ? personalData.admittedForm.split(':')[1]
+        : '';
+    const handleAdmittedFormOtherChange = (value: string) => {
+        updatePersonalData('admittedForm', `Other:${value}`);
+    };
+
     const [modeOfArrival, setModeOfArrival] = useState('');
-    const [modeOfArrivalOther, setModeOfArrivalOther] = useState('');
+
     const [admittedForm, setAdmittedForm] = useState('');
-    const [admittedFormOther, setAdmittedFormOther] = useState('');
+
     const [diagnosis, setDiagnosis] = useState('');
     const [chiefComplaint, setChiefComplaint] = useState('');
     const [pastIllness, setPastIllness] = useState('');
@@ -82,21 +104,31 @@ export default function PersonalData({ id }: PersonalDataProps) {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const { selectedRoom } = useRecoilValue(selectedRoomPatientSelector);
     const router = useRouter();
-    useEffect(() => {
-        if (id) {
-            const fetchImage = async () => {
-                try {
-                    const imageRef = ref(storage, `profile/${id}.jpg`);
-                    const url = await getDownloadURL(imageRef);
-                    setImageUrl(url);
-                } catch (error) {
-                    console.error('Error getting image URL:', error);
-                }
-            };
 
-            fetchImage();
-        }
-    }, []);
+    useEffect(() => {
+        if (!id) return;
+
+        const checkAndLoadImage = async () => {
+            const folderRef = ref(storage, `profile`);
+            try {
+                const result = await listAll(folderRef);
+                const fileExists = result.items.find(
+                    (item) => item.name === `${id}.jpg`
+                );
+                if (fileExists) {
+                    const url = await getDownloadURL(fileExists);
+                    setImageUrl(url);
+                } else {
+                    setImageUrl('');
+                }
+            } catch (error) {
+                console.error('Failed to list files:', error);
+                setImageUrl('');
+            }
+        };
+
+        checkAndLoadImage();
+    }, [id]);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -112,36 +144,30 @@ export default function PersonalData({ id }: PersonalDataProps) {
 
         if (!id) {
             if (
-                !firstName ||
-                !lastName ||
-                !['male', 'female', 'other'].includes(sex) ||
-                !dateOfBirth
+                !personalData?.firstName ||
+                !personalData?.lastName ||
+                !['male', 'female', 'other'].includes(personalData?.sex) ||
+                !personalData?.dateOfBirth
             ) {
                 alert(
-                    `Please fill in the required form.  ${firstName ? '' : 'firstname'} ${lastName ? '' : 'lastName'} ${['male', 'female', 'other'].includes(sex) ? '' : 'sex must be male or female or other'} ${dateOfBirth ? '' : 'dateOfBirth'}`
+                    `Please fill in the required form.  ${personalData?.firstName ? '' : 'firstname'} ${personalData?.lastName ? '' : 'lastName'} ${['male', 'female', 'other'].includes(personalData?.sex) ? '' : 'sex must be male or female or other'} ${personalData?.dateOfBirth ? '' : 'dateOfBirth'}`
                 );
             } else {
                 const formData = {
                     // roomId: selectedRoom,
                     roomId: 'ROOM-7',
                     patientModel: {
-                        firstName,
-                        lastName,
-                        profilePictureUrl: ``,
-                        sex,
-                        education,
-                        occupation,
-                        dateOfBirth,
-                        height: height ? height : 0,
-                        weight: weight ? weight : 0,
-                        modeOfArrival:
-                            modeOfArrival == 'Other'
-                                ? `Other:${modeOfArrivalOther}`
-                                : modeOfArrival,
-                        admittedForm:
-                            admittedForm == 'Other'
-                                ? `Other:${admittedFormOther}`
-                                : admittedForm,
+                        firstName: personalData?.firstName,
+                        lastName: personalData?.lastName,
+                        profilePictureUrl: '',
+                        sex: personalData?.sex,
+                        education: personalData?.education,
+                        occupation: personalData?.occupation,
+                        dateOfBirth: personalData?.dateOfBirth,
+                        height: personalData?.height ? personalData.height : 0,
+                        weight: personalData?.weight ? personalData.weight : 0,
+                        modeOfArrival: personalData?.modeOfArrival,
+                        admittedForm: personalData?.admittedForm,
                         initialVitalSigns: {
                             temperature: temp,
                             heartRate: hr ? hr : 0,
@@ -238,14 +264,14 @@ export default function PersonalData({ id }: PersonalDataProps) {
                 }
             }
         } else {
-            //wait for update
+            console.log(personalData);
             try {
                 if (selectedFile) {
-                    const imageRef = ref(storage, `profile/${id}.jpg`); // Overwrite or change filename as needed
+                    const imageRef = ref(storage, `profile/${id}.jpg`);
                     await uploadBytes(imageRef, selectedFile);
                     const url = await getDownloadURL(imageRef);
-                    setImageUrl(url); // Update with new Firebase URL
-                    setSelectedFile(null); // Clear temp file
+                    setImageUrl(url);
+                    setSelectedFile(null);
                     alert('Image uploaded successfully!');
                 }
             } catch (err) {
@@ -294,64 +320,93 @@ export default function PersonalData({ id }: PersonalDataProps) {
                                 <div className='flex flex-row'>
                                     <TextInput
                                         placeHolder='Name'
-                                        value={firstName}
-                                        onChange={setFirstName}
+                                        value={personalData?.firstName}
+                                        onChange={(val: string) =>
+                                            updatePersonalData('firstName', val)
+                                        }
                                         style={'w-[80px]'}
                                     ></TextInput>
                                     <TextInput
                                         placeHolder='Lastname'
-                                        value={lastName}
-                                        onChange={setLastName}
+                                        value={personalData?.lastName}
+                                        onChange={(val: string) =>
+                                            updatePersonalData('lastName', val)
+                                        }
                                         style={'w-[110px]'}
                                     ></TextInput>
                                     <TextInput
                                         placeHolder='Birthdate'
-                                        value={dateOfBirth}
-                                        onChange={setDateOfBirth}
+                                        value={personalData?.dateOfBirth}
+                                        onChange={(val: string) =>
+                                            updatePersonalData(
+                                                'dateOfBirth',
+                                                val
+                                            )
+                                        }
                                         style={'w-[51px]'}
                                     ></TextInput>
                                     <TextInput
                                         placeHolder='Sex'
-                                        value={sex}
-                                        onChange={setSex}
+                                        value={personalData?.sex}
+                                        onChange={(val: string) =>
+                                            updatePersonalData('sex', val)
+                                        }
                                         style={'w-[50px]'}
                                     ></TextInput>
                                     <TextInput
                                         placeHolder='Education'
-                                        value={education}
-                                        onChange={setEducation}
+                                        value={personalData?.education}
+                                        onChange={(val: string) =>
+                                            updatePersonalData('education', val)
+                                        }
                                         style={'w-[92px]'}
                                     ></TextInput>
                                     <TextInput
                                         placeHolder='Occupation'
-                                        value={occupation}
-                                        onChange={setOccupation}
+                                        value={personalData?.occupation}
+                                        onChange={(val: string) =>
+                                            updatePersonalData(
+                                                'occupation',
+                                                val
+                                            )
+                                        }
                                         style={'w-[103px]'}
                                     ></TextInput>
                                 </div>
                                 <div className='flex flex-row'>
                                     <TextInput
                                         placeHolder='Admssion Date'
-                                        value={admissionDate}
-                                        onChange={setAdmissionDate}
+                                        value={personalData?.admissionDate}
+                                        onChange={(val: string) =>
+                                            updatePersonalData(
+                                                'admissionDate',
+                                                val
+                                            )
+                                        }
                                         style={'w-[142px]'}
                                     ></TextInput>
                                     <TextInput
                                         placeHolder='Time'
-                                        value={time}
-                                        onChange={setTime}
+                                        value={personalData?.time}
+                                        onChange={(val: string) =>
+                                            updatePersonalData('time', val)
+                                        }
                                         style={'w-[89px]'}
                                     ></TextInput>
                                     <NumberInput
                                         placeHolder='Height'
-                                        value={height}
-                                        onChange={setHeight}
+                                        value={personalData?.height}
+                                        onChange={(val: any) =>
+                                            updatePersonalData('height', val)
+                                        }
                                         style={'w-[89px]'}
                                     ></NumberInput>
                                     <NumberInput
                                         placeHolder='Weight'
-                                        value={weight}
-                                        onChange={setWeight}
+                                        value={personalData?.weight}
+                                        onChange={(val: any) =>
+                                            updatePersonalData('weight', val)
+                                        }
                                         style={'w-[89px]'}
                                     ></NumberInput>
                                 </div>
@@ -364,9 +419,15 @@ export default function PersonalData({ id }: PersonalDataProps) {
                                         id='Walk'
                                         name='modeOfArrival'
                                         value='Walk'
-                                        checked={modeOfArrival === 'Walk'}
+                                        checked={
+                                            personalData?.modeOfArrival ===
+                                            'Walk'
+                                        }
                                         onChange={() =>
-                                            setModeOfArrival('Walk')
+                                            updatePersonalData(
+                                                'modeOfArrival',
+                                                'Walk'
+                                            )
                                         }
                                     />
                                     <p className='ml-[6px] mr-[20px]'>Walk</p>
@@ -376,10 +437,14 @@ export default function PersonalData({ id }: PersonalDataProps) {
                                         name='modeOfArrival'
                                         value='Wheel Chair'
                                         checked={
-                                            modeOfArrival === 'Wheel Chair'
+                                            personalData?.modeOfArrival ===
+                                            'Wheel Chair'
                                         }
                                         onChange={() =>
-                                            setModeOfArrival('Wheel Chair')
+                                            updatePersonalData(
+                                                'modeOfArrival',
+                                                'Wheel Chair'
+                                            )
                                         }
                                     />
                                     <p className='ml-[6px] mr-[20px]'>
@@ -390,9 +455,15 @@ export default function PersonalData({ id }: PersonalDataProps) {
                                         id='Stretcher'
                                         name='modeOfArrival'
                                         value='Stretcher'
-                                        checked={modeOfArrival === 'Stretcher'}
+                                        checked={
+                                            personalData?.modeOfArrival ===
+                                            'Stretcher'
+                                        }
                                         onChange={() =>
-                                            setModeOfArrival('Stretcher')
+                                            updatePersonalData(
+                                                'modeOfArrival',
+                                                'Stretcher'
+                                            )
                                         }
                                     />
                                     <p className='ml-[6px] mr-[20px]'>
@@ -404,16 +475,21 @@ export default function PersonalData({ id }: PersonalDataProps) {
                                         id='Other'
                                         name='modeOfArrival'
                                         value='Other'
-                                        checked={modeOfArrival === 'Other'}
+                                        checked={isModeOfArrivalOther}
                                         onChange={() =>
-                                            setModeOfArrival('Other')
+                                            updatePersonalData(
+                                                'modeOfArrival',
+                                                'Other:'
+                                            )
                                         }
                                     />
                                     <TextInput
                                         placeHolder='Other'
                                         value={modeOfArrivalOther}
-                                        onChange={setModeOfArrivalOther}
-                                        disabled={modeOfArrival !== 'Other'}
+                                        onChange={
+                                            handleModeOfArrivalOtherChange
+                                        }
+                                        disabled={!isModeOfArrivalOther}
                                         style={'w-[89px]'}
                                     ></TextInput>
                                 </div>
@@ -426,9 +502,15 @@ export default function PersonalData({ id }: PersonalDataProps) {
                                         id='ER Trauma'
                                         name='admittedForm'
                                         value='ER Trauma'
-                                        checked={admittedForm === 'ER Trauma'}
+                                        checked={
+                                            personalData?.admittedForm ===
+                                            'ER Trauma'
+                                        }
                                         onChange={() =>
-                                            setAdmittedForm('ER Trauma')
+                                            updatePersonalData(
+                                                'admittedForm',
+                                                'ER Trauma'
+                                            )
                                         }
                                     />
                                     <p className='ml-[6px] mr-[20px]'>
@@ -439,8 +521,15 @@ export default function PersonalData({ id }: PersonalDataProps) {
                                         id='OPD'
                                         name='admittedForm'
                                         value='OPD'
-                                        checked={admittedForm === 'OPD'}
-                                        onChange={() => setAdmittedForm('OPD')}
+                                        checked={
+                                            personalData?.admittedForm === 'OPD'
+                                        }
+                                        onChange={() =>
+                                            updatePersonalData(
+                                                'admittedForm',
+                                                'OPD'
+                                            )
+                                        }
                                     />
                                     <p className='ml-[6px] mr-[20px]'>OPD</p>
                                     <input
@@ -448,9 +537,15 @@ export default function PersonalData({ id }: PersonalDataProps) {
                                         id='Refer'
                                         name='admittedForm'
                                         value='Refer'
-                                        checked={admittedForm === 'Refer'}
+                                        checked={
+                                            personalData?.admittedForm ===
+                                            'Refer'
+                                        }
                                         onChange={() =>
-                                            setAdmittedForm('Refer')
+                                            updatePersonalData(
+                                                'admittedForm',
+                                                'Refer'
+                                            )
                                         }
                                     />
                                     <p className='ml-[6px] mr-[20px]'>Refer</p>
@@ -460,16 +555,19 @@ export default function PersonalData({ id }: PersonalDataProps) {
                                         id='Other'
                                         name='admittedForm'
                                         value='Other'
-                                        checked={admittedForm === 'Other'}
+                                        checked={isAdmittedFormOther}
                                         onChange={() =>
-                                            setAdmittedForm('Other')
+                                            updatePersonalData(
+                                                'admittedForm',
+                                                'Other:'
+                                            )
                                         }
                                     />
                                     <TextInput
                                         placeHolder='Other'
                                         value={admittedFormOther}
-                                        onChange={setAdmittedFormOther}
-                                        disabled={admittedForm !== 'Other'}
+                                        onChange={handleAdmittedFormOtherChange}
+                                        disabled={!isAdmittedFormOther}
                                         style={'w-[89px]'}
                                     ></TextInput>
                                 </div>
@@ -478,28 +576,44 @@ export default function PersonalData({ id }: PersonalDataProps) {
                         <div className='ml-[12px] mt-[12px] flex w-[750px] flex-col gap-[12px]'>
                             <TextInput
                                 placeHolder='Diagnosis'
-                                value={diagnosis}
-                                onChange={setDiagnosis}
+                                value={personalData?.diagnosis}
+                                onChange={(val: string) =>
+                                    updatePersonalData('diagnosis', val)
+                                }
                             ></TextInput>
                             <TextInput
                                 placeHolder='Chief Complaint'
-                                value={chiefComplaint}
-                                onChange={setChiefComplaint}
+                                value={personalData?.chiefComplaint}
+                                onChange={(val: string) =>
+                                    updatePersonalData('chiefComplaint', val)
+                                }
                             ></TextInput>
                             <TextInput
                                 placeHolder='Past Illness'
-                                value={pastIllness}
-                                onChange={setPastIllness}
+                                value={personalData?.pastIllness}
+                                onChange={(val: string) =>
+                                    updatePersonalData('pastIllness', val)
+                                }
                             ></TextInput>
                             <TextInput
                                 placeHolder='Past Illness History'
-                                value={pastIllnessHistory}
-                                onChange={setPastIllnessHistory}
+                                value={personalData?.pastIllnessHistory}
+                                onChange={(val: string) =>
+                                    updatePersonalData(
+                                        'pastIllnessHistory',
+                                        val
+                                    )
+                                }
                             ></TextInput>
                             <TextInput
                                 placeHolder='Family Illness History'
-                                value={familyIllnessHistory}
-                                onChange={setFamilyIllnessHistory}
+                                value={personalData?.familyIllnessHistory}
+                                onChange={(val: string) =>
+                                    updatePersonalData(
+                                        'familyIllnessHistory',
+                                        val
+                                    )
+                                }
                             ></TextInput>
                             <div className='flex flex-row gap-[5px]'>
                                 <ArrayInput

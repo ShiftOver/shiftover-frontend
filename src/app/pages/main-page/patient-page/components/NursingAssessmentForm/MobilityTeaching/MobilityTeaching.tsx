@@ -3,6 +3,8 @@ import CardHolder from '../../CardHolder';
 import RadioButton from '../../Radiobutton';
 import SaveButton from '../../SaveButton';
 import TextInput from '../../TextInput';
+import { useRecoilState } from 'recoil';
+import { selectedMobility, selectedTeaching } from '@/recoil/atoms';
 
 export type MobilityTeachingProps = {
     id: any;
@@ -23,6 +25,21 @@ export default function MobilityTeaching({
     const [dominantHand, setDominantHand] = useState('');
     const [information, setInformation] = useState('');
     const [informationOther, setInformationOther] = useState('');
+
+    const [mobility, setMobility] = useRecoilState<any>(selectedMobility);
+    const useSyncMobility = () => {
+        const update = (field: string, value: any) => {
+            setMobility((prev: any) => ({
+                ...prev,
+                [field]: value,
+            }));
+        };
+
+        return update;
+    };
+    const updateMobility = useSyncMobility();
+
+    const [teaching, setTeaching] = useRecoilState<any>(selectedTeaching);
 
     return (
         <div className='ml-[27px] mt-[23px] justify-items-center'>

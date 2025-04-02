@@ -112,8 +112,11 @@ export default function NursingAssessmentForm({
     const [, setDischarge] = useRecoilState<any>(selectedDischarge);
     useEffect(() => {
         const fetchPatientData = async () => {
-            // const patientData = await getPatientById(id);
-            // setPersonalData(patientData);
+            const patientData = await getPatientById(
+                // id
+                'PATIENT-20'
+            );
+            setPersonalData(patientData);
             try {
                 const patientAssessmentData = await getPatientAssessmentById(
                     // id
@@ -137,24 +140,26 @@ export default function NursingAssessmentForm({
                 setDischarge(patientAssessmentData.discharge);
             } catch (error) {
                 console.warn('No patient assessment data found:', error);
-                setSpiritual(null);
-                setNutrition(null);
-                setSkin(null);
-                setPulmonary(null);
-                setCardiovascular(null);
-                setCardioCurrentTreatment(null);
-                setNeurosensory(null);
-                setMusculoskeletal(null);
-                setMobility(null);
-                setTeaching(null);
-                setGastrointestinal(null);
-                setGenitourinary(null);
-                setPainManagement(null);
-                setDischarge(null);
             }
         };
         if (id) {
             fetchPatientData();
+        } else {
+            setPersonalData(null);
+            setSpiritual(null);
+            setNutrition(null);
+            setSkin(null);
+            setPulmonary(null);
+            setCardiovascular(null);
+            setCardioCurrentTreatment(null);
+            setNeurosensory(null);
+            setMusculoskeletal(null);
+            setMobility(null);
+            setTeaching(null);
+            setGastrointestinal(null);
+            setGenitourinary(null);
+            setPainManagement(null);
+            setDischarge(null);
         }
     }, []);
     const handleSubmit = useRecoilCallback(

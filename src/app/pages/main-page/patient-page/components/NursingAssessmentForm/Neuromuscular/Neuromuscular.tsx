@@ -3,7 +3,7 @@ import CardHolder from '../../CardHolder';
 import RadioButton from '../../Radiobutton';
 import SaveButton from '../../SaveButton';
 import TextInput from '../../TextInput';
-import { selectedNeurosensory } from '@/recoil/atoms';
+import { selectedMusculoskeletal, selectedNeurosensory } from '@/recoil/atoms';
 import { useRecoilState } from 'recoil';
 
 export type NeuromuscularProps = {
@@ -29,7 +29,21 @@ export default function Neuromuscular({
     };
     const updateNeurosensory = useSyncNeurosensory();
 
-    const [lOC, setLOC] = useState('');
+    const [musculoskeletal, setMusculoskeletal] = useRecoilState<any>(
+        selectedMusculoskeletal
+    );
+    const useSyncMusculoskeletal = () => {
+        const update = (field: string, value: any) => {
+            setMusculoskeletal((prev: any) => ({
+                ...prev,
+                [field]: value,
+            }));
+        };
+
+        return update;
+    };
+    const updateMusculoskeletal = useSyncMusculoskeletal();
+
     const [vision, setVision] = useState('');
     const [visionRT, setVisionRT] = useState('');
     const [visionLT, setVisionLT] = useState('');
